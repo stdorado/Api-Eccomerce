@@ -1,0 +1,101 @@
+[
+  {
+    "title": "casa de 80x80",
+    "thumbnail": "imagen2.jpg",
+    "descripcion": "Descripción del Producto 2",
+    "code": "|||||||||||||||||",
+    "stock": 5,
+    "price": 29.99,
+    "status": true,
+    "category": "CASA",
+    "id": 1
+  },
+  {
+    "title": "casa de 80x80",
+    "thumbnail": "imagen2.jpg",
+    "descripcion": "Descripción del Producto 2",
+    "code": "||||||||||||||||| | | | ",
+    "stock": 5,
+    "price": 29.99,
+    "status": true,
+    "category": "CASA",
+    "id": 2
+  },
+  {
+    "title": "casa de 80x80",
+    "thumbnail": "imagen2.jpg",
+    "descripcion": "Descripción del Producto 2",
+    "code": "||||||||||||||||| | | ",
+    "stock": 5,
+    "price": 29.99,
+    "status": true,
+    "category": "CASA",
+    "id": 3
+  },
+  {
+    "title": "casa de 80x80",
+    "thumbnail": "imagen2.jpg",
+    "descripcion": "Descripción del Producto 2",
+    "code": "||||||||||||||||| |  ",
+    "stock": 5,
+    "price": 29.99,
+    "status": true,
+    "category": "CASA",
+    "id": 4
+  },
+  {
+    "title": "casa de 80x80",
+    "thumbnail": "imagen2.jpg",
+    "descripcion": "Descripción del Producto 2",
+    "code": "|||||||||||||  ",
+    "stock": 5,
+    "price": 29.99,
+    "status": true,
+    "category": "CASA",
+    "id": 5
+  },
+  {
+    "title": "casa de 80x80",
+    "thumbnail": "imagen2.jpg",
+    "descripcion": "Descripción del Producto 2",
+    "code": "||||||||| ",
+    "stock": 5,
+    "price": 29.99,
+    "status": true,
+    "category": "CASA",
+    "id": 6
+  },
+  {
+    "title": "casa de 80x80",
+    "thumbnail": "imagen2.jpg",
+    "descripcion": "Descripción del Producto 2",
+    "code": "|||||||| ",
+    "stock": 5,
+    "price": 29.99,
+    "status": true,
+    "category": "CASA",
+    "id": 7
+  },
+  {
+    "title": "casa de 80x80",
+    "thumbnail": "imagen2.jpg",
+    "descripcion": "Descripción del Producto 2",
+    "code": "|||||||| ||| |||| |||",
+    "stock": 5,
+    "price": 29.99,
+    "status": true,
+    "category": "CASA",
+    "id": 8
+  },
+  {
+    "title": "casa de 80x80",
+    "thumbnail": "imagen2.jpg",
+    "descripcion": "Descripción del Producto 2",
+    "code": "|||||||| ||| |||| ||| ||| ||",
+    "stock": 5,
+    "price": 29.99,
+    "status": true,
+    "category": "CASA",
+    "id": 9
+  }
+]

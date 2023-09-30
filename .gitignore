@@ -1,0 +1,20 @@
+# Archivos y directorios generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Carpeta node_modules generada por npm/yarn
+node_modules
+
+# Carpeta de compilación generada por varios entornos
+/dist/
+
+# Carpeta de dependencias de desarrollo generada por npm/yarn
+/devDependencies/
+
+# Archivo de credenciales
+.env
+
+# Archivo de registros
+*.log
+
+# Dependiendo del lenguaje de programación y el IDE, es posible que desees agregar más patrones aquí
