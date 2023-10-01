@@ -1,6 +1,5 @@
 import io from "socket.io-client";
-
-const socketClient = io();
+const socketClient = io("http://localhost:8080");
 let products = [];
 let error = "";
 const productsList = document.getElementById("productsList");
