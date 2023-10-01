@@ -1,46 +1,120 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inmobiliaria Don-Mario</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../public/styles/styles.css">
-</head>
-<body>
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <div class="container">
-        <!-- Logo o nombre de tu sitio -->
-        <a class="navbar-brand" href="#">Mi Sitio</a>
 
-        <!-- Botón de hamburguesa para dispositivos móviles -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inmobiliaria Don-Mario</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../../public/styles/styles.css" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+      <div class="container">
+
+        <a class="navbar-brand" href="/"><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="56"
+            height="56"
+            fill="red"
+            class="bi bi-house-heart-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M7.293 1.5a1 1 0 0 1 1.414 0L11 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l2.354 2.353a.5.5 0 0 1-.708.707L8 2.207 1.354 8.853a.5.5 0 1 1-.708-.707L7.293 1.5Z"
+            />
+            <path
+              d="m14 9.293-6-6-6 6V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9.293Zm-6-.811c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.691 0-5.018Z"
+            />
+          </svg></a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Enlaces de navegación -->
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <ul class="navbar-nav ">
-                <li class="nav-item ">
-                    <button class="btn btn-warning"><a class="nav-link" href="/">Inicio</a></button>
-                </li>
-                <li class="nav-item">
-                   <button class="btn btn-warning"><a class="nav-link" href="/api/carts">Inicio</a></button>
-                </li>
-                <li class="nav-item">
-                    <button class="btn btn-warning"><a class="nav-link" href="/realtimeProducts">Inicio</a></button>
-                </li>
-            </ul>
+        <div
+          class="collapse navbar-collapse justify-content-center"
+          id="navbarNav"
+        >
+          <div class="row">
+            <div class="col-md-4">
+              <button class="btn btn-outline-success btn-block"><a
+                  class="nav-link"
+                  href="/"
+                ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="45"
+                    height="45"
+                    fill="currentColor"
+                    class="bi bi-house"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"
+                    />
+                  </svg></a></button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-outline-primary btn-block"><a
+                  class="nav-link"
+                  href="/api/carts"
+                ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="45"
+                    height="45"
+                    fill="currentColor"
+                    class="bi bi-cart"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                    />
+                  </svg></a></button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-outline-warning btn-block"><a
+                  class="nav-link"
+                  href="/realtimeProducts"
+                ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="45"
+                    height="45"
+                    fill="currentColor"
+                    class="bi bi-box-seam"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"
+                    />
+                  </svg></a></button>
+            </div>
+          </div>
         </div>
-    </div>
-</nav>
+      </div>
+    </nav>
+
     <h1 class="text-center">Welcome to Don-Mario</h1>
     {{{body}}}
-    <footer class="bg-black p-4 text-center fs-4">Dorado Santino Full stack Developer</footer>
-    
-    
+    <footer class="bg-black p-4 text-center fs-4 text-light">Dorado Santino Full
+      stack Developer</footer>
+
     <script src="/socket.io/socket.io.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+
 </html>
