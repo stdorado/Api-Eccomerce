@@ -6,7 +6,7 @@ async function getAllProductsHandler(io, socket) {
       const products = await productManager.getProducts();
       io.sockets.emit("updatedProducts", products);
     } catch (error) {
-      // Manejo de errores: Envia un mensaje de error a través de Socket.io
+      // Envia un mensaje de error a través de Socket.io
       io.to(socket.id).emit("error", "No se pueden obtener los productos.");
       console.error("Error al obtener productos:", error);
     }
