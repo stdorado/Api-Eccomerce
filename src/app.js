@@ -16,17 +16,17 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/public"));
 
-// Configuración de Handlebars
+
 app.engine("handlebars", engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
-// Rutas de la API y de las vistas
+
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
 app.use("/", viewsRouter);
 
-// Inicialización del servidor HTTP y Socket.io
+
 const httpServer = app.listen(PORT, () => {
   console.log(`Servidor en ejecución en el puerto ${PORT}`);
 });
@@ -37,10 +37,10 @@ const socketServer = new Server(httpServer);
 socketServer.on("connection", (socket) => {
   console.log("Cliente conectado a través de Socket.io");
 
-  // Manejo de eventos de Socket.io
+  
   socket.on("disconnect", () => {
     console.log("Cliente desconectado");
   });
 
-  // Agrega aquí el manejo de eventos de Socket.io según tus necesidades
+  
 });
