@@ -36,20 +36,17 @@ const socketServer = new Server(httpServer);
 socketServer.on("connection", (socket) => {
   console.log("Cliente conectado a través de Socket.io");
 
-<<<<<<< HEAD
+
   getAllProductsHandler(socketServer, socket);
 
   // Manejo de eventos de Socket.io
   socket.on("disconnect", () => {
     console.log("Cliente desconectado");
   });
-=======
-  
+
   socket.on("disconnect", () => {
     console.log("Cliente desconectado");
   });
 
-  
->>>>>>> 94228d9a420215d0f3837510dc306f927defe4e7
 });
 

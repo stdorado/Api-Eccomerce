@@ -4,109 +4,92 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inmobiliaria Don-Mario</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="../../public/styles/styles.css" />
+    <link href="/dist/output.css" rel="stylesheet">
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <div class="container">
+<nav class="bg-gray-800">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/" class="flex-shrink-0 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="class="h-8 w-auto transform hover:scale-110 transition-transform"" viewBox="0 0 16 16">
+  <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+  <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.707l.547.547 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+</svg>
+        <span class="ml-2 text-white text-xl font-semibold">Don Mario</span>
+      </a>
 
-        <a class="navbar-brand" href="/"><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="56"
-            height="56"
-            fill="red"
-            class="bi bi-house-heart-fill"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M7.293 1.5a1 1 0 0 1 1.414 0L11 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l2.354 2.353a.5.5 0 0 1-.708.707L8 2.207 1.354 8.853a.5.5 0 1 1-.708-.707L7.293 1.5Z"
-            />
-            <path
-              d="m14 9.293-6-6-6 6V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9.293Zm-6-.811c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.691 0-5.018Z"
-            />
-          </svg></a>
+      <!-- Menú móvil -->
+      <div class="flex items-center sm:hidden">
+        <button id="mobile-menu-button" class="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6 transform hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
+      <!-- Menú de navegación -->
+      <div class="hidden sm:flex sm:space-x-4">
+        <a href="/" class="text-white hover:bg-gray-700 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-300">Home</a>
+        <a href="/api/carts" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-300">Cart</a>
+        <a href="/realtimeProducts" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-300">Update Products</a>
+      </div>
+
+      <!-- Iconos -->
+      <div class="hidden sm:flex sm:items-center sm:ml-6">
+        <button class="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-colors duration-300">
+          <span class="sr-only">View notifications</span>
+          <svg class="h-6 w-6 transform hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"></path>
+          </svg>
         </button>
 
-        <div
-          class="collapse navbar-collapse justify-content-center"
-          id="navbarNav"
-        >
-          <div class="row">
-            <div class="col-md-4">
-              <button class="btn btn-outline-success btn-block"><a
-                  class="nav-link"
-                  href="/"
-                ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="45"
-                    height="45"
-                    fill="currentColor"
-                    class="bi bi-house"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"
-                    />
-                  </svg></a></button>
-            </div>
-            <div class="col-md-4">
-              <button class="btn btn-outline-primary btn-block"><a
-                  class="nav-link"
-                  href="/api/carts"
-                ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="45"
-                    height="45"
-                    fill="currentColor"
-                    class="bi bi-cart"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-                    />
-                  </svg></a></button>
-            </div>
-            <div class="col-md-4">
-              <button class="btn btn-outline-warning btn-block"><a
-                  class="nav-link"
-                  href="/realtimeProducts"
-                ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="45"
-                    height="45"
-                    fill="currentColor"
-                    class="bi bi-box-seam"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"
-                    />
-                  </svg></a></button>
-            </div>
-          </div>
+        <!-- Perfil del usuario -->
+        <div class="ml-3 relative">
+          <button class="flex items-center text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-colors duration-300">
+            <span class="sr-only">Open user menu</span>
+            <img class="h-8 w-8 rounded-full transform hover:scale-110 transition-transform" src="https://luisgyg.com/wp-content/uploads/2022/12/WhatsApp-Image-2022-12-06-at-06.25.46-1.jpeg" alt="User Image">
+          </button>
         </div>
       </div>
-    </nav>
+    </div>
+  </div>
 
-    <h1 class="text-center">Welcome to Don-Mario</h1>
+  <!-- Menú móvil (oculto por defecto) -->
+  <div class="sm:hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <a href="/" class="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 text-base font-medium transition-colors duration-300">Home</a>
+      <a href="/api/carts" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 text-base font-medium transition-colors duration-300">Cart</a>
+      <a href="/realtimeProducts" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 text-base font-medium transition-colors duration-300">Update Products</a>
+    </div>
+  </div>
+</nav>
+
+  
     {{{body}}}
-    <footer class="bg-black p-4 text-center fs-4 text-light">Dorado Santino Full
-      stack Developer</footer>
+
+    {{!-- footer --}}
+    <footer class="bg-gray-800 text-white py-4">
+    <div class="container mx-auto">
+        <div class="flex justify-between items-center">
+            <p>&copy; Dorado Santino</p>
+            <ul class="flex space-x-4">
+                <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="25" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg></a></li>
+                <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="25" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+</svg></a></li>
+                <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="25" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
+  <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5V3zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a1.99 1.99 0 0 1-1-.268zM1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1z"/>
+</svg></a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
 
     <script src="/socket.io/socket.io.js"></script>
 
@@ -115,6 +98,7 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </body>
 
 </html>

@@ -1,7 +1,25 @@
+<link rel="stylesheet" href="../public/styles/styles.css">
 <div class="container">
-  <h1 class="text-center">Mira las Casas que tenemos para vos!</h1>
-  <h3>{{error}}</h3>
+  <section class="text-center my-8">
+    <div class="flex items-center justify-center">
+      <div class="w-1/2 pr-4">
+        <h1 class="text-6xl font-extrabold text-black mb-4">¡Bienvenido a Nuestra Selección de Propiedades!</h1>
+        <p class="text-gray-700 text-xl mb-4">Explora nuestro catálogo de casas y departamentos exclusivos para encontrar tu hogar perfecto.</p>
+        <a href="/contacto" class="inline-block px-6 py-3 text-blue-500 hover border border-green-500 rounded-lg hover:bg-orange-300 hover:text-black transition duration-200 ease-in-out transform hover:scale-105">Contáctanos para obtener más información</a>
+      </div>
+      <div class="w-1/2 ml-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" fill="orange" class="w-4/5 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105" viewBox="0 0 16 16">
+  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 1 1-1 0v-1h-1a.5.5 0 1 1 0-1h1v-1a.5.5 0 0 1 1 0Z"/>
+  <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+  <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+</svg>
+      </div>
+    </div>
+  </section>
+  
+  <h3 class="text-red-500">{{error}}</h3>
   <div class="row m-3" id="productsList">
+    <!-- Aquí se mostrarán las propiedades -->
   </div>
 </div>
 <script src="/js/home.js"></script>
