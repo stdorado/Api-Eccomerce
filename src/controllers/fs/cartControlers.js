@@ -1,4 +1,4 @@
-import CartManager from "../models/CartManager.js";
+import CartManager from "../dao/CartManager.js";
 
 export async function createCart(req, res, next) {
   try {

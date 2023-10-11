@@ -1,9 +1,10 @@
-import { productManager } from "../models/ProductManager.js";
+import { ProductsManager } from "../dao/ProductsManager.js";
+const productsManager = new ProductsManager();
 
 async function getAllProductsHandler(io, socket) {
   socket.on("getAllProducts", async () => {
     try {
-      const products = await productManager.getProducts();
+      const products = await productsManager.findAll(); 
       io.sockets.emit("updatedProducts", products);
     } catch (error) {
       // Envia un mensaje de error a través de Socket.io
