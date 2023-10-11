@@ -39,14 +39,14 @@ const productsList = document.getElementById("productsList");
     <h3 class="text-2xl font-semibold text-black">${product.title}</h3>
     <p class="text-gray-600 text-sm mt-2">${product.descripcion}</p>
     <div class="mt-4 flex justify-between items-center">
-      <div class="text-gray-700 text-sm">
-        <p>Stock disponible: ${product.stock}</p>
-        <p>Código: ${product.code}</p>
+      <div class="absolute bottom-2 left-2 bg-gray-800 text-white text-xs py-1 px-2 rounded-full">
+        <p>Código Del Producto: ${product.code}</p>
       </div>
+      <p>Stock disponible: ${product.stock}</p>
       <p class="text-2xl font-semibold text-gray-900">$${product.price}</p>
     </div>
     <div class="mt-4 flex justify-end space-x-2">
-      <button class="bg-pink-500 text-white py-2 px-4 rounded-md hover:bg-pink-600 transition">
+      <button class="bg-black text-white py-2 px-4 rounded-md hover:bg-red-800 transition">
         <a href="/cart" class="block w-full text-center text-white py-2 px-4 rounded-md transition">Comprar</a>
       </button>
     </div>

@@ -25,3 +25,4 @@ async function createMessage(user,message){
 async function getAllMessages(){
     return Mensaje.find().exec()
 }
+
