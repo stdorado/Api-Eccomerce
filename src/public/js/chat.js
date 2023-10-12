@@ -1,20 +1,32 @@
+// public/chat.js
+import { io } from 'socket.io-client';
+
 const socket = io();
+const messageTemplate = Handlebars.compile(document.getElementById('message-template').innerHTML);
 
-  document.getElementById('chat-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const user = document.getElementById('user').value;
-    const message = document.getElementById('message').value;
+socket.on('chat message', (data) => {
+  const { user, message } = data;
+  const messageHTML = messageTemplate({ user, message });
+  const messagesList = document.getElementById('messages');
+  messagesList.innerHTML += messageHTML;
+});
 
-    // Envía el mensaje al servidor a través de Socket.io
-    socket.emit('chatMessage', { user, message });
+function sendMessage() {
+  const user = document.getElementById('user').value;
+  const messageInput = document.getElementById('m');
+  const message = messageInput.value;
+  socket.emit('chat message', { user, message }); // Emitir el evento 'chat message'
+  messageInput.value = ''; // Limpiar el campo de mensaje después de enviar
+}
 
-    document.getElementById('message').value = '';
-  });
+// Agrega el evento 'click' al botón de enviar
+document.getElementById('sendButton').addEventListener('click', () => {
+  sendMessage();
+});
 
-  socket.on('newMessage', (message) => {
-    // Recibe y muestra el mensaje en tiempo real
-    const messages = document.getElementById('messages');
-    const li = document.createElement('li');
-    li.innerHTML = `<strong>${message.user}:</strong> ${message.message}`;
-    messages.appendChild(li);
-  });
+// Opcional: Agregar el evento 'keydown' para enviar mensajes con la tecla "Enter"
+document.getElementById('m').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    sendMessage();
+  }
+});
