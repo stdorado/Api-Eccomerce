@@ -4,6 +4,8 @@ import { io } from 'socket.io-client';
 const socket = io();
 const messageTemplate = Handlebars.compile(document.getElementById('message-template').innerHTML);
 
+document.body.appendChild(chatContainer);
+
 socket.on('chat message', (data) => {
   const { user, message } = data;
   const messageHTML = messageTemplate({ user, message });
@@ -24,7 +26,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
   sendMessage();
 });
 
-// Opcional: Agregar el evento 'keydown' para enviar mensajes con la tecla "Enter"
+
 document.getElementById('m').addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
     sendMessage();
