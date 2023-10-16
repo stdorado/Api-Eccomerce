@@ -1,10 +1,11 @@
-// public/chat.js
 import { io } from 'socket.io-client';
 
 const socket = io();
-const messageTemplate = Handlebars.compile(document.getElementById('message-template').innerHTML);
 
-document.body.appendChild(chatContainer);
+// Agregar el evento de conexión
+socket.on('connect', () => {
+  console.log('Conectado al servidor Socket.io');
+});
 
 socket.on('chat message', (data) => {
   const { user, message } = data;
@@ -17,15 +18,13 @@ function sendMessage() {
   const user = document.getElementById('user').value;
   const messageInput = document.getElementById('m');
   const message = messageInput.value;
-  socket.emit('chat message', { user, message }); // Emitir el evento 'chat message'
-  messageInput.value = ''; // Limpiar el campo de mensaje después de enviar
+  socket.emit('chat message', { user, message });
+  messageInput.value = '';
 }
 
-// Agrega el evento 'click' al botón de enviar
 document.getElementById('sendButton').addEventListener('click', () => {
   sendMessage();
 });
-
 
 document.getElementById('m').addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {

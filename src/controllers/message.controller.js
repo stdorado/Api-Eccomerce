@@ -1,23 +1,23 @@
-import Message from "../dao/model/message.js";
+import messageManager from "../dao/messageManager.js";
 
-async function saveMessage(user, message) {
-    try {
-      const newMessage = new Message({ user, message });
-      await newMessage.save();
-      return newMessage;
-    } catch (error) {
-      throw new Error('Error al guardar el mensaje en MongoDB');
-    }
+async function sendMessageFromMongo(req, res) {
+  const { user, messageText } = req.body; // Puedes recibir estos datos de una solicitud POST
+  try {
+    const savedMessage = await MessageManager.sendMessage(user, messageText);
+    res.json(savedMessage);
+  } catch (error) {
+    res.status(500).json({ error: 'No se pudo enviar el mensaje.' });
   }
-  
-  
-  async function getAllMessages() {
-    try {
-      const messages = await Message.find().exec();
-      return messages;
-    } catch (error) {
-      throw new Error('Error al obtener los mensajes desde MongoDB');
-    }
+}
+
+// Controlador para obtener mensajes
+async function getMessagesFromMongo(req, res) {
+  try {
+    const messages = await MessageManager.getMessages();
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ error: 'No se pudieron obtener los mensajes.' });
   }
-  
-  export { saveMessage, getAllMessages };
+}
+
+export { sendMessageFromMongo, getMessagesFromMongo };
