@@ -7,10 +7,6 @@ import viewsRouter from "./router/views.router.js";
 import { __dirname } from "./utils.js";
 import mongoose from "./config.js";
 
-
-
-
-
 const app = express();
 const PORT =  8080;
 
