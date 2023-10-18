@@ -1,5 +1,5 @@
 import { ProductsManager } from "../dao/ProductsManager.js";
-import { product } from "../dao/model/products.js";
+import { Product } from "../dao/model/products.js";
 
 const productsManager = new ProductsManager();
 
@@ -22,7 +22,7 @@ export const getAllProductsFromMongoose = async (req, res) => {
     }
 
     const filter = query ? { tipo: query } : {};
-    const productos = await product.find(filter)
+    const productos = await Product.find(filter)
       .sort(sortOptions)
       .skip(options.skip)
       .limit(options.limit);
@@ -31,7 +31,7 @@ export const getAllProductsFromMongoose = async (req, res) => {
 
 
 
-    const totalItems = await product.countDocuments(filter);
+    const totalItems = await Product.countDocuments(filter);
     const totalPages = Math.ceil(totalItems / limit);
 
     const hasPrevPage = page > 1;
