@@ -1,44 +1,39 @@
-<body class="bg-gray-100 p-4">
-  <div class="container mx-auto flex items-center justify-center h-screen">
-    <div class="bg-white rounded-lg shadow-md p-8 w-full max-w-md">
-      <h1 class="text-3xl font-semibold text-center text-gray-900 mb-6">Cart</h1>
-
-      <table class="w-full border border-gray-200">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="py-3 px-4 text-left font-semibold">Producto</th>
-            <th class="py-3 px-4 text-left">Cantidad</th>
-            <th class="py-3 px-4 text-right">Precio unitario</th>
-            <th class="py-3 px-4 text-right">Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="py-4 px-4 font-semibold">Producto 1</td>
-            <td class="py-4 px-4">2</td>
-            <td class="py-4 px-4 text-right">$29.99</td>
-            <td class="py-4 px-4 text-right">$59.98</td>
-          </tr>
-          <tr>
-            <td class="py-4 px-4">Producto 2</td>
-            <td class="py-4 px-4">1</td>
-            <td class="py-4 px-4 text-right">$19.99</td>
-            <td class="py-4 px-4 text-right">$19.99</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="mt-6">
-        <div class="flex justify-between">
-          <p class="text-lg font-semibold text-gray-900">Total:</p>
-          <p class="text-lg text-blue-500 font-semibold">$79.97</p>
-        </div>
-      </div>
-
-      <div class="mt-8 flex justify-center space-x-4">
-        <a href="/products" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-lg transition duration-300 transform hover:scale-105">Continuar Comprando</a>
-        <a href="#" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg transition duration-300 transform hover:scale-105">Realizar Pago</a>
-      </div>
-    </div>
-  </div>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Carrito de Compras</title>
+</head>
+<body>
+  <h1>Carrito de Compras</h1>
+<div id="cart">Cart: 6526aabbfb59b510c4693a00</div>
+  {{#if products.length}}
+    <table>
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+        <th>Acciones</th>
+      </tr>
+      {{#each products}}
+      <tr>
+        <td>{{this.title}}</td>
+        <td>${{this.price}}</td>
+        <td>{{this.quantity}}</td>
+        <td>${{this.subtotal}}</td>
+        <td>
+          <button data-product-id="{{this.id}}" class="remove-from-cart">Eliminar</button>
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+    <p>Total: ${{total}}</p>
+    <button class="checkout">Realizar Compra</button>
+    <button id="clearCartButton">Vaciar Carrito</button>
+  {{else}}
+    <p>El carrito está vacío.</p>
+  {{/if}}
+  <script src="/js/cart.js"></script>
 </body>
+</html>
+
