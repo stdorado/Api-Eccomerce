@@ -52,7 +52,8 @@ class CartManager {
       if (!cart) {
         throw new Error("Carrito no encontrado.");
       }
-      const existingProduct = cart.products.find(p => p.productId === productId);
+      console.log('Valor de productId:', productId); // Agrega esta línea
+      const existingProduct = cart.products.find(p => p.product === productId);
       if (existingProduct) {
         existingProduct.quantity += quantity;
       } else {

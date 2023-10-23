@@ -1,70 +1,65 @@
-let products = [];
-let error = "";
-let cartId;
-
-const cart = document.getElementById("cart");
-
-if (cart) {
-  cartId = cart.innerText.replace("Cart: ", "");
+window.addEventListener("load", () => {
   const productsList = document.getElementById("productsList");
 
   async function getAllProducts() {
     try {
-      const response = await fetch(`/api/carts/${cartId}`);
-      const responseJson = await response.json();
-
-      if (responseJson.error) {
-        console.error(`Error: ${responseJson.error}`);
+      const response = await fetch("/api/carts/cart");
+      
+      if (response.headers.get("content-type") === "application/json") {
+        const responseJson = await response.json();
+  
+        if (responseJson.error) {
+          console.error(`Error: ${responseJson.error}`);
+        } else {
+          const products = responseJson.products;
+          renderProducts(products);
+        }
       } else {
-        products = [...responseJson.products];
-        compileProducts();
+        console.error("La respuesta no es de tipo JSON.");
       }
     } catch (err) {
       console.error('Error:', err);
-      error = err;
     }
   }
 
-  function compileProducts() {
-    const productsTemplate = products
-      .map(
-        (product) => `<li>
-          <p>ID: ${product.productId._id} Quantity: ${product.quantity}</p>
-          <p>Title: ${product.productId.title}</p>
-          <p>Description: ${product.productId.description}</p>
-          <p>Price: ${product.productId.price}</p>
-          <p>Code: ${product.productId.code}</p>
-          <p>Stock: ${product.productId.stock}</p>
-          <button data-product-id="${product.productId._id}" class="remove-from-cart">Eliminar</button>
-        </li>`
-      )
-      .join(" ");
-    productsList.innerHTML = productsTemplate;
+  function renderProducts(products) {
+    const productsHTML = products.map((product) => {
+      return `
+        <div class="product">
+          <img src="${product.thumbnail}" alt="${product.title}" />
+          <h2>${product.title}</h2>
+          <p>${product.descripcion}</p>
+          <p>Price: $${product.price}</p>
+          <p>Stock: ${product.stock}</p>
+          <p>Category: ${product.category}</p>
+          <button class="eliminarButton" data-product-id="${product._id}">Eliminar producto</button>
+        </div>
+      `;
+    }).join("");
+
+    productsList.innerHTML = productsHTML;
 
     // Agregar event listeners a los botones "Eliminar"
-    const removeButtons = document.querySelectorAll(".remove-from-cart");
-    removeButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const productId = button.getAttribute("data-product-id");
+    const eliminarButtons = document.querySelectorAll(".eliminarButton");
+    eliminarButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const productId = event.target.getAttribute("data-product-id");
         eliminarProductoDelCarrito(productId);
       });
     });
   }
 
   getAllProducts();
-} else {
-  console.error("Element with ID 'cart' not found in the HTML.");
-}
+});
 
 async function eliminarProductoDelCarrito(productId) {
   try {
-    const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
+    const response = await fetch(`/api/carts/cart/products/${productId}`, {
       method: "DELETE",
     });
 
     if (response.ok) {
-      // Producto eliminado con éxito
-      getAllProducts(); // Vuelve a cargar los productos del carrito
+      getAllProducts();
     } else {
       const responseData = await response.json();
       console.error(`Error al eliminar el producto: ${responseData.error}`);
@@ -73,24 +68,3 @@ async function eliminarProductoDelCarrito(productId) {
     console.error("Error en la solicitud de eliminación del producto:", error);
   }
 }
-
-const clearCartButton = document.getElementById("clearCartButton");
-
-clearCartButton.addEventListener("click", async () => {
-  try {
-    const response = await fetch(`/api/carts/${cartId}`, {
-      method: "DELETE",
-    });
-
-    if (response.ok) {
-      // Carrito vaciado con éxito
-      products = []; // Vacía la lista de productos en el frontend
-      compileProducts();
-    } else {
-      const responseData = await response.json();
-      console.error(`Error al vaciar el carrito: ${responseData.error}`);
-    }
-  } catch (error) {
-    console.error("Error en la solicitud de vaciado del carrito:", error);
-  }
-});

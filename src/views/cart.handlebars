@@ -4,35 +4,32 @@
   <title>Carrito de Compras</title>
 </head>
 <body>
-  <h1>Carrito de Compras</h1>
-<div id="cart">Cart: 6526aabbfb59b510c4693a00</div>
-  {{#if products.length}}
-    <table>
-      <tr>
-        <th>Producto</th>
-        <th>Precio</th>
-        <th>Cantidad</th>
-        <th>Subtotal</th>
-        <th>Acciones</th>
-      </tr>
-      {{#each products}}
-      <tr>
-        <td>{{this.title}}</td>
-        <td>${{this.price}}</td>
-        <td>{{this.quantity}}</td>
-        <td>${{this.subtotal}}</td>
-        <td>
-          <button data-product-id="{{this.id}}" class="remove-from-cart">Eliminar</button>
-        </td>
-      </tr>
-      {{/each}}
-    </table>
-    <p>Total: ${{total}}</p>
-    <button class="checkout">Realizar Compra</button>
-    <button id="clearCartButton">Vaciar Carrito</button>
-  {{else}}
-    <p>El carrito está vacío.</p>
-  {{/if}}
+
+
+<h1 class="text-4xl font-bold text-center mb-8">Carrito de Compras</h1>
+
+{{#if products.length}}
+<div class="max-w-screen-xl mx-auto">
+  <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+    {{#each products}}
+    <div class="bg-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+      <img src="{{this.thumbnail}}" alt="{{this.title}}" class="w-full h-48 object-cover">
+      <div class="p-4 pt-6 pb-6">
+        <h2 class="text-lg sm:text-xl font-semibold mb-2">{{this.title}}</h2>
+        <p class="text-gray-600 text-sm">{{this.descripcion}}</p>
+        <p class="text-2xl font-semibold text-gray-900 mt-2">${{this.price}}</p>
+        <p class="mt-2 text-sm text-gray-600">Stock disponible: {{this.stock}}</p>
+        <p class="mt-2 text-sm text-gray-600">Categoría: {{this.category}}</p>
+        <button data-product-id="{{this._id}}" class="eliminarButton px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none mt-4">Eliminar producto</button>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+{{else}}
+<p class="text-xl text-center mt-8">No hay productos en el carrito.</p>
+{{/if}}
+    
   <script src="/js/cart.js"></script>
 </body>
 </html>

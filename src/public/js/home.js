@@ -89,19 +89,14 @@ nextButton.addEventListener("click", () => {
   getAllProducts(currentPage);
 });
 
-const carritoId = "6526aabbfb59b510c4693a00";
+const carritoId = "6526a937fb59b510c46939f8"
 
-function agregarAlCarrito(productoId) { // Cambié "productId" por "productoId"
+function agregarAlCarrito(productoId) {
   if (!productoId || typeof productoId !== 'string') {
     console.error('ID de producto no válido.');
     alert('ID de producto no válido.');
     return;
   }
-
-  const productoAAgregar = {
-    product: productoId, // Cambio en la clave 'id' por 'product'
-    quantity: 1, // Puedes ajustar la cantidad si es necesario
-  };
 
   const url = `/api/carts/${carritoId}/products/${productoId}`;
 
@@ -110,15 +105,14 @@ function agregarAlCarrito(productoId) { // Cambié "productId" por "productoId"
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(productoAAgregar),
+    body: JSON.stringify({
+      quantity: 1, // Puedes ajustar la cantidad si es necesario
+    }),
   })
     .then(response => {
       if (response.ok) {
         console.log('Producto agregado al carrito con éxito.');
-        alert('Producto agregado al carrito con éxito.');
-
-        // Opcional: Puedes realizar alguna acción adicional después de agregar al carrito
-
+        alert('Producto agregado al carrito con éxito');
       } else {
         response.text().then(errorMsg => {
           console.error('Error al agregar el producto al carrito:', errorMsg);
