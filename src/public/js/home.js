@@ -106,7 +106,7 @@ function agregarAlCarrito(productoId) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      quantity: 1, // Puedes ajustar la cantidad si es necesario
+      quantity: 1, 
     }),
   })
     .then(response => {

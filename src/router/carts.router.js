@@ -12,7 +12,6 @@ router.delete('/:cid/products/:pid', deleteCart);
 // Ruta para obtener los productos en un carrito
 router.get('/:cid/products', getCartById);
 
-
 router.put('/:cid', updateCart);
 
 // Ruta para crear un nuevo carrito

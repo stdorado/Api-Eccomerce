@@ -36,12 +36,12 @@ export const addProductToCart = async (req, res) => {
       return res.status(404).json({ error: "Carrito no encontrado." });
     }
 
-    const product = await Product.findById(req.params.pid); // Asegúrate de que req.params.pid contenga el _id del producto
+    const product = await Product.findById(req.params.pid); 
     if (!product) {
       return res.status(404).json({ error: "Producto no encontrado." });
     }
 
-    // Puedes establecer la cantidad en 1 como valor predeterminado
+   
     const quantity = req.body.quantity || 1;
 
     // Añade el producto al carrito
@@ -58,6 +58,7 @@ export const addProductToCart = async (req, res) => {
     res.status(500).json({ error: "Error al agregar el producto al carrito." });
   }
 };
+//controlador para actualizar el carrito
 export const updateCart = async (req, res) => {
   try {
     const { cid } = req.params;
@@ -72,7 +73,6 @@ export const updateCart = async (req, res) => {
     res.status(500).json({ error: "Error al actualizar el carrito." });
   }
 };
-
 // Controlador para eliminar un carrito
 export const deleteCart = async (req, res) => {
   try {
@@ -106,9 +106,10 @@ export const deleteCart = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar el producto del carrito.' });
   }
 };
+//controlador para renderizar los productos
 export const viewCart = async (req, res) => {
   try {
-    const cartId = "6526a937fb59b510c46939f8"; // Esto debería obtenerse dinámicamente si hay múltiples carritos
+    const cartId = "6526a937fb59b510c46939f8"; 
     const cart = await Cart.findById(cartId).exec();
 
     if (!cart) {
@@ -118,7 +119,7 @@ export const viewCart = async (req, res) => {
     const productIds = cart.products.map(product => product.productId);
     const products = await Product.find({ _id: { $in: productIds } }).exec();
 
-    // Crear un objeto con los datos de los productos
+    
     const cartData = {
       products: products.map(product => ({
         title: product.title,
@@ -127,7 +128,7 @@ export const viewCart = async (req, res) => {
         thumbnail: product.thumbnail,
         stock: product.stock,
         category: product.category,
-        _id: product._id, // Agrega el _id del producto
+        _id: product._id, 
       })),
     };
 
@@ -139,13 +140,11 @@ export const viewCart = async (req, res) => {
     res.status(500).render('error', { error: 'Error al obtener los productos en el carrito.' });
   }
 };
-
 // Controlador para obtener los productos en un carrito
 export const getProductsInCart = async (req, res) => {
   try {
     const cartId = req.params.cid;
-    // Lógica para obtener los productos en el carrito
-    res.json(productsInCart); // O res.render según tus necesidades
+    res.json(productsInCart); 
   } catch (error) {
     console.error(error);
     res.status(500).render("error", { error: 'Error al obtener los productos en el carrito.' });
