@@ -3,14 +3,14 @@
 <head>
   <title>Carrito de Compras</title>
 </head>
-<body>
+<body >
 
 
-<h1 class="text-4xl font-bold text-center mb-8">Carrito de Compras</h1>
+<h1 class="text-4xl font-bold text-center m-8  ">Carrito de Compras</h1>
 
 {{#if products.length}}
 <div class="max-w-screen-xl mx-auto">
-  <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
     {{#each products}}
     <div class="bg-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
       <img src="{{this.thumbnail}}" alt="{{this.title}}" class="w-full h-48 object-cover">
@@ -20,7 +20,7 @@
         <p class="text-2xl font-semibold text-gray-900 mt-2">${{this.price}}</p>
         <p class="mt-2 text-sm text-gray-600">Stock disponible: {{this.stock}}</p>
         <p class="mt-2 text-sm text-gray-600">Categoría: {{this.category}}</p>
-        <button data-product-id="{{this._id}}" class="eliminarButton px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none mt-4">Eliminar producto</button>
+        <button data-product-id="{{this._id}}" class="eliminarButton px-4 py-2 bg-red-800 hover:bg-red-500 text-white rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none mt-4">Eliminar producto</button>
       </div>
     </div>
     {{/each}}

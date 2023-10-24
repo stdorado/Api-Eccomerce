@@ -53,9 +53,17 @@ function createProductCard(product) {
           <p class="text-2xl font-semibold text-gray-900">$${product.price}</p>
         </div>
         <div class="mt-4 flex justify-between items-center">
-          <button data-product-id="${product._id}" class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none comprarButton">
-            Agregar al Carrito
-          </button>
+        <button data-product-id="${product._id}" class="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-white rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none comprarButton">
+        <span class="flex items-center">
+          Agregar al Carrito
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 ml-1" viewBox="0 0 16 16">
+            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5z"/>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 ml-1 transform rotate-180" viewBox="0 0 16 16">
+            <path d="M6.354 11.354a.5.5 0 0 0 0-.708L2.707 7.5H12.5a.5.5 0 0 0 0-1H2.707l3.647-3.646a.5.5 0 0 0 0-.708a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708 0z"/>
+          </svg>
+        </span>
+      </button>
         </div>
       </div>
     </div>

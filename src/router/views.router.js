@@ -11,12 +11,9 @@ router.get("/", (req, res) => {
 router.get("/cart", viewCart);
 //ruta que renderiza los productos en la pantalla 
 router.get("/products", (req, res) => {
-  res.render("home");
+  res.render("products");
 });
-//ruta para actualizar los productos desde el cliente
-router.get("/realtimeProducts", (req, res) => {
-  res.render("realtimeProducts");
-});
+
 //ruta para ver los productos del carrito
 router.get('/carts/:cid', getProductsInCart);
 
