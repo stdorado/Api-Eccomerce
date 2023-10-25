@@ -134,3 +134,4 @@ function agregarAlCarrito(productoId) {
       alert('Error al agregar el producto al carrito: ' + error.message);
     });
 }
+
