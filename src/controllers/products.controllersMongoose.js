@@ -7,51 +7,54 @@ const productManager = new ProductsManager();
 export const getProductsController = async (req, res) => {
   try {
     const { limit = 9, page = 1, query, sort } = req.query;
+    const validPage = Math.min(Math.max(parseInt(page), 1), 3);
 
     const options = {
+      page: validPage, 
       limit: parseInt(limit),
-      skip: 0,
     };
 
-    if (options.limit > 0) {
-      options.skip = (page - 1) * options.limit;
-    }
-
-    const sortOptions = {};
     if (sort) {
-      sortOptions.precio = sort === 'asc' ? 1 : -1;
+      options.sort = { precio: sort === 'asc' ? 1 : -1 };
     }
 
     const filter = query ? { tipo: query } : {};
-    const productos = await Product.find(filter)
-      .sort(sortOptions)
-      .skip(options.skip)
-      .limit(options.limit);
 
-    const totalItems = await Product.countDocuments(filter);
-    const totalPages = Math.ceil(totalItems / limit);
+    const result = await Product.paginate(filter, options);
 
-    const hasPrevPage = page > 1;
-    const hasNextPage = page < totalPages;
-    const prevPage = hasPrevPage ? page - 1 : null;
-    const nextPage = hasNextPage ? page + 1 : null;
-    const prevLink = hasPrevPage ? `/products?page=${prevPage}` : null;
-    const nextLink = hasNextPage ? `/products?page=${nextPage}` : null;
+    const { docs, totalDocs, totalPages, page: currentPage } = result;
+
+    const hasPrevPage = result.hasPrevPage;
+    const hasNextPage = result.hasNextPage;
+    const prevPage = result.prevPage;
+    const nextPage = result.nextPage;
+
+    let prevLink = null;
+    let nextLink = null;
+
+    if (hasPrevPage) {
+      prevLink = `/products?page=${prevPage}`;
+    }
+
+    if (hasNextPage) {
+      nextLink = `/products?page=${nextPage}`;
+    }
 
     const response = {
       status: 'success',
-      payload: productos,
+      payload: docs,
       prevPage: prevPage,
       nextPage: nextPage,
       prevLink: prevLink,
       nextLink: nextLink,
-      page: page,
+      page: currentPage,
       hasNextPage: hasNextPage,
       hasPrevPage: hasPrevPage,
       totalPages: totalPages,
     };
 
     res.json(response);
+    console.log(response)
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'error', error: 'Error en el servidor' });
@@ -124,6 +127,7 @@ export const getProductsInCartController = async (req, res) => {
       return res.status(404).json({ error: 'Carrito no encontrado.' });
     }
     res.json(cart.products);
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al obtener los productos en el carrito.' });

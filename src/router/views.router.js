@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
 });
 //ruta para ver los productos del carrito
 router.get("/cart", viewCart);
+
 //ruta que renderiza los productos en la pantalla 
 router.get("/products", (req, res) => {
   res.render("products");
