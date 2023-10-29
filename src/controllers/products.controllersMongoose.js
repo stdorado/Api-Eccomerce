@@ -54,7 +54,6 @@ export const getProductsController = async (req, res) => {
     };
 
     res.json(response);
-    console.log(response)
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'error', error: 'Error en el servidor' });

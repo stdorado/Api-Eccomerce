@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv"
+dotenv.config();
 
-const MongoUri = "mongodb+srv://SantinoDorado:Loshermanos13@codecluster.z68rxjp.mongodb.net/Eccomerce?retryWrites=true&w=majority"
-
+const MongoUri = process.env.MONGO_URI;
+console.log(MongoUri)
 mongoose.connect(MongoUri)
 .then(() => {
     console.log("data base connection")
@@ -10,3 +12,4 @@ mongoose.connect(MongoUri)
 });
 
 export default mongoose
+
