@@ -53,7 +53,7 @@ function createProductCard(product) {
           <p class="text-2xl font-semibold text-gray-900">$${product.price}</p>
         </div>
         <div class="mt-4 flex justify-between items-center">
-        <button data-product-id="${product._id}" class="px-4 py-2 bg-blue-900 hover:bg-blue-700 text-white rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none comprarButton">
+        <button data-product-id="${product._id}" class="px-4 py-2 bg-orange-400 hover:bg-orange-700 text-white rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none comprarButton">
         <span class="flex items-center">
           Agregar al Carrito
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-4 h-4 ml-1" viewBox="0 0 16 16">

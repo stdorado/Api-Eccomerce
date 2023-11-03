@@ -9,6 +9,8 @@ import { __dirname } from "./utils.js";
 import mongoose from "./config.js";
 import session from "express-session";
 import dotenv from "dotenv"
+import passport from "passport";
+import AuthRouter from "./router/authentication.router.js"
 
 
 //configuracion de .env
@@ -35,10 +37,16 @@ app.use(session({
 }));
 console.log("SESSION_SECRET:", process.env.SESSION_SECRET);
 
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 //rutas / endpoints
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/sessions",SessionRouter)
+app.use("/auth",AuthRouter)
 app.use("/", viewsRouter);
 
 

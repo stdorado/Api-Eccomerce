@@ -1,7 +1,35 @@
+
 document.addEventListener("DOMContentLoaded", async () => {
     const logoutButton = document.getElementById("logoutButton");
     const logoutForm = document.getElementById("logoutForm");
+    const profileDetails = document.getElementById("profile-details");
 
+    // Función para cargar y mostrar los detalles del perfil
+    const loadProfileDetails = async () => {
+        try {
+            // Realiza una solicitud GET al servidor para obtener los detalles del perfil del usuario
+            const profileResponse = await fetch("/api/sessions/profile");
+
+            if (profileResponse.ok) {
+                const profileData = await profileResponse.json();
+                // Actualiza la vista con los datos del perfil
+                profileDetails.innerHTML = `
+                <p class="text-lg"><span class="font-semibold text-2xl">Email:</span "> ${profileData.email}</p>
+                <p class="text-lg"><span class="font-semibold text-2xl">Rol:</span> ${profileData.role}</p>
+                
+            `;
+            } else {
+                console.error("Error al obtener los detalles del perfil:", profileResponse);
+            }
+        } catch (error) {
+            console.error("Error al obtener los detalles del perfil:", error);
+        }
+    };
+
+    // Cargar y mostrar los detalles del perfil al cargar la página
+    loadProfileDetails();
+
+    // Agregar un evento click al botón de cierre de sesión
     logoutButton.addEventListener("click", async () => {
         try {
             // Realiza una solicitud DELETE al servidor para cerrar la sesión del usuario
