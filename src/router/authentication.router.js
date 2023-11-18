@@ -1,31 +1,42 @@
 import express from "express";
 import passport from "../Services/passport.js";
-
-
 const router = express.Router();
 
-// Ruta autenticación con GitHub
-router.get("/github", passport.authenticate("github"));
 
+
+// Ruta autenticación con google
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 router.get(
-  "/github/callback",
-  passport.authenticate("github", {
-    successRedirect: "/home", 
-    failureRedirect: "/login", 
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/home",
+    failureRedirect: "/login",
   })
 );
 
+
+
 // Ruta para el inicio de sesión 
-router.post("/login", passport.authenticate("local-login", {
+router.post("/login", passport.authenticate("login", {
   successRedirect: "/home", 
   failureRedirect: "/login", 
 }));
 
+
+
+
 // Ruta para el registro 
-router.post("/register", passport.authenticate("local-register", {
+router.post("/register", passport.authenticate("register", {
   successRedirect: "/home", 
   failureRedirect: "/register", 
 }));
+
+
+
+
+router.get("/profile", passport.authenticate("profile"), (req,res)=>{
+  res.json(req.user)
+})
 
 
 export default router;

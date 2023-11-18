@@ -1,72 +1,78 @@
 import passport from 'passport';
-import GitHubStrategy from 'passport-github';
+import GoogleStrategy from "passport-google-oauth2"
 import LocalStrategy from 'passport-local';
 import UserManager from '../dao/UserManager.js';
 import { hashPassword } from '../utils.js';
+import dotenv from 'dotenv';
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
+dotenv.config();
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await UserManager.findById(id);
-    done(null, user);
-  } catch (err) {
-    done(err);
+passport.use('login', new LocalStrategy(
+  {
+    usernameField: 'email',
+    passReqToCallback: true,
+  },
+  async (req, email, password, done) => {
+    try {
+      const userDB = await UserManager.findByEmail(email);
+      if (!userDB) {
+        return done(null, false, { message: 'El correo electrónico no está registrado' });
+      }
+      const passwordMatch = await bcrypt.compare(password, userDB.password);
+      if (!passwordMatch) {
+        return done(null, false, { message: 'Contraseña incorrecta' });
+      }
+      return done(null, userDB);
+    } catch (error) {
+      return done(error);
+    }
   }
-});
-
-passport.use('local-register', new LocalStrategy(
+));
+ 
+passport.use('register', new LocalStrategy(
   {
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true,
   },
   async (req, email, password, done) => {
-    const { nombre, apellido } = req.body;
-
+    const { first_name, last_name } = req.body;
     try {
-      const existingUser = await UserManager.findOne({ email });
-
-      if (existingUser) {
+      const userDB = await UserManager.findByEmail(email);
+      if (userDB) {
         return done(null, false, { message: 'El correo electrónico ya está registrado' });
       }
 
-      // Encripta la contraseña utilizando la función de utils.js
-      try {
-        const hashedPassword = await hashPassword(password);
-        const newUser = new UserManager({ email, password: hashedPassword, nombre, apellido });
+      const hashedPassword = await hashPassword(password);
+      const newUser = new UserManager({ email, password: hashedPassword, first_name, last_name });
 
-        await newUser.save();
-        return done(null, newUser);
-      } catch (hashError) {
-        return done(hashError);
-      }
+      await newUser.save();
+      return done(null, newUser);
     } catch (error) {
       return done(error);
     }
   }
 ));
 
-passport.use(new GitHubStrategy({
-  clientID: process.env.GITHUB_CLIENT_ID,
-  clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: 'http://localhost:8080/auth/github/callback'
-}, async (accessToken, refreshToken, profile, done) => {
+//estrategia google
+passport.use('google', new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: 'http://localhost:8080/google/callback',
+  passReqToCallback: true,
+}, async (req, accessToken, refreshToken, profile, done) => {
   try {
     const email = profile._json.email;
 
-    // Busca el usuario en la base de datos por su email
     const user = await UserManager.findOne({ email });
 
     if (user) {
-      // El usuario ya existe, puedes autenticarlo
       return done(null, user);
     } else {
-      // Si no existe crea una nueva cuenta
       const newUser = new UserManager({
         email: email,
+        googleId: profile.id,
+        displayName: profile.displayName,
       });
 
       await newUser.save();
@@ -76,5 +82,21 @@ passport.use(new GitHubStrategy({
     return done(error);
   }
 }));
+
+//serialize un user
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+//deserialize un User
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await UserManager.getById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
 
 export default passport;

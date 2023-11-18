@@ -19,11 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         // Redirecciona al usuario después de iniciar sesión
+        const data = await response.json();
+        // Aquí puedes manejar la respuesta como desees, por ejemplo, guardar el token en el localStorage
+        // localStorage.setItem("token", data.token);
         window.location.href = "/home";
       } else {
         // Muestra un mensaje de error si las credenciales son incorrectas
         const data = await response.json();
-        errorMessage.textContent = data.message;
+        errorMessage.textContent = data.error || "Credenciales inválidas";
       }
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
@@ -32,10 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Agregar un evento al botón "Login with GitHub"
-  const githubLoginButton = document.getElementById("github-login");
-  githubLoginButton.addEventListener("click", () => {
-    // Redirigir al usuario a la ruta de autenticación de GitHub
-    window.location.href = "/auth/github";
+  // Agregar un evento al botón "Login with google"
+  const googleLoginButton = document.getElementById("google-login");
+  googleLoginButton.addEventListener("click", () => {
+    // Redirigir al usuario a la ruta de autenticación de Google
+    window.location.href = "/auth/google";
   });
 });

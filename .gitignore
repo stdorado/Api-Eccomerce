@@ -5,6 +5,9 @@ Thumbs.db
 # Carpeta node_modules generada por npm/yarn
 node_modules
 
+
+/src/Practicando-Process
+
 # Carpeta de compilación generada por varios entornos
 /dist/
 

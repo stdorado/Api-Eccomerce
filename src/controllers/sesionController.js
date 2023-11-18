@@ -1,18 +1,18 @@
 import sessionManager from "../dao/SessionManager.js";
 import UserManager from "../dao/UserManager.js";
+import { generateToken } from "../utils.js";
+import bcrypt from "bcrypt"
 
 async function login(req, res) {
   try {
     const { email, password } = req.body;
     let result;
 
-    if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+    // Verificación del administrador (cambia según tus necesidades)
+    if (email === "adminCoder@coder.com" && bcrypt.compareSync(password, hashedAdminPassword)) {
       result = {
         email: "adminCoder@coder.com",
-        password: "adminCod3r123",
         age: 20,
-        first_name: "Coder",
-        last_name: "House",
         role: "admin"
       };
 
@@ -20,83 +20,110 @@ async function login(req, res) {
       req.session["role"] = result.role;
 
       delete result.password;
-      return res.status(200).json({ message: result });
+
+      const token = generateToken({ email: result.email });
+
+      // Configura la cookie con el token
+      res.cookie("jwt", token, {
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+        httpOnly: true,
+      });
+
+      return res.status(200).json({ success: true, message: result });
     }
 
-    // Si no es un usuario "admin", realiza la autenticación normal
+    // Verifica si el usuario existe antes de realizar la autenticación normal
+    const userExists = await UserManager.findOne({ email });
+
+    if (!userExists) {
+      return res.status(401).json({ success: false, message: 'Credenciales inválidas' });
+    }
+
+    // Autenticación normal
     result = await sessionManager.login(email, password);
+
+    if (!result) {
+      return res.status(401).json({ success: false, message: 'Credenciales inválidas' });
+    }
+
     req.session["email"] = email;
     req.session["role"] = result.role;
 
     delete result._doc.password;
-    res.status(200).json({ message: result });
+
+    const token = generateToken({ email, first_Name: result.first_Name, last_Name: result.last_Name });
+
+    // Configura la cookie con el token
+    res.cookie("jwt", token, {
+      maxAge: 1000 * 60 * 60 * 24 * 7, 
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Configura secure solo en producción
+    });
+
+    return res.status(200).json({ success: true, message: `Welcome` });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(`Error en el inicio de sesión: ${error.message}`);
+    res.status(500).json({ success: false, error: error.message });
   }
 }
-
 async function register(req, res) {
   try {
-    const result = await UserManager.createOne(req.body);
+    const { email, first_Name, last_Name, password } = req.body;
 
-    // Elimina la contraseña de la respuesta para mayor seguridad
-    delete result._doc.password;
+    const result = await UserManager.createOne({
+      email,
+      password,
+      first_Name,
+      last_Name,
+    });
 
     req.session.email = result.email;
     req.session.role = result.role;
 
-    // Redirige al usuario a la página de inicio
     res.redirect("/home");
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
-
 async function getProfile(req, res) {
   try {
-    // Obtén los datos del usuario desde la sesión o la base de datos, dependiendo de tu lógica de autenticación
+    
     if (req.session.email) {
-      // Si la sesión está activa, obtén los datos del usuario desde la sesión
+      
       const userData = {
         email: req.session.email,
-        role: req.session.role, // Puedes agregar otros campos según tus necesidades
+        role: req.session.role, 
       };
       return res.status(200).json(userData);
     } else {
-      // Si la sesión no está activa, puedes buscar los datos del usuario en la base de datos
-      // Por ejemplo, puedes usar el email almacenado en req.session para buscar el usuario en la base de datos
-      const email = req.session.email; // Asume que el email se almacenó en la sesión durante el inicio de sesión
-      const user = await UserManager.findOne({ email }); // Asume que tienes un método para buscar usuarios en tu UserManager
+      
+      const email = req.session.email; 
+      const user = await UserManager.findOne({ email }); 
 
       if (user) {
-        // Si se encontró el usuario, puedes enviar sus datos al cliente
+        
         const userData = {
           email: user.email,
-          role: user.role, // Puedes agregar otros campos según tus necesidades
+          role: user.role, 
         };
         return res.status(200).json(userData);
       }
     }
-
-    // Si no se encontraron datos del usuario, puedes enviar un error o un mensaje apropiado
     res.status(404).json({ error: "Usuario no encontrado" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
-
-
 async function logout(req, res) {
   try {
     req.session.destroy((err) => {
       if (err) {
         return res.status(500).json({ error: "Error en el deslogeo" });
       }
-      res.status(200).json({ message: "Cuenta desLogeada Exitosamente" });
+      res.status(200).json({ alert: "Cuenta desLogeada Exitosamente" });
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
-
 export { logout, login, register,getProfile };

@@ -11,44 +11,49 @@ import session from "express-session";
 import dotenv from "dotenv"
 import passport from "passport";
 import AuthRouter from "./router/authentication.router.js"
+import MongoStore from "connect-mongo"
+import cookieParser from "cookie-parser";
 
 
-//configuracion de .env
+//configuration de .env
 dotenv.config();
 
 //express
 const app = express();
 const PORT = 8080;
+
+//middlewares 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
-
+app.use(cookieParser())
 
 //handlebars
 app.engine("handlebars", engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
-//cokkies
+//cookies
+const URI = process.env.MONGO_URI
 app.use(session({
   secret: process.env.SESSION_SECRET, 
   resave: false,
+  cookie :{maxAge: 50 * 50 * 1000},
   saveUninitialized: false,
+  store : new MongoStore({mongoUrl:URI}),
 }));
-console.log("SESSION_SECRET:", process.env.SESSION_SECRET);
 
 //passport
-app.use(passport.initialize());
+app.use(passport.initialize())
 app.use(passport.session());
 
 
-//rutas / endpoints
+//ruts / endpoints
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/sessions",SessionRouter)
-app.use("/auth",AuthRouter)
+app.use('/auth', AuthRouter);
 app.use("/", viewsRouter);
-
 
 //socket.io
 const httpServer = app.listen(PORT, () => {
@@ -60,7 +65,7 @@ socketServer.on("connect", () => {
   console.log('Conectado a Socket.io');
 });
 
-// Manejo de errores de Socket.io
+// Manipulation de errors de Socket.io
 socketServer.on('error', (error) => {
   console.error('Error de Socket.io:', error);
 });
@@ -68,3 +73,4 @@ socketServer.on('error', (error) => {
 socketServer.on('disconnect', () => {
   console.log('Desconectado de Socket.io');
 });
+

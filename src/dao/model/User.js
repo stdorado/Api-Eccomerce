@@ -1,13 +1,14 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import { Cart } from "./cart.js";
 
 const userSchema = new mongoose.Schema({
-    fist_Name :{
-        type:String,
-        require:true
+    first_Name: {
+        type: String,
+        required: true
     },
-    last_Name :{
-        type:String,
-        require:true
+    last_Name: {
+        type: String,
+        required: true
     },
     email:{
         type:String,
@@ -16,7 +17,7 @@ const userSchema = new mongoose.Schema({
     },
     age : {
         type: Number,
-        require: true,
+        require: false,
         max : 99,
         min : 0
     },
@@ -28,7 +29,15 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:"User"
     },
-    
+    cart: {
+        type : mongoose.Schema.Types.ObjectId,
+        ref: Cart,
+        default : null
+    },
+    fromGoogle:{
+        type:Boolean,
+        default:false,
+    }
 })
 
 const User = new mongoose.model("users",userSchema)

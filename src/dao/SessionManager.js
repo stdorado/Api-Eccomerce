@@ -9,7 +9,6 @@ class sessionManager {
           if (!user) {
             throw new Error("Usuario no existe");
           }
-    
           // Verificar la contraseña
           if (user.password !== password) {
             throw new Error("Contraseña incorrecta");

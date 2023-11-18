@@ -10,6 +10,14 @@ class userManager{
     }
   }
 
+  async findOne(query) {
+    try {
+      return User.findOne(query);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // Método para filtrar un usuario por ID
   async findById(id) {
     try {
@@ -41,6 +49,14 @@ class userManager{
   async deleteOne(id) {
     try {
       return User.findByIdAndDelete(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  async getUserByEmail(email) {
+    try {
+      return User.findOne({ email });
     } catch (error) {
       throw error;
     }
