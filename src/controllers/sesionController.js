@@ -9,7 +9,7 @@ async function login(req, res) {
     let result;
 
     // Verificación del administrador (cambia según tus necesidades)
-    if (email === "adminCoder@coder.com" && bcrypt.compareSync(password, hashedAdminPassword)) {
+    if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
       result = {
         email: "adminCoder@coder.com",
         age: 20,
