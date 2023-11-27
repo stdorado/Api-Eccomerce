@@ -1,4 +1,4 @@
-import User from "./model/User.js";
+import User from "../model/User.js";
 
 class userManager{
     // Método para obtener todos los usuarios

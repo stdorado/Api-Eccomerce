@@ -1,5 +1,5 @@
-import { Cart } from "../dao/model/cart.js";
-import { Product } from "../dao/model/products.js"; 
+import { Cart } from "../../dao/model/cart.js";
+import { Product } from "../../dao/model/products.js"; 
 
 // Controlador para crear un nuevo carrito
 export const createCart = async (req, res) => {

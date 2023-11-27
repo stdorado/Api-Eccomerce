@@ -1,6 +1,6 @@
-import { ProductsManager } from "../dao/ProductsManager.js";
-import { Cart } from "../dao/model/cart.js";
-import { Product } from "../dao/model/products.js";
+import { ProductsManager } from "../../dao/DaoDataBase/ProductsManager.js";
+import { Cart } from "../../dao/model/cart.js";
+import { Product } from "../../dao/model/products.js";
 
 const productManager = new ProductsManager();
 

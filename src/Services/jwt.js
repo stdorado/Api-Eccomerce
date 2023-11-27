@@ -1,7 +1,6 @@
 import JWT from "jsonwebtoken"
-import dotenv from "dotenv"
 import UserManager from "../dao/UserManager.js"
-dotenv.config()
+
 
 const SecretKey = process.env.JWT_SECRET_KEY
 

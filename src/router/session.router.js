@@ -1,5 +1,5 @@
 import express from "express"
-import { register,login,logout,getProfile } from "../controllers/sesionController.js"
+import { register,login,logout,getProfile } from "../controllers/ControllersMemory/sesionController.js"
 
 const SessionRouter = express.Router()
 

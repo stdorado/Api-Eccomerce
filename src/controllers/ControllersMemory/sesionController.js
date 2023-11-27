@@ -1,6 +1,6 @@
-import sessionManager from "../dao/SessionManager.js";
-import UserManager from "../dao/UserManager.js";
-import { generateToken } from "../utils.js";
+import sessionManager from "../../dao/DaoDataBase/SessionManager.js";
+import UserManager from "../../dao/DaoDataBase/UserManager.js";
+import { generateToken } from "../../utils.js";
 import bcrypt from "bcrypt"
 
 async function login(req, res) {

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addProductToCart, deleteCart, updateCart, createCart, getCartById } from '../controllers/cart.controller.js';
+import { addProductToCart, deleteCart, updateCart, createCart, getCartById } from '../controllers/ControllersMemory/cart.controller.js';
 
 const router = Router();
 

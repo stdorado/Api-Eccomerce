@@ -1,5 +1,5 @@
 import express from "express";
-import { getProductByIdController, getProductsController, createProductController, updateProductController, deleteProductController } from "../controllers/products.controllersMongoose.js";
+import { getProductByIdController, getProductsController, createProductController, updateProductController, deleteProductController } from "../controllers/ControllersMemory/products.controllersMongoose.js";
 const router = express.Router();
 
 //ruta para traer los productos

@@ -1,11 +1,8 @@
 import passport from 'passport';
 import GoogleStrategy from "passport-google-oauth2"
 import LocalStrategy from 'passport-local';
-import UserManager from '../dao/UserManager.js';
+import UserManager from '../dao/DaoDataBase/UserManager.js';
 import { hashPassword } from '../utils.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 passport.use('login', new LocalStrategy(
   {
@@ -54,17 +51,17 @@ passport.use('register', new LocalStrategy(
   }
 ));
 
-//estrategia google
 passport.use('google', new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'http://localhost:8080/google/callback',
+  callbackURL: 'http://localhost:8080/auth/google/callback',
   passReqToCallback: true,
 }, async (req, accessToken, refreshToken, profile, done) => {
   try {
+    console.log("Google strategy callback reached");
     const email = profile._json.email;
 
-    const user = await UserManager.findOne({ email });
+    const user = await UserManager.getUserByEmail(email);
 
     if (user) {
       return done(null, user);
@@ -79,6 +76,7 @@ passport.use('google', new GoogleStrategy({
       return done(null, newUser);
     }
   } catch (error) {
+    console.error("Error in Google strategy:", error);
     return done(error);
   }
 }));
@@ -88,15 +86,13 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-//deserialize un User
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await UserManager.getById(id);
+    const user = await UserManager.findById(id);
     done(null, user);
   } catch (err) {
     done(err);
   }
 });
-
 
 export default passport;

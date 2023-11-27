@@ -8,15 +8,12 @@ import SessionRouter from "./router/session.router.js";
 import { __dirname } from "./utils.js";
 import mongoose from "./config.js";
 import session from "express-session";
-import dotenv from "dotenv"
 import passport from "passport";
 import AuthRouter from "./router/authentication.router.js"
 import MongoStore from "connect-mongo"
 import cookieParser from "cookie-parser";
-
-
-//configuration de .env
-dotenv.config();
+import dotenv from "dotenv"
+dotenv.config()
 
 //express
 const app = express();
@@ -28,19 +25,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 app.use(cookieParser())
 
+
 //handlebars
 app.engine("handlebars", engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
 //cookies
+console.log("SESSION ", process.env.SESSION_SECRET)
 const URI = process.env.MONGO_URI
 app.use(session({
-  secret: process.env.SESSION_SECRET, 
+  secret: process.env.SESSION_SECRET,
   resave: false,
-  cookie :{maxAge: 50 * 50 * 1000},
   saveUninitialized: false,
-  store : new MongoStore({mongoUrl:URI}),
+  store: new MongoStore({ mongoUrl: URI }),
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
 }));
 
 //passport

@@ -1,4 +1,4 @@
-import { Cart } from "./model/cart.js";
+import { Cart } from "../DaoDataBase/model/cart.js";
 
 class CartManager {
   async findAll() {

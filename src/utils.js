@@ -2,9 +2,6 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import bcrypt from "bcrypt"
 import JWT from "jsonwebtoken"
-import dotenv from "dotenv"
-dotenv.config()
-
 
 //Bcrypt (encrypt la password que se sube al mongo)
 export const hashPassword = async (password) => {

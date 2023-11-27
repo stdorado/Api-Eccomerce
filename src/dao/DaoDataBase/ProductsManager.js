@@ -1,4 +1,4 @@
-import { Product } from "./model/products.js";
+import { Product } from "../model/products.js";
 
 export class ProductsManager {
     //metodo para filtrar
