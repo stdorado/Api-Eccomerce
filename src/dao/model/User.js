@@ -4,41 +4,41 @@ import { Cart } from "./cart.js";
 const userSchema = new mongoose.Schema({
     first_Name: {
         type: String,
-        required: true
+        required: false
     },
     last_Name: {
         type: String,
+        required: false
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    age: {
+        type: Number,
+        required: false,
+        max: 99,
+        min: 0
+    },
+    password: {
+        type: String,
         required: true
     },
-    email:{
-        type:String,
-        require:true,
-        unique:true
-    },
-    age : {
-        type: Number,
-        require: false,
-        max : 99,
-        min : 0
-    },
-    password:{
+    role: {
         type: String,
-        require: true
-    },
-    role : {
-        type:String,
-        default:"User"
+        default: "User"
     },
     cart: {
-        type : mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: Cart,
-        default : null
+        default: null
     },
-    fromGoogle:{
-        type:Boolean,
-        default:false,
+    fromGoogle: {
+        type: Boolean,
+        default: false,
     }
-})
+});
 
 const User = new mongoose.model("users",userSchema)
 

@@ -1,7 +1,6 @@
 import { Product } from "../model/products.js";
 
 export class ProductsManager {
-    //metodo para filtrar
     async findAll() {
       try {
         return Product.find();
@@ -9,7 +8,6 @@ export class ProductsManager {
         throw error;
       }
     }
-  //metodo para filtrar por id
     async findById(id) {
       try {
         return Product.findById(id);
@@ -17,7 +15,6 @@ export class ProductsManager {
         throw error;
       }
     }
-  //metodo para crear en mongoose
     async createOne(data) {
       try {
         return Product.create(data);
@@ -25,7 +22,6 @@ export class ProductsManager {
         throw error;
       }
     }
-  //metodo para actualizar
     async updateOne(id, data) {
       try {
         return Product.findByIdAndUpdate(id, data, { new: true });
@@ -33,7 +29,6 @@ export class ProductsManager {
         throw error;
       }
     }
-  //metodo para eliminar 
     async deleteOne(id) {
       try {
         return Product.findByIdAndDelete(id);

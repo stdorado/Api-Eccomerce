@@ -1,53 +1,33 @@
 import { Router } from "express";
 import { getProductsInCart, viewCart } from "../controllers/ControllersMemory/cart.controller.js";
-
 const router = Router();
 
-function requireAuthentication(req, res, next) {
-    if (!req.session.email) {
-        // Redirige al usuario a la página de inicio de sesión si no está autenticado
-        return res.redirect("/login");
-    }
-    next();
-}
-
-function requireNoAuthentication(req, res, next) {
-    if (req.session.email) {
-        // Redirige al usuario a la página de productos si ya está autenticado
-        return res.redirect("/home");
-    }
-    next();
-}
 
 // Rutas de acceso
-router.get("/login", requireNoAuthentication, (req, res) => {
-    res.render("login");
-});
 
-router.get("/", requireNoAuthentication, (req, res) => {
-    res.render("login");
-});
-
-router.get("/home", requireAuthentication, (req, res) => {
+router.get("/",  (req, res) => {
     res.render("init");
 });
 
-// Rutas de productos, carrito, etc.
-router.get("/cart", requireAuthentication, viewCart);
+router.get("/login",  (req, res) => {
+    res.render("login");
+});
 
-router.get("/products", requireAuthentication, (req, res) => {
+// Rutas de productos, carrito, etc.
+router.get("/cart",  viewCart);
+
+router.get("/products",  (req, res) => {
     res.render("products");
 });
 
 router.get('/carts/:cid', getProductsInCart);
 
 // Rutas de registro y perfil
-router.get("/register", requireNoAuthentication, (req, res) => {
+router.get("/register",  (req, res) => {
     res.render("register");
 });
 
-router.get("/profile", requireAuthentication, (req, res) => {
+router.get("/profile",  (req, res) => {
     res.render("profile");
 });
-
 export default router;

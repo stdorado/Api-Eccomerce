@@ -1,8 +1,8 @@
-
 document.addEventListener("DOMContentLoaded", async () => {
     const logoutButton = document.getElementById("logoutButton");
-    const logoutForm = document.getElementById("logoutForm");
     const profileDetails = document.getElementById("profile-details");
+    const loginButton = document.getElementById("loginButton");
+    const registerButton = document.getElementById("registerButton");
 
     // Función para cargar y mostrar los detalles del perfil
     const loadProfileDetails = async () => {
@@ -12,12 +12,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (profileResponse.ok) {
                 const profileData = await profileResponse.json();
+                
                 // Actualiza la vista con los datos del perfil
                 profileDetails.innerHTML = `
-                <p class="text-lg"><span class="font-semibold text-2xl">Email:</span "> ${profileData.email}</p>
-                <p class="text-lg"><span class="font-semibold text-2xl">Rol:</span> ${profileData.role}</p>
+                    <p class="text-lg"><span class="font-semibold text-2xl">Email:</span> ${profileData.email}</p>
+                    <p class="text-lg"><span class="font-semibold text-2xl">Rol:</span> ${profileData.role}</p>
+                `;
                 
-            `;
+                // Si el usuario está autenticado, oculta los botones de "Log In" y "Register"
+                if (profileData.email) {
+                    loginButton.style.display = "none";
+                    registerButton.style.display = "none";
+                } else {
+                    // Si el usuario no está autenticado, muestra los botones de "Log In" y "Register"
+                    loginButton.style.display = "inline-block";
+                    registerButton.style.display = "inline-block";
+                }
             } else {
                 console.error("Error al obtener los detalles del perfil:", profileResponse);
             }
@@ -39,12 +49,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (logoutResponse.ok) {
                 // Redirecciona al usuario a la página de inicio de sesión después de cerrar sesión
-                window.location.href = "/login";
+                window.location.href = "/";
             } else {
                 console.error("Error al cerrar sesión:", logoutResponse);
             }
         } catch (error) {
             console.error("Error al cerrar sesión:", error);
         }
+    });
+
+    // Agregar eventos de clic a los botones de "Log In" y "Register"
+    loginButton.addEventListener("click", () => {
+        window.location.href = "http://localhost:8080/login";
+    });
+
+    registerButton.addEventListener("click", () => {
+        window.location.href = "http://localhost:8080/register";
     });
 });

@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
         // Aquí puedes manejar la respuesta como desees, por ejemplo, guardar el token en el localStorage
         // localStorage.setItem("token", data.token);
-        window.location.href = "/home";
+        window.location.href = "/";
       } else {
         // Muestra un mensaje de error si las credenciales son incorrectas
         const data = await response.json();

@@ -59,7 +59,6 @@ export const getProductsController = async (req, res) => {
     res.status(500).json({ status: 'error', error: 'Error en el servidor' });
   }
 };
-
 export const getProductByIdController = async (req, res) => {
   try {
     const { pid } = req.params;
@@ -75,7 +74,6 @@ export const getProductByIdController = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener el producto.' });
   }
 };
-
 export const createProductController = async (req, res) => {
   try {
     const nuevoProducto = await productManager.createOne(req.body);
@@ -85,7 +83,6 @@ export const createProductController = async (req, res) => {
     res.status(500).json({ error: 'Error al crear el producto.' });
   }
 };
-
 export const updateProductController = async (req, res) => {
   try {
     const { pid } = req.params;
@@ -101,7 +98,6 @@ export const updateProductController = async (req, res) => {
     res.status(500).json({ error: 'Error al actualizar el producto.' });
   }
 };
-
 export const deleteProductController = async (req, res) => {
   try {
     const { pid } = req.params;
@@ -116,7 +112,6 @@ export const deleteProductController = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar el producto.' });
   }
 };
-
 export const getProductsInCartController = async (req, res) => {
   const cartId = req.params.cid;
 

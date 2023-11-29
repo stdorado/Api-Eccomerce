@@ -57,13 +57,18 @@ async function login(req, res) {
     res.cookie("jwt", token, {
       maxAge: 1000 * 60 * 60 * 24 * 7, 
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Configura secure solo en producción
     });
 
     return res.status(200).json({ success: true, message: `Welcome` });
   } catch (error) {
     console.error(`Error en el inicio de sesión: ${error.message}`);
-    res.status(500).json({ success: false, error: error.message });
+    
+    
+    if (error.message === "secretOrPrivateKey must have a value") {
+      return res.status(500).json({ success: false, error: "Error en el inicio de sesión: secretOrPrivateKey must have a value" });
+    }
+
+    return res.status(500).json({ success: false, error: error.message });
   }
 }
 async function register(req, res) {
@@ -126,4 +131,6 @@ async function logout(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
+
+
 export { logout, login, register,getProfile };

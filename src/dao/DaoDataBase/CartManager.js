@@ -9,7 +9,6 @@ class CartManager {
       throw error;
     }
   }
-
   async findById(id) {
     try {
       const cart = await Cart.findById(id);
@@ -18,7 +17,6 @@ class CartManager {
       throw error;
     }
   }
-
   async createOne(data) {
     try {
       const nuevoCart = await Cart.create(data);
@@ -27,7 +25,6 @@ class CartManager {
       throw error;
     }
   }
-
   async updateOne(id, data) {
     try {
       const cartActualizado = await Cart.findByIdAndUpdate(id, data, { new: true });
@@ -36,7 +33,6 @@ class CartManager {
       throw error;
     }
   }
-
   async deleteOne(id) {
     try {
       const cartEliminado = await Cart.findByIdAndDelete(id);
@@ -45,7 +41,6 @@ class CartManager {
       throw error;
     }
   }
-
   async addProductToCart(cartId, productId, quantity) {
     try {
       const cart = await Cart.findById(cartId);
@@ -67,7 +62,6 @@ class CartManager {
       throw error;
     }
   }
-
   async deleteProductFromCart(cartId, productId) {
     try {
       const cart = await Cart.findById(cartId);
@@ -86,24 +80,6 @@ class CartManager {
       throw error;
     }
   }
-
-  async deleteProductsFromCart(cartId) {
-    try {
-      const cart = await Cart.findById(cartId);
-      if (!cart) {
-        throw new Error("Carrito no encontrado.");
-      }
-      cart.products = [];
-
-      // Guarda el carrito actualizado en la base de datos
-      await cart.save();
-
-      return "Carrito limpiado con éxito.";
-    } catch (error) {
-      throw error;
-    }
-  }
-
   async getProductsInCart(cartId) {
     try {
       const cart = await Cart.findById(cartId).populate('products');
@@ -116,4 +92,4 @@ class CartManager {
     }
   }
 }
-  export default CartManager;
+export default CartManager;

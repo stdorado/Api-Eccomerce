@@ -1,5 +1,5 @@
 import passport from 'passport';
-import GoogleStrategy from "passport-google-oauth2"
+import GoogleStrategy from "passport-google-oauth20"
 import LocalStrategy from 'passport-local';
 import UserManager from '../dao/DaoDataBase/UserManager.js';
 import { hashPassword } from '../utils.js';
@@ -11,7 +11,7 @@ passport.use('login', new LocalStrategy(
   },
   async (req, email, password, done) => {
     try {
-      const userDB = await UserManager.findByEmail(email);
+      const userDB = await UserManager.getUserByEmail(email);
       if (!userDB) {
         return done(null, false, { message: 'El correo electrónico no está registrado' });
       }
@@ -25,7 +25,6 @@ passport.use('login', new LocalStrategy(
     }
   }
 ));
- 
 passport.use('register', new LocalStrategy(
   {
     usernameField: 'email',
@@ -33,15 +32,21 @@ passport.use('register', new LocalStrategy(
     passReqToCallback: true,
   },
   async (req, email, password, done) => {
-    const { first_name, last_name } = req.body;
+    const { first_Name, last_Name } = req.body;
     try {
-      const userDB = await UserManager.findByEmail(email);
+      const userDB = await UserManager.getUserByEmail(email);
       if (userDB) {
         return done(null, false, { message: 'El correo electrónico ya está registrado' });
       }
 
       const hashedPassword = await hashPassword(password);
-      const newUser = new UserManager({ email, password: hashedPassword, first_name, last_name });
+      const newUser = new User({
+        email,
+        password: hashedPassword,
+        first_Name,
+        last_Name,
+        role: 'User', 
+      });
 
       await newUser.save();
       return done(null, newUser);
@@ -50,45 +55,38 @@ passport.use('register', new LocalStrategy(
     }
   }
 ));
-
-passport.use('google', new GoogleStrategy({
+passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: 'http://localhost:8080/auth/google/callback',
-  passReqToCallback: true,
-}, async (req, accessToken, refreshToken, profile, done) => {
+},
+async (accessToken, refreshToken, profile, done) => {
   try {
-    console.log("Google strategy callback reached");
-    const email = profile._json.email;
+    let user = await UserManager.getUserByEmail(profile.emails[0].value);
 
-    const user = await UserManager.getUserByEmail(email);
-
-    if (user) {
-      return done(null, user);
-    } else {
-      const newUser = new UserManager({
-        email: email,
+    if (!user) {
+      user = await UserManager.createOne({
         googleId: profile.id,
-        displayName: profile.displayName,
+        email: profile.emails[0].value,
+        first_Name: profile.name.givenName ? profile.name.givenName : 'First name not provided',
+        last_Name: profile.name.familyName ? profile.name.familyName : 'Last name not provided',
       });
-
-      await newUser.save();
-      return done(null, newUser);
     }
-  } catch (error) {
-    console.error("Error in Google strategy:", error);
-    return done(error);
+
+    return done(null, user);
+  } catch (err) {
+    console.error(`Error en la autenticación con Google: ${err.message}`);
+    return done(err);
   }
 }));
 
-//serialize un user
+//serializadores
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
-
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await UserManager.findById(id);
+    const user = await UserManager.getUserByEmail(id);
     done(null, user);
   } catch (err) {
     done(err);
