@@ -92,28 +92,33 @@ async function register(req, res) {
 }
 async function getProfile(req, res) {
   try {
-    
     if (req.session.email) {
-      
+      // Usuario autenticado
       const userData = {
         email: req.session.email,
-        role: req.session.role, 
+        first_Name: req.session.first_Name,
+        last_Name: req.session.last_Name,
+        role: req.session.role,
       };
       return res.status(200).json(userData);
     } else {
-      
-      const email = req.session.email; 
-      const user = await UserManager.findOne({ email }); 
+      // Usuario no autenticado
+      const email = req.session.email;
+      const user = await UserManager.findOne({ email });
 
       if (user) {
-        
+        // Usuario encontrado en la base de datos
         const userData = {
           email: user.email,
-          role: user.role, 
+          first_Name: user.first_Name,
+          last_Name: user.last_Name,
+          role: user.role,
         };
         return res.status(200).json(userData);
       }
     }
+
+    // Si no se cumple ninguna de las condiciones anteriores, el usuario no está autenticado y no se encontró en la base de datos
     res.status(404).json({ error: "Usuario no encontrado" });
   } catch (error) {
     res.status(500).json({ error: error.message });

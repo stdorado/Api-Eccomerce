@@ -1,25 +1,28 @@
 <div class="container mx-auto mt-10 text-center" id="profile">
-    <h1 class="text-6xl font-bold mb-4">User Profile</h1>
-    <h3 class="mb-6 text-4xl">Welcome to your Profile Page</h3>
+    <h1 class="text-3xl font-bold text-indigo-800 mb-2">Tu Perfil</h1>
+    <h3 class="text-lg text-gray-600 mb-4">¡Bienvenido a tu página de perfil!</h3>
 
-    <div id="profile-details">
-        <!-- Los detalles del perfil se cargarán aquí -->
+    <div id="profile-details" class="bg-white p-8 rounded-lg shadow-md mx-auto max-w-md mb-8">
+        <!-- Detalles del perfil se cargarán aquí -->
     </div>
 
-    <form id="logoutForm">
-        <button type="button" id="logoutButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-8 px-8 rounded mt-5">
-            Log Out
-        </button>
-    </form>
+    <div class="flex flex-col gap-6 max-w-md mx-auto">
+        <!-- Botones de Log Out, Log In y Register -->
+        <form id="logoutForm">
+            <button type="button" id="logoutButton" class="w-full bg-gradient-to-r from-red-500 to-red-700 text-white font-bold py-3 rounded-full transition duration-300 focus:outline-none focus:shadow-outline-red hover:shadow-lg" style="display: none;">
+                Cerrar Sesión
+            </button>
+        </form>
 
-    <!-- Botones de Log In y Register -->
-<button id="loginButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">
-    Log In
-</button>
+        <div class="grid grid-cols-2 gap-4">
+            <button id="loginButton" class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py-3 rounded-full transition duration-300 focus:outline-none focus:shadow-outline-blue hover:shadow-lg">
+                Iniciar Sesión
+            </button>
 
-<button id="registerButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-    Register
-</button>
-
+            <button id="registerButton" class="w-full bg-gradient-to-r from-green-500 to-green-700 text-white font-bold py-3 rounded-full transition duration-300 focus:outline-none focus:shadow-outline-green hover:shadow-lg">
+                Registrarse
+            </button>
+        </div>
+    </div>
 </div>
 <script src="/js/profile.js"></script>

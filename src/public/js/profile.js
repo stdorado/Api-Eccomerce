@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const logoutButton = document.getElementById("logoutButton");
     const profileDetails = document.getElementById("profile-details");
     const loginButton = document.getElementById("loginButton");
     const registerButton = document.getElementById("registerButton");
+    const logoutButton = document.getElementById("logoutButton");
 
     // Función para cargar y mostrar los detalles del perfil
     const loadProfileDetails = async () => {
@@ -12,21 +12,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (profileResponse.ok) {
                 const profileData = await profileResponse.json();
-                
+
                 // Actualiza la vista con los datos del perfil
                 profileDetails.innerHTML = `
                     <p class="text-lg"><span class="font-semibold text-2xl">Email:</span> ${profileData.email}</p>
                     <p class="text-lg"><span class="font-semibold text-2xl">Rol:</span> ${profileData.role}</p>
                 `;
-                
-                // Si el usuario está autenticado, oculta los botones de "Log In" y "Register"
+
+                // Oculta o muestra el botón de cerrar sesión según la autenticación
                 if (profileData.email) {
                     loginButton.style.display = "none";
                     registerButton.style.display = "none";
+                    logoutButton.style.display = "block"; // Muestra el botón de cerrar sesión
                 } else {
-                    // Si el usuario no está autenticado, muestra los botones de "Log In" y "Register"
                     loginButton.style.display = "inline-block";
                     registerButton.style.display = "inline-block";
+                    logoutButton.style.display = "none"; // Oculta el botón de cerrar sesión
                 }
             } else {
                 console.error("Error al obtener los detalles del perfil:", profileResponse);
@@ -38,6 +39,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Cargar y mostrar los detalles del perfil al cargar la página
     loadProfileDetails();
+
+    // Agregar eventos de clic a los botones de "Log In" y "Register"
+    loginButton.addEventListener("click", () => {
+        window.location.href = "http://localhost:8080/login";
+    });
+
+    registerButton.addEventListener("click", () => {
+        window.location.href = "http://localhost:8080/register";
+    });
 
     // Agregar un evento click al botón de cierre de sesión
     logoutButton.addEventListener("click", async () => {
@@ -56,14 +66,5 @@ document.addEventListener("DOMContentLoaded", async () => {
         } catch (error) {
             console.error("Error al cerrar sesión:", error);
         }
-    });
-
-    // Agregar eventos de clic a los botones de "Log In" y "Register"
-    loginButton.addEventListener("click", () => {
-        window.location.href = "http://localhost:8080/login";
-    });
-
-    registerButton.addEventListener("click", () => {
-        window.location.href = "http://localhost:8080/register";
     });
 });
