@@ -1,7 +1,7 @@
 import sessionManager from "../../dao/DaoDataBase/SessionManager.js";
 import UserManager from "../../dao/DaoDataBase/UserManager.js";
 import { generateToken } from "../../utils.js";
-import bcrypt from "bcrypt"
+
 
 async function login(req, res) {
   try {
@@ -48,18 +48,13 @@ async function login(req, res) {
 
     req.session["email"] = email;
     req.session["role"] = result.role;
+    req.session["first_Name"] = result.first_Name;
+    req.session["last_Name"] = result.last_Name;
 
-    delete result._doc.password;
-
-    const token = generateToken({ email, first_Name: result.first_Name, last_Name: result.last_Name });
-
-    // Configura la cookie con el token
-    res.cookie("jwt", token, {
-      maxAge: 1000 * 60 * 60 * 24 * 7, 
-      httpOnly: true,
+    return res.status(200).json({
+      success: true,
+      message: `Welcome ${result.first_Name} ${result.last_Name}`,
     });
-
-    return res.status(200).json({ success: true, message: `Welcome` });
   } catch (error) {
     console.error(`Error en el inicio de sesión: ${error.message}`);
     

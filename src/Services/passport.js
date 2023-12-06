@@ -84,10 +84,16 @@ async (accessToken, refreshToken, profile, done) => {
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
+
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await UserManager.getUserByEmail(id);
-    done(null, user);
+    done(null, {
+      id: user.id,
+      email: user.email,
+      first_Name: user.first_Name,
+      last_Name: user.last_Name,
+    });
   } catch (err) {
     done(err);
   }

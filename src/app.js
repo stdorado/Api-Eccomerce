@@ -72,4 +72,3 @@ socketServer.on('error', (error) => {
 socketServer.on('disconnect', () => {
   console.log('Desconectado de Socket.io');
 });
-

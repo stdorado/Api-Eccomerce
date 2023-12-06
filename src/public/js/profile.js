@@ -12,12 +12,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (profileResponse.ok) {
                 const profileData = await profileResponse.json();
-
+                console.log("Profile Response:", profileData);
                 // Actualiza la vista con los datos del perfil
-                profileDetails.innerHTML = `
-                    <p class="text-lg"><span class="font-semibold text-2xl">Email:</span> ${profileData.email}</p>
-                    <p class="text-lg"><span class="font-semibold text-2xl">Rol:</span> ${profileData.role}</p>
-                `;
+                if (profileData.email) {
+                    profileDetails.innerHTML = `
+                        <p class="text-lg"><span class="font-semibold text-2xl">Email:</span> ${profileData.email}</p>
+                        <p class="text-lg"><span class="font-semibold text-2xl">First Name:</span> ${profileData.first_Name}</p>
+                        <p class="text-lg"><span class="font-semibold text-2xl">Last Name:</span> ${profileData.last_Name}</p>
+                        <p class="text-lg"><span class="font-semibold text-2xl">Role:</span> ${profileData.role}</p>
+                    `;
+                } else {
+                    profileDetails.innerHTML = "";
+                }
 
                 // Oculta o muestra el botón de cerrar sesión según la autenticación
                 if (profileData.email) {
