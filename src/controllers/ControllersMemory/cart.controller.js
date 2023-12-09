@@ -229,8 +229,13 @@ export const purchaseCart = async (req, res) => {
         purchaser: req.user.email,
       });
 
+      // Limpia los productos del carrito después de la compra
+      cart.products = [];
+      await cart.save();
+
       // Devuelve el ticket al cliente
       res.status(200).json({ success: true, ticket });
+      console.log(ticket)
     } else {
       res.status(400).json({ success: false, error: "Algunos productos no tienen suficiente stock", failedProducts });
     }

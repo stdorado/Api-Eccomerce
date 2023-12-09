@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+  let cartId = '6526aab3fb59b510c46939fe';  
+  
   const eliminarButtons = document.querySelectorAll('.eliminarButton');
   const finalizarCompraButton = document.getElementById('finalizarCompraButton');
   const vaciarCarritoButton = document.getElementById('vaciarCarritoButton');
-  const cartId = '6526aab3fb59b510c46939fe';
 
   eliminarButtons.forEach((button) => {
     button.addEventListener('click', async (event) => {
@@ -55,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (response.status === 200) {
         const data = await response.json();
         alert(`Compra realizada con éxito. Código de ticket: ${data.ticketCode}`);
-        window.location.href = '/purchase';
       } else {
         const data = await response.json();
         alert(`Error al finalizar la compra: ${data.error}`);

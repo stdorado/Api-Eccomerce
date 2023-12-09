@@ -7,11 +7,26 @@
     <title>Compra Exitosa</title>
 </head>
 <body>
-     <h1>Compra Exitosa</h1>
-     <p>Tu compra se ha realizado con éxito. Aquí está tu código de ticket: {{ ticket.code }}</p>
-    <p>Total: ${{ totalAmount }}</p>
+    <<div class="container mx-auto mt-8 text-center">
+        <h1 class="text-3xl font-bold mb-4">Compra realizada</h1>
 
+        {{#if ticket}}
+            <h2 class="text-2xl font-bold mb-2">Detalles del Ticket</h2>
+            <p class="mb-2">Código de Ticket: {{ticket.code}}</p>
+            <p class="mb-2">Fecha de Compra: {{ticket.purchase_datetime}}</p>
+            <p class="mb-2">Monto Total: ${{ticket.amount}}</p>
+            <p class="mb-4">Comprador: {{ticket.purchaser}}</p>
+        {{/if}}
+        <div id="ticketDetails"></div>
 
+        <!-- Agregar el botón de confirmar compra -->
+        <div class="mt-4">
+            <button id="confirmarCompraButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Ver Ticket
+            </button>
+        </div>
+
+    
     <script src="/js/purchase.js"></script>
 </body>
 </html>
