@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   const eliminarButtons = document.querySelectorAll('.eliminarButton');
+  const finalizarCompraButton = document.getElementById('finalizarCompraButton');
+  const vaciarCarritoButton = document.getElementById('vaciarCarritoButton');
+  const cartId = '6526aab3fb59b510c46939fe';
 
   eliminarButtons.forEach((button) => {
     button.addEventListener('click', async (event) => {
       const productId = event.target.getAttribute('data-product-id');
-      const cartId = '6526a937fb59b510c46939f8'; // 
 
       try {
         const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
@@ -12,9 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (response.status === 200) {
-          // El producto se eliminó con éxito
           alert('Producto eliminado del carrito');
-          window.location.reload(); // Recargar la página para reflejar los cambios
+          window.location.reload();
         } else {
           const data = await response.json();
           alert(`Error al eliminar el producto: ${data.error}`);
@@ -24,5 +25,44 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Hubo un error al eliminar el producto del carrito');
       }
     });
+  });
+
+  vaciarCarritoButton.addEventListener('click', async () => {
+    try {
+      const response = await fetch(`/api/carts/${cartId}/clear`, {
+        method: 'POST',
+      });
+
+      if (response.status === 200) {
+        alert('Carrito vaciado con éxito');
+        window.location.reload();
+      } else {
+        const data = await response.json();
+        alert(`Error al vaciar el carrito: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error al vaciar el carrito:', error);
+      alert('Hubo un error al vaciar el carrito');
+    }
+  });
+
+  finalizarCompraButton.addEventListener('click', async () => {
+    try {
+      const response = await fetch(`/api/carts/${cartId}/purchase`, {
+        method: 'POST',
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        alert(`Compra realizada con éxito. Código de ticket: ${data.ticketCode}`);
+        window.location.href = '/purchase';
+      } else {
+        const data = await response.json();
+        alert(`Error al finalizar la compra: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error al finalizar la compra:', error);
+      alert('Hubo un error al finalizar la compra');
+    }
   });
 });

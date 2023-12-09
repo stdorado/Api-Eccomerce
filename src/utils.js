@@ -25,20 +25,14 @@ export const generateToken = (user)=>{
   return token
 }
 
-export const setTokenCookie = (res, token) => {
-  const cookieOptions = {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-    sameSite: 'Strict',
-    path: '/',
-  };
 
-  res.setHeader('Set-Cookie', serialize(process.env.SESSION_SECRET, token, cookieOptions));
+export const generateUniqueCode = () => {
+  const currentDate = new Date();
+  const timestamp = currentDate.getTime(); 
+  const randomComponent = Math.floor(Math.random() * 10000); 
+
+  const uniqueCode = `${timestamp}${randomComponent}`;
+
+  return uniqueCode;
 };
 
-
-
-
-
-console.log(__dirname)

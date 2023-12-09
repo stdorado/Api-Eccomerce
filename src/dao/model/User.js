@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
+        enum : ["User","premium","admin"],
         default: "User"
     },
     cart: {

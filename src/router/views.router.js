@@ -1,33 +1,37 @@
 import { Router } from "express";
 import { getProductsInCart, viewCart } from "../controllers/ControllersMemory/cart.controller.js";
+import { requireAuth } from "../middlewares/authMiddleware.js";
 const router = Router();
 
 
 // Rutas de acceso
-
 router.get("/",  (req, res) => {
-    res.render("init");
-});
-
-router.get("/login",  (req, res) => {
     res.render("login");
 });
 
+router.get("/home",   (req, res) => {
+    res.render("init");
+});
+
 // Rutas de productos, carrito, etc.
-router.get("/cart",  viewCart);
+router.get("/cart", requireAuth,  viewCart);
 
 router.get("/products",  (req, res) => {
     res.render("products");
 });
 
-router.get('/carts/:cid', getProductsInCart);
+router.get('/carts/:cid', requireAuth, getProductsInCart);
+
+router.get("/:cid/purchase", requireAuth, (req,res)=>{
+    res.render("purchase")
+})
 
 // Rutas de registro y perfil
 router.get("/register",  (req, res) => {
     res.render("register");
 });
 
-router.get("/profile",  (req, res) => {
+router.get("/profile",   (req, res) => {
     res.render("profile");
 });
 export default router;

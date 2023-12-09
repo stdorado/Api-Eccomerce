@@ -20,9 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         // Redirecciona al usuario después de iniciar sesión
         const data = await response.json();
-        // Aquí puedes manejar la respuesta como desees, por ejemplo, guardar el token en el localStorage
-        // localStorage.setItem("token", data.token);
-        window.location.href = "/";
+        window.location.href = "/home";
       } else {
         // Muestra un mensaje de error si las credenciales son incorrectas
         const data = await response.json();

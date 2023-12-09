@@ -1,5 +1,6 @@
 import UserManager from "./UserManager.js";
 
+
 class sessionManager {
     async login(email, password) {
         try {
@@ -11,10 +12,10 @@ class sessionManager {
     }
 
    
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await(password, user.password);
 
     if (!passwordMatch) {
-      return null; // Contraseña incorrecta
+      return null; 
     }
     
           return {

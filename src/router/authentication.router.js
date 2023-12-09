@@ -8,18 +8,26 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 router.get(
     "/google/callback",
     passport.authenticate("google", {
-        successRedirect: "/",
+        successRedirect: "/home",
         failureRedirect: "/login",
     })
 );
 
 // Rutas del Profile
-router.post("/login", passport.authenticate("login"), (req, res) => {
-    res.status(200).json({ success: true, message: 'Inicio de sesión exitoso' });
+router.post("/login", (req, res, next) => {
+    passport.authenticate("login", (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.redirect("/login");
+        }
+        res.redirect("/home");
+    })(req, res, next);
 });
 
 router.post("/register", passport.authenticate("register"), (req, res) => {
-    res.redirect("/");
+    res.redirect("/home");
 });
 
 router.get("/profile",  (req, res) => {

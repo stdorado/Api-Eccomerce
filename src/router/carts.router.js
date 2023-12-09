@@ -1,7 +1,12 @@
 import { Router } from 'express';
-import { addProductToCart, deleteCart, updateCart, createCart, getCartById } from '../controllers/ControllersMemory/cart.controller.js';
-
+import { addProductToCart, deleteCart, updateCart, createCart, getCartById,purchaseCart,clearCart } from '../controllers/ControllersMemory/cart.controller.js';
+import { requireAuth } from '../middlewares/authMiddleware.js';
 const router = Router();
+
+
+router.post("/:cid/purchase", requireAuth, purchaseCart);
+
+router.post('/:cid/clear', clearCart);
 
 // Ruta para agregar un producto al carrito
 router.post('/:cid/products/:pid', addProductToCart);

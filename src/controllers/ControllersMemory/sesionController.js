@@ -1,7 +1,7 @@
 import sessionManager from "../../dao/DaoDataBase/SessionManager.js";
 import UserManager from "../../dao/DaoDataBase/UserManager.js";
 import { generateToken } from "../../utils.js";
-
+import bcrypt from "bcrypt"
 
 async function login(req, res) {
   try {
@@ -98,18 +98,22 @@ async function getProfile(req, res) {
       return res.status(200).json(userData);
     } else {
       // Usuario no autenticado
-      const email = req.session.email;
-      const user = await UserManager.findOne({ email });
+      try {
+        const email = req.session.email;
+        const user = await UserManager.findOne({ email });
 
-      if (user) {
-        // Usuario encontrado en la base de datos
-        const userData = {
-          email: user.email,
-          first_Name: user.first_Name,
-          last_Name: user.last_Name,
-          role: user.role,
-        };
-        return res.status(200).json(userData);
+        if (user) {
+          // Usuario encontrado en la base de datos
+          const userData = {
+            email: user.email,
+            first_Name: user.first_Name,
+            last_Name: user.last_Name,
+            role: user.role,
+          };
+          return res.status(200).json(userData);
+        }
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
       }
     }
 
@@ -119,6 +123,7 @@ async function getProfile(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
+
 async function logout(req, res) {
   try {
     req.session.destroy((err) => {

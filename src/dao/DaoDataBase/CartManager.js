@@ -1,4 +1,4 @@
-import { Cart } from "../DaoDataBase/model/cart.js";
+import { Cart } from "../model/cart.js";
 
 class CartManager {
   async findAll() {
@@ -87,6 +87,19 @@ class CartManager {
         return [];
       }
       return cart.products;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async clearCart(cartId) {
+    try {
+      const updatedCart = await Cart.findByIdAndUpdate(
+        cartId,
+        { products: [] },
+        { new: true }
+      );
+
+      return updatedCart;
     } catch (error) {
       throw error;
     }
