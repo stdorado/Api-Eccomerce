@@ -102,7 +102,6 @@ const carritoId = "6526aab3fb59b510c46939fe"
 function agregarAlCarrito(productoId) {
   if (!productoId || typeof productoId !== 'string') {
     console.error('ID de producto no válido.');
-    alert('ID de producto no válido.');
     return;
   }
 
@@ -119,19 +118,15 @@ function agregarAlCarrito(productoId) {
   })
     .then(response => {
       if (response.ok) {
-        console.log('Producto agregado al carrito con éxito.');
         alert('Producto agregado al carrito con éxito');
       } else {
         response.text().then(errorMsg => {
-          console.error('Error al agregar el producto al carrito:', errorMsg);
-          console.log('Mensaje de error completo:', errorMsg);
           alert('Error al agregar el producto al carrito: ' + errorMsg);
         });
       }
     })
     .catch(error => {
       console.error('Error al agregar el producto al carrito:', error);
-      alert('Error al agregar el producto al carrito: ' + error.message);
     });
 }
 

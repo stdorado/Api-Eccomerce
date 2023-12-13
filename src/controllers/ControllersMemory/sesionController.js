@@ -123,7 +123,6 @@ async function getProfile(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
 async function logout(req, res) {
   try {
     req.session.destroy((err) => {
@@ -136,6 +135,5 @@ async function logout(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
 
 export { logout, login, register,getProfile };

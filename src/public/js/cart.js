@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (response.status === 200) {
         const data = await response.json();
-        alert(`Compra realizada con éxito. Código de ticket: ${data.ticketCode}`);
+        alert(`Compra realizada con éxito`);
       } else {
         const data = await response.json();
         alert(`Error al finalizar la compra: ${data.error}`);

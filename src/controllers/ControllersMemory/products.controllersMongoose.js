@@ -1,93 +1,45 @@
-import { ProductsManager } from "../../dao/DaoDataBase/ProductsManager.js";
-import { Cart } from "../../dao/model/cart.js";
-import { Product } from "../../dao/model/products.js";
+import { getProductById, getProductsInCart,getProducts,createProduct,updateProduct,deleteProduct } from "../../Services/product.servicio.js";
 
-const productManager = new ProductsManager();
-
-export const getProductsController = async (req, res) => {
+export const GetProducts = async (req, res) => {
   try {
-    const { limit = 9, page = 1, query, sort } = req.query;
-    const validPage = Math.min(Math.max(parseInt(page), 1), 3);
-
-    const options = {
-      page: validPage, 
-      limit: parseInt(limit),
-    };
-
-    if (sort) {
-      options.sort = { precio: sort === 'asc' ? 1 : -1 };
-    }
-
-    const filter = query ? { tipo: query } : {};
-
-    const result = await Product.paginate(filter, options);
-
-    const { docs, totalDocs, totalPages, page: currentPage } = result;
-
-    const hasPrevPage = result.hasPrevPage;
-    const hasNextPage = result.hasNextPage;
-    const prevPage = result.prevPage;
-    const nextPage = result.nextPage;
-
-    let prevLink = null;
-    let nextLink = null;
-
-    if (hasPrevPage) {
-      prevLink = `/products?page=${prevPage}`;
-    }
-
-    if (hasNextPage) {
-      nextLink = `/products?page=${nextPage}`;
-    }
-
-    const response = {
-      status: 'success',
-      payload: docs,
-      prevPage: prevPage,
-      nextPage: nextPage,
-      prevLink: prevLink,
-      nextLink: nextLink,
-      page: currentPage,
-      hasNextPage: hasNextPage,
-      hasPrevPage: hasPrevPage,
-      totalPages: totalPages,
-    };
-
-    res.json(response);
+    const products = await getProducts(req.query);
+    res.json(products);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ status: 'error', error: 'Error en el servidor' });
+    res.status(500).json({ status: 'error', error: error.message });
   }
 };
-export const getProductByIdController = async (req, res) => {
+
+export const GetProductById = async (req, res) => {
   try {
     const { pid } = req.params;
-    const producto = await productManager.findById(pid);
-
-    if (!producto) {
+    const product = await getProductById(pid);
+    if (!product) {
       res.status(404).json({ error: 'Producto no encontrado.' });
     } else {
-      res.json({ product: producto });
+      res.json({ product });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al obtener el producto.' });
+    res.status(500).json({ error: error.message });
   }
 };
-export const createProductController = async (req, res) => {
+
+export const CreateProduct = async (req, res) => {
   try {
-    const nuevoProducto = await productManager.createOne(req.body);
+    const nuevoProducto = await createProduct(req.body);
     res.status(201).json(nuevoProducto);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al crear el producto.' });
+    res.status(500).json({ error: error.message });
   }
 };
-export const updateProductController = async (req, res) => {
+
+export const UpdateProduct = async (req, res) => {
   try {
     const { pid } = req.params;
     const data = req.body;
-    const productoActualizado = await productManager.updateOne(pid, data);
+    const productoActualizado = await updateProduct(pid, data);
     if (!productoActualizado) {
       res.status(404).json({ error: 'Producto no encontrado.' });
     } else {
@@ -95,13 +47,14 @@ export const updateProductController = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al actualizar el producto.' });
+    res.status(500).json({ error: error.message });
   }
 };
-export const deleteProductController = async (req, res) => {
+
+export const DeleteProduct = async (req, res) => {
   try {
     const { pid } = req.params;
-    const productoEliminado = await productManager.deleteOne(pid);
+    const productoEliminado = await deleteProduct(pid);
     if (!productoEliminado) {
       res.status(404).json({ error: 'Producto no encontrado.' });
     } else {
@@ -109,21 +62,18 @@ export const deleteProductController = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al eliminar el producto.' });
+    res.status(500).json({ error: error.message });
   }
 };
-export const getProductsInCartController = async (req, res) => {
+
+export const GetProductsInCart = async (req, res) => {
   const cartId = req.params.cid;
 
   try {
-    const cart = await Cart.findById(cartId).populate('products');
-    if (!cart) {
-      return res.status(404).json({ error: 'Carrito no encontrado.' });
-    }
-    res.json(cart.products);
-    
+    const productsInCart = await getProductsInCart(cartId);
+    res.json(productsInCart);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al obtener los productos en el carrito.' });
+    res.status(500).json({ error: error.message });
   }
 };

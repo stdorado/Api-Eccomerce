@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Data de la compra", data);
-
         if (data.success) {
           // Crea el ticket en el cliente
           const ticketDetails = document.createElement('div');
@@ -41,8 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 `;
-          
-
           if (ticketElement) {
             ticketElement.innerHTML = '';
             ticketElement.appendChild(ticketDetails);

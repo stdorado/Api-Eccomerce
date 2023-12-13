@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProductsInCart, viewCart } from "../controllers/ControllersMemory/cart.controller.js";
+import { GetProductsInCart, ViewCart } from "../controllers/ControllersMemory/cart.controller.js";
 import { requireAuth } from "../middlewares/authMiddleware.js";
 const router = Router();
 
@@ -14,13 +14,13 @@ router.get("/home",   (req, res) => {
 });
 
 // Rutas de productos, carrito, etc.
-router.get("/cart", requireAuth,  viewCart);
+router.get("/cart", requireAuth,  ViewCart);
 
 router.get("/products",  (req, res) => {
     res.render("products");
 });
 
-router.get('/carts/:cid', requireAuth, getProductsInCart);
+router.get('/carts/:cid', requireAuth, GetProductsInCart);
 
 router.get("/:cid/purchase", requireAuth, (req,res)=>{
     res.render("purchase")
