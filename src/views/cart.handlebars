@@ -6,7 +6,7 @@
 <body >
 
 
-<h1 class="text-4xl font-bold text-center m-8  ">Carrito de Compras</h1>
+<h1 class="text-5xl font-bold text-center m-8  ">Bienvenido a tu carrito de Compras</h1>
 
 {{#if products.length}}
 <div class="max-w-screen-xl mx-auto">
@@ -27,16 +27,40 @@
   </div>
 </div>
 {{else}}
-<p class="text-xl text-center mt-8">No hay productos en el carrito.</p>
+<p class="text-xl text-center mt-8">Carrito vacio, Agrega Productos aqui <button class="bg-slate-900 text-white px-4 py-2 rounded-md"><a href="/products">Buildings</a></button></p>
 <img src="https://pizzadelli.es/static/images/cart/empty_cart.png" alt="imagen-carrito-vacio" class="mx-auto mt-4 w-1/2" >
 {{/if}}
 
-<div class="mt-8 text-center ">
+<div class="mt-8 text-center mb-6 ">
   <p id="totalAmount">Total: ${{totalAmount}}</p>
   <button id="vaciarCarritoButton" class="bg-red-500 text-white px-4 py-2 rounded-md mt-4 mr-4">Vaciar Carrito</button>
   <button id="finalizarCompraButton" class="bg-green-500 text-white px-4 py-2 rounded-md mt-4"><a href="/:cid/purchase">Finalizar Compra</a></button>
 </div>
     
+<!-- Footer -->
+<footer class="bg-gray-600 text-white p-8">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+        <!-- Logo -->
+        <div class="mb-4 md:mb-0">
+            <h1 class="text-2xl font-bold">Inmobiliaria Dorado</h1>
+        </div>
+
+        <!-- Enlaces del Pie de Página -->
+        <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
+            <a href="#" class="hover:text-gray-400 transition duration-300">Inicio</a>
+            <a href="#" class="hover:text-gray-400 transition duration-300">Propiedades</a>
+            <a href="#" class="hover:text-gray-400 transition duration-300">Contacto</a>
+            <a href="#" class="hover:text-gray-400 transition duration-300">Acerca de nosotros</a>
+        </div>
+
+        <!-- Información de Contacto -->
+        <div class="mt-4 md:mt-0">
+            <p class="text-lg font-semibold">Santino Dorado <br> Diseñador UX Ui - Back-End Developer </p>
+        </div>
+    </div>
+</footer>
+
+
   <script src="/js/cart.js"></script>
 </body>
 </html>

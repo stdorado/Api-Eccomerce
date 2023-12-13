@@ -24,16 +24,32 @@ export const createCart = async () => {
     if (!product) {
       return { success: false, error: "Producto no encontrado" };
     }
+
+    // Verificar el stock antes de agregar al carrito
+    if (product.stock === 0) {
+      return { success: false, error: "Producto sin stock disponible" };
+    }
+
+    // Verificar si la cantidad deseada supera el stock disponible
+    if (quantity > product.stock) {
+      return { success: false, error: "No hay suficiente stock disponible para la cantidad deseada" };
+    }
   
     cart.products.push({
       productId: product._id,
       quantity: quantity,
     });
+
+    // Actualizar el stock del producto después de agregar al carrito
+    product.stock -= quantity;
   
     const savedCart = await cart.save();
-    return { success: true, cart: savedCart };
-  };
+    const savedProduct = await product.save();
   
+    return { success: true, cart: savedCart, product: savedProduct };
+};
+
+
   export const updateCart = async (cartId, cartData) => {
     const cart = await Cart.findByIdAndUpdate(cartId, cartData, { new: true });
     if (!cart) {
