@@ -5,7 +5,6 @@ import productsRouter from "./router/products.router.js";
 import cartRouter from "./router/carts.router.js";
 import viewsRouter from "./router/views.router.js";
 import SessionRouter from "./router/session.router.js";
-import MessageRouter from "./router/messager.router.js"
 import { __dirname } from "./utils.js";
 import mongoose from "./config.js";
 import session from "express-session";
@@ -53,7 +52,6 @@ app.use(passport.session());
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/sessions",SessionRouter)
-app.use("/api/messages", MessageRouter)
 app.use('/auth', AuthRouter);
 app.use("/", viewsRouter);
 
