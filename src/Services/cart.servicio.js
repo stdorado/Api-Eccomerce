@@ -10,11 +10,9 @@ export const createCart = async () => {
     });
     return newCart.save();
   };
-  
   export const getCartById = async (cartId) => {
     return Cart.findById(cartId).populate("products.productId");
   };
-  
   export const addProductToCart = async (cartId, productId, quantity) => {
     const cart = await Cart.findById(cartId);
     if (!cart) {
@@ -49,8 +47,6 @@ export const createCart = async () => {
   
     return { success: true, cart: savedCart, product: savedProduct };
 };
-
-
   export const updateCart = async (cartId, cartData) => {
     const cart = await Cart.findByIdAndUpdate(cartId, cartData, { new: true });
     if (!cart) {
@@ -58,7 +54,6 @@ export const createCart = async () => {
     }
     return { success: true, cart };
   };
-  
   export const deleteProductFromCart = async (cartId, productId) => {
     const cart = await Cart.findById(cartId);
     if (!cart) {
@@ -77,7 +72,6 @@ export const createCart = async () => {
     await cart.save();
     return { success: true, message: "Producto eliminado con éxito" };
   };
-  
   export const getViewCartData = async (cartId) => {
     try {
       const cart = await Cart.findById(cartId).exec();
@@ -120,7 +114,6 @@ export const createCart = async () => {
       throw new Error('Error al obtener los datos del carrito para la vista.');
     }
   };
-  
   export const clearCart = async (cartId) => {
     const cart = await Cart.findById(cartId);
     if (!cart) {
@@ -131,7 +124,6 @@ export const createCart = async () => {
     await cart.save();
     return { success: true, message: "Carrito vaciado con éxito" };
   };
-  
   export const getProductsInCart = async (cartId) => {
     const cart = await Cart.findById(cartId);
     if (!cart) {
@@ -140,7 +132,6 @@ export const createCart = async () => {
   
     return { success: true, products: cart.products };
   };
-
   export const purchaseCart = async (cartId, userEmail) => {
     try {
       const cart = await Cart.findById(cartId);

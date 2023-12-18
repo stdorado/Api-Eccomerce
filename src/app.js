@@ -4,6 +4,7 @@ import { Server} from "socket.io";
 import productsRouter from "./router/products.router.js";
 import cartRouter from "./router/carts.router.js";
 import viewsRouter from "./router/views.router.js";
+import MocksRouter from "./router/router.mock.js"
 import SessionRouter from "./router/session.router.js";
 import { __dirname } from "./utils.js";
 import mongoose from "./config.js";
@@ -13,6 +14,7 @@ import AuthRouter from "./router/authentication.router.js"
 import MongoStore from "connect-mongo"
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv"
+import compression from "express-compression"
 import { errorHandler } from "./middlewares/errorHandlerMiddlewares.js";
 dotenv.config()
 
@@ -25,6 +27,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 app.use(cookieParser())
+app.use(compression({
+  brotli:{enabled:true,zlib:{}}
+}))
 app.use(errorHandler)
 
 //handlebars
@@ -52,6 +57,7 @@ app.use(passport.session());
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/sessions",SessionRouter)
+app.use("/api/mocks", MocksRouter)
 app.use('/auth', AuthRouter);
 app.use("/", viewsRouter);
 
