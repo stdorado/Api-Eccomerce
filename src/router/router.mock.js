@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getMockProducts } from "../controllers/ControllersMemory/mockProducts.js";
+import getMocksProducts from "../controllers/ControllersMemory/mockProducts.js";
 
 const router = Router()
 
-router.get("/",getMockProducts)
+router.get("/",getMocksProducts)
 
 export default router

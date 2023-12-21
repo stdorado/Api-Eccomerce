@@ -18,7 +18,6 @@ export const hashPassword = async (password) => {
 
 //dirname (ruth absolute)
 export const __dirname = dirname(fileURLToPath(import.meta.url));
-console.log(process.env.JWT_SECRET_KEY)
 const SecretKey = process.env.JWT_SECRET_KEY
 export const generateToken = (user)=>{
   const token = JWT.sign(user,SecretKey,{expiresIn:"1h"})

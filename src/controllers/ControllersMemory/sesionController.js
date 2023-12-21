@@ -1,14 +1,12 @@
 import sessionManager from "../../dao/DaoDataBase/SessionManager.js";
 import UserManager from "../../dao/DaoDataBase/UserManager.js";
 import { generateToken } from "../../utils.js";
-import bcrypt from "bcrypt"
 
 async function login(req, res) {
   try {
     const { email, password } = req.body;
     let result;
 
-    // Verificación del administrador (cambia según tus necesidades)
     if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
       result = {
         email: "adminCoder@coder.com",
@@ -23,23 +21,23 @@ async function login(req, res) {
 
       const token = generateToken({ email: result.email });
 
-      // Configura la cookie con el token
+      
       res.cookie("jwt", token, {
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+        maxAge: 1000 * 60 * 60 * 24 * 7, 
         httpOnly: true,
       });
 
       return res.status(200).json({ success: true, message: result });
     }
 
-    // Verifica si el usuario existe antes de realizar la autenticación normal
+    
     const userExists = await UserManager.findOne({ email });
 
     if (!userExists) {
       return res.status(401).json({ success: false, message: 'Credenciales inválidas' });
     }
 
-    // Autenticación normal
+    
     result = await sessionManager.login(email, password);
 
     if (!result) {
@@ -88,7 +86,6 @@ async function register(req, res) {
 async function getProfile(req, res) {
   try {
     if (req.session.email) {
-      // Usuario autenticado
       const userData = {
         email: req.session.email,
         first_Name: req.session.first_Name,
@@ -97,13 +94,11 @@ async function getProfile(req, res) {
       };
       return res.status(200).json(userData);
     } else {
-      // Usuario no autenticado
       try {
         const email = req.session.email;
         const user = await UserManager.findOne({ email });
 
         if (user) {
-          // Usuario encontrado en la base de datos
           const userData = {
             email: user.email,
             first_Name: user.first_Name,
@@ -116,8 +111,6 @@ async function getProfile(req, res) {
         return res.status(500).json({ error: error.message });
       }
     }
-
-    // Si no se cumple ninguna de las condiciones anteriores, el usuario no está autenticado y no se encontró en la base de datos
     res.status(404).json({ error: "Usuario no encontrado" });
   } catch (error) {
     res.status(500).json({ error: error.message });

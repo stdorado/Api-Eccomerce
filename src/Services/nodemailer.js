@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer"
 
-export function enviarCorreo(destinatario, asunto, mensaje, callback){
+export function SendToEmail(addressee, affair, Message, callback){
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth:{
@@ -14,9 +14,9 @@ export function enviarCorreo(destinatario, asunto, mensaje, callback){
 
 const Options = {
     from : "doradosantinotomas@gmail.com",
-    to : destinatario,
-    subject : asunto,
-    html : mensaje
+    to : addressee,
+    subject : affair,
+    html : Message
 }
 
 transporter.sendMail(Options, (error, info)=> {

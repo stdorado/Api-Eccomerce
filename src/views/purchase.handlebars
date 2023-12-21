@@ -7,24 +7,53 @@
     <title>Compra Exitosa</title>
 </head>
 <body>
-    <<div class="container mx-auto mt-8 text-center">
-        <h1 class="text-3xl font-bold mb-4">Compra realizada</h1>
+    
 
-        {{#if ticket}}
-            <h2 class="text-2xl font-bold mb-2">Detalles del Ticket</h2>
-            <p class="mb-2">Código de Ticket: {{ticket.code}}</p>
-            <p class="mb-2">Fecha de Compra: {{ticket.purchase_datetime}}</p>
-            <p class="mb-2">Monto Total: ${{ticket.amount}}</p>
-            <p class="mb-4">Comprador: {{ticket.purchaser}}</p>
-        {{/if}}
-        <div id="ticketDetails"></div>
+   <div class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-        <!-- Agregar el botón de confirmar compra -->
-        <div class="mt-4">
-            <button id="confirmarCompraButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                Ver Ticket
-            </button>
+        <div class="bg-white p-12 rounded-lg shadow-md max-w-md w-full text-center">
+
+            <h1 class="text-5xl font-bold mb-8 text-green-600">¡Compra Exitosa!</h1>
+
+            <!-- Mensaje de confirmación -->
+            <p class="text-xl mb-8 text-gray-700">
+                ¡Gracias por tu compra! Hemos enviado los detalles de tu compra a tu correo electrónico.
+            </p>
+
+            <!-- Iconos para hacerlo más visual -->
+            <div class="flex justify-center mb-12">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="w-20 h-20 text-green-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 13l4 4L19 7"></path>
+                </svg>
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="w-20 h-20 text-green-600 mx-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="w-20 h-20 text-green-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+            </div>
+
+            <!-- Botones con efectos de color -->
+            <div class="flex justify-center space-x-4">
+                <a href="/home" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded">
+                    Volver al Inicio
+                </a>
+
+                <a href="/products" class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded">
+                    Seguir Comprando
+                </a>
+            </div>
         </div>
+
+    </div>
 
     
     <script src="/js/purchase.js"></script>

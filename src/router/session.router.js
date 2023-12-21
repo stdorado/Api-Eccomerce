@@ -1,6 +1,7 @@
-import express from "express"
+import { Router } from "express";
 import { register,login,logout,getProfile } from "../controllers/ControllersMemory/sesionController.js"
-const SessionRouter = express.Router()
+
+const SessionRouter = Router()
 
 SessionRouter.get("/profile" , getProfile)
 SessionRouter.post("/register", register);

@@ -6,8 +6,9 @@ import cartRouter from "./router/carts.router.js";
 import viewsRouter from "./router/views.router.js";
 import MocksRouter from "./router/router.mock.js"
 import SessionRouter from "./router/session.router.js";
+import loggerRouter from "./router/logger.router.js"
 import { __dirname } from "./utils.js";
-import mongoose from "./config.js";
+import mongoose from "./Database.config.js";
 import session from "express-session";
 import passport from "passport";
 import AuthRouter from "./router/authentication.router.js"
@@ -16,6 +17,8 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv"
 import compression from "express-compression"
 import { errorHandler } from "./middlewares/errorHandlerMiddlewares.js";
+import {logger} from "./logger.js";
+
 dotenv.config()
 
 //express
@@ -38,14 +41,14 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
 //cookies
-console.log("SESSION ", process.env.SESSION_SECRET)
+logger.info('SESSION', process.env.SESSION_SECRET);
 const URI = process.env.MONGO_URI
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: new MongoStore({ mongoUrl: URI }),
-  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, 
 }));
 
 //passport
@@ -58,12 +61,13 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/sessions",SessionRouter)
 app.use("/api/mocks", MocksRouter)
+app.use("/api/logger" ,  loggerRouter)
 app.use('/auth', AuthRouter);
 app.use("/", viewsRouter);
 
 //socket.io
 const httpServer = app.listen(PORT, () => {
-  console.log(`Servidor en ejecución en el puerto ${PORT}`);
+  logger.info(`Servidor en ejecución en el puerto ${PORT}`);
 });
 
 const socketServer = new Server(httpServer); 
@@ -73,7 +77,7 @@ socketServer.on("connect", () => {
 
 // Manipulation de errors de Socket.io
 socketServer.on('error', (error) => {
-  console.error('Error de Socket.io:', error);
+  logger.error('Error de Socket.io:', error);
 });
 
 socketServer.on('disconnect', () => {

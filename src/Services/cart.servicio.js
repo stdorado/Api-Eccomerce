@@ -2,7 +2,7 @@ import { Cart } from "../dao/model/cart.js";
 import { Product } from "../dao/model/products.js";
 import Ticket from "../dao/model/Ticket.js";
 import { generateUniqueCode } from "../utils.js";
-import { enviarCorreo } from "./nodemailer.js";
+import { SendToEmail } from "./nodemailer.js";
 
 export const createCart = async () => {
     const newCart = new Cart({
@@ -16,22 +16,21 @@ export const createCart = async () => {
   export const addProductToCart = async (cartId, productId, quantity) => {
     const cart = await Cart.findById(cartId);
     if (!cart) {
-      return { success: false, error: "Carrito no encontrado" };
+      return { success: false, error: "Carrito not found" };
     }
   
     const product = await Product.findById(productId);
     if (!product) {
-      return { success: false, error: "Producto no encontrado" };
+      return { success: false, error: "Producto not found" };
     }
 
-    // Verificar el stock antes de agregar al carrito
+    
     if (product.stock === 0) {
-      return { success: false, error: "Producto sin stock disponible" };
+      return { success: false, error: "product out of stock available" };
     }
 
-    // Verificar si la cantidad deseada supera el stock disponible
     if (quantity > product.stock) {
-      return { success: false, error: "No hay suficiente stock disponible para la cantidad deseada" };
+      return { success: false, error: "not enough stock available" };
     }
   
     cart.products.push({
@@ -39,7 +38,7 @@ export const createCart = async () => {
       quantity: quantity,
     });
 
-    // Actualizar el stock del producto después de agregar al carrito
+    
     product.stock -= quantity;
   
     const savedCart = await cart.save();
@@ -50,14 +49,14 @@ export const createCart = async () => {
   export const updateCart = async (cartId, cartData) => {
     const cart = await Cart.findByIdAndUpdate(cartId, cartData, { new: true });
     if (!cart) {
-      return { success: false, error: "Carrito no encontrado" };
+      return { success: false, error: "Cart not found" };
     }
     return { success: true, cart };
   };
   export const deleteProductFromCart = async (cartId, productId) => {
     const cart = await Cart.findById(cartId);
     if (!cart) {
-      return { success: false, error: "Carrito no encontrado" };
+      return { success: false, error: "Cart not found" };
     }
   
     const productIndex = cart.products.findIndex(
@@ -65,12 +64,12 @@ export const createCart = async () => {
     );
   
     if (productIndex === -1) {
-      return { success: false, error: "Producto no encontrado en el carrito" };
+      return { success: false, error: "Product not found to cart" };
     }
   
     cart.products.splice(productIndex, 1);
     await cart.save();
-    return { success: true, message: "Producto eliminado con éxito" };
+    return { success: true, message: "Product delete to success" };
   };
   export const getViewCartData = async (cartId) => {
     try {
@@ -110,24 +109,23 @@ export const createCart = async () => {
         totalAmount: totalAmount.toFixed(2),
       };
     } catch (error) {
-      console.error(error);
-      throw new Error('Error al obtener los datos del carrito para la vista.');
+      throw new Error('error getting cart data.');
     }
   };
   export const clearCart = async (cartId) => {
     const cart = await Cart.findById(cartId);
     if (!cart) {
-      return { success: false, error: "Carrito no encontrado" };
+      return { success: false, error: "Cart not found" };
     }
   
     cart.products = [];
     await cart.save();
-    return { success: true, message: "Carrito vaciado con éxito" };
+    return { success: true, message: "cart emptied successfully" };
   };
   export const getProductsInCart = async (cartId) => {
     const cart = await Cart.findById(cartId);
     if (!cart) {
-      return { success: false, error: "Carrito no encontrado" };
+      return { success: false, error: "Carrito not found" };
     }
   
     return { success: true, products: cart.products };
@@ -137,7 +135,7 @@ export const createCart = async () => {
       const cart = await Cart.findById(cartId);
   
       if (!cart) {
-        return { success: false, error: 'Carrito no encontrado' };
+        return { success: false, error: 'Carrito not found' };
       }
   
       const failedProducts = [];
@@ -165,31 +163,31 @@ export const createCart = async () => {
           purchaser: userEmail,
         });
   
-        // Limpia los productos del carrito después de la compra
+        
         cart.products = [];
         await cart.save();
   
-        // Construye el mensaje del correo con los detalles del ticket
-        const mensajeCorreo = `
+        
+        const MessageEmail = `
         <div class="font-sans max-w-2xl mx-auto p-4">
-        <h1 class="text-5xl font-bold text-blue-500 text-center mb-4">¡Gracias por tu compra!</h1>
-        <p class="text-center mb-4">Detalles de la compra:</p>
+        <h1 class="text-5xl font-bold text-blue-500 text-center mb-4">¡Thanks for you Buy!</h1>
+        <p class="text-center mb-4">Details Order:</p>
         <ul class="list-none p-0 text-left mb-4">
           <li class="mb-2 text-black">Ticket Code:${ticket.code}</li>
-          <li class="mb-2 text-black">Fecha y hora de compra: ${ticket.purchase_datetime}</li>
-          <li class="mb-2 text-black">Compra realizada por: ${ticket.purchaser}</li>
-          <li class="mb-2 text-black">Total: $${totalAmount.toFixed(2)}</li>
+          <li class="mb-2 text-black">Date to Shop: ${ticket.purchase_datetime}</li>
+          <li class="mb-2 text-black">Purchase to: ${ticket.purchaser}</li>
+          <li class="mb-2 text-black">Total buy: $${totalAmount.toFixed(2)}</li>
         </ul>
         <p class="text-center"><img src="https://cdn-icons-png.flaticon.com/128/9427/9427117.png" alt="Tick" class="inline-block w-8 h-auto"></p>
       </div>
     `;
 
-        // Llama a la función enviarCorreo
-        enviarCorreo(userEmail, 'Compra realizada con éxito', mensajeCorreo, (error, info) => {
+       
+        SendToEmail(userEmail, 'Shop Success', MessageEmail, (error, info) => {
           if (error) {
-            console.error('Error al enviar el correo:', error);
+            console.error('Error to send Email:', error);
           } else {
-            console.log('Correo enviado con éxito:', info.response);
+            console.log('Email send to success:', info.response);
           }
         });
   
@@ -197,13 +195,12 @@ export const createCart = async () => {
       } else {
         return {
           success: false,
-          error: 'Algunos productos no tienen suficiente stock',
+          error: 'Some products are out of stock',
           failedProducts,
         };
       }
     } catch (error) {
-      console.error('Error en la compra:', error.message);
-      throw new Error('Error en la compra');
+      throw new Error('Error o buy');
     }
   };
 
