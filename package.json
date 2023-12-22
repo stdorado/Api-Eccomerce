@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start:prod": " nodemon src/Practicando-Process/process.app.js --mode dev --port 8080 --test",
-    "start:test": "nodemon src/Practicando-Process/process.app.js test",
-    "start:dev": "nodemon src/Practicando-Process/process.app.js dev",
+    "start:prod": " nodemon src/Entorno de produccion/process.app.js --mode dev --port 8080 --test",
+    "start:test": "nodemon src/Entorno de testing/process.app.js test",
+    "start:dev": "nodemon src/Entorno de desarrollo/process.app.js dev",
     "start": "nodemon src/app.js"
   },
   "author": "Dorado Santino",
