@@ -7,8 +7,8 @@ import viewsRouter from "./router/views.router.js";
 import MocksRouter from "./router/router.mock.js"
 import SessionRouter from "./router/session.router.js";
 import loggerRouter from "./router/logger.router.js"
-import { __dirname } from "./utils.js";
-import mongoose from "./Database.config.js";
+import { __dirname } from "./utils/utils.js";
+import mongoose from "./config/Database.config.js"
 import session from "express-session";
 import passport from "passport";
 import AuthRouter from "./router/authentication.router.js"

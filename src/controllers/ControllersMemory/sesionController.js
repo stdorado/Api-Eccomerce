@@ -1,6 +1,6 @@
 import sessionManager from "../../dao/DaoDataBase/SessionManager.js";
 import UserManager from "../../dao/DaoDataBase/UserManager.js";
-import { generateToken } from "../../utils.js";
+import { generateToken } from "../../utils/utils.js";
 
 async function login(req, res) {
   try {

@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    owner: { 
+        type: String, default: 'admin' 
+    },
     email: {
         type: String,
         required: true,

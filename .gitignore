@@ -16,6 +16,9 @@ node_modules
 
 # Archivo de credenciales
 .env
+.env.dev
+.env.prod
+.env.test
 
 # Archivo de registros
 *.log

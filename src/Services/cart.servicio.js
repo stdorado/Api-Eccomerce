@@ -1,7 +1,7 @@
 import { Cart } from "../dao/model/cart.js";
 import { Product } from "../dao/model/products.js";
 import Ticket from "../dao/model/Ticket.js";
-import { generateUniqueCode } from "../utils.js";
+import { generateUniqueCode } from "../utils/utils.js";
 import { SendToEmail } from "./nodemailer.js";
 
 export const createCart = async () => {
@@ -13,39 +13,44 @@ export const createCart = async () => {
   export const getCartById = async (cartId) => {
     return Cart.findById(cartId).populate("products.productId");
   };
-  export const addProductToCart = async (cartId, productId, quantity) => {
-    const cart = await Cart.findById(cartId);
-    if (!cart) {
-      return { success: false, error: "Carrito not found" };
-    }
+  export const addProductToCart = async (userId, cartId, productId, quantity) => {
+    try {
+      
+      const product = await Product.findById(productId);
+      const isOwnerOrAdmin = req.user.role === 'admin' || product.owner === req.user.email;
   
-    const product = await Product.findById(productId);
-    if (!product) {
-      return { success: false, error: "Producto not found" };
-    }
-
-    
-    if (product.stock === 0) {
-      return { success: false, error: "product out of stock available" };
-    }
-
-    if (quantity > product.stock) {
-      return { success: false, error: "not enough stock available" };
-    }
+      if (!isOwnerOrAdmin) {
+        return { success: false, error: 'You do not have permission to access here' };
+      }
   
-    cart.products.push({
-      productId: product._id,
-      quantity: quantity,
-    });
-
-    
-    product.stock -= quantity;
+      const cart = await Cart.findById(cartId);
+      if (!cart) {
+        return { success: false, error: 'Cart Not found' };
+      }
   
-    const savedCart = await cart.save();
-    const savedProduct = await product.save();
+      if (product.stock === 0) {
+        return { success: false, error: 'Product out Stock' };
+      }
   
-    return { success: true, cart: savedCart, product: savedProduct };
-};
+      if (quantity > product.stock) {
+        return { success: false, error: 'Not found : Stock invalid' };
+      }
+  
+      cart.products.push({
+        productId: product._id,
+        quantity: quantity,
+      });
+  
+      product.stock -= quantity;
+  
+      const savedCart = await cart.save();
+      const savedProduct = await product.save();
+  
+      return { success: true, cart: savedCart, product: savedProduct };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  };
   export const updateCart = async (cartId, cartData) => {
     const cart = await Cart.findByIdAndUpdate(cartId, cartData, { new: true });
     if (!cart) {
