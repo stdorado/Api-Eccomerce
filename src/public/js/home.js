@@ -119,6 +119,7 @@ function agregarAlCarrito(productoId) {
   }
 
   const url = `/api/carts/${carritoId}/products/${productoId}`;
+ 
 
   fetch(url, {
     method: 'POST',

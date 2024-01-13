@@ -1,0 +1,81 @@
+openapi: 3.0.0
+info:
+  title: Inmobiliaria Don Mario
+  version: 1.0.0
+paths:
+  # Cart Paths
+  /carts:
+    get:
+      summary: Obtiene todos los carritos
+      description: Obtiene la lista de todos los carritos.
+      responses:
+        '200':
+          description: Lista de carritos
+
+  /carts/{cid}:
+    get:
+      summary: Obtiene un carrito por ID
+      description: Obtiene información detallada de un carrito por su ID.
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Información detallada del carrito
+
+    put:
+      summary: Actualiza un carrito
+      description: Actualiza la información del carrito.
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+      requestBody:
+        # Agrega aquí la definición del cuerpo de la solicitud si es necesario
+      responses:
+        '200':
+          description: Carrito actualizado con éxito
+
+    delete:
+      summary: Vacía el carrito
+      description: Elimina todos los productos del carrito.
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Carrito vaciado con éxito
+
+  /carts/{cid}/products/{pid}:
+    post:
+      summary: Agrega un producto al carrito
+      description: Añade un producto específico al carrito.
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+        - in: path
+          name: pid
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      requestBody:
+        # Agrega aquí la definición del cuerpo de la solicitud si es necesario
+      responses:
+        '200':
+          description: Producto añadido al carrito con éxito

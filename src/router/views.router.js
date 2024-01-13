@@ -31,7 +31,17 @@ router.get("/register",  (req, res) => {
     res.render("register");
 });
 
+
 router.get("/profile",   (req, res) => {
     res.render("profile");
 });
+
+
+router.get("/recovering/:token", (req,res)=>{
+    res.render("recoveringPassword")
+})
+
+router.get("/reset-password/:token",(req,res)=>{
+    res.render("resetPasswor")
+})
 export default router;

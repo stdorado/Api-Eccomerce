@@ -7,13 +7,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Función para cargar y mostrar los detalles del perfil
     const loadProfileDetails = async () => {
         try {
-            // Realiza una solicitud GET al servidor para obtener los detalles del perfil del usuario
+            
             const profileResponse = await fetch("/api/sessions/profile");
 
             if (profileResponse.ok) {
                 const profileData = await profileResponse.json();
                 console.log("Profile Response:", profileData);
-                // Actualiza la vista con los datos del perfil
+                
                 if (profileData.email) {
                     profileDetails.innerHTML = `
                         <p class="text-lg"><span class="font-semibold text-2xl">Email:</span> ${profileData.email}</p>

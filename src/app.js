@@ -7,7 +7,8 @@ import viewsRouter from "./router/views.router.js";
 import MocksRouter from "./router/router.mock.js"
 import SessionRouter from "./router/session.router.js";
 import loggerRouter from "./router/logger.router.js"
-import { __dirname } from "./utils/utils.js";
+import RecoveringRouter from "./router/recoveringPassword.router.js"
+import { __dirname } from "./utils.js";
 import mongoose from "./config/Database.config.js"
 import session from "express-session";
 import passport from "passport";
@@ -18,6 +19,7 @@ import dotenv from "dotenv"
 import compression from "express-compression"
 import { errorHandler } from "./middlewares/errorHandlerMiddlewares.js";
 import {logger} from "./logger.js";
+import swaggerDocs from "./swagger.js";
 
 dotenv.config()
 
@@ -62,12 +64,17 @@ app.use("/api/carts", cartRouter);
 app.use("/api/sessions",SessionRouter)
 app.use("/api/mocks", MocksRouter)
 app.use("/api/logger" ,  loggerRouter)
+app.use("/api/recovering",RecoveringRouter)
 app.use('/auth', AuthRouter);
 app.use("/", viewsRouter);
+
+
+
 
 //socket.io
 const httpServer = app.listen(PORT, () => {
   logger.info(`Servidor en ejecución en el puerto ${PORT}`);
+  swaggerDocs(app,PORT)
 });
 
 const socketServer = new Server(httpServer); 

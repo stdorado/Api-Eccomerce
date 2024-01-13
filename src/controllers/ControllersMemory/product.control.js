@@ -1,8 +1,8 @@
-import { getProductById, getProductsInCart,getProducts,createProduct,updateProduct,deleteProduct } from "../../Services/product.servicio.js";
+import productServic from "../../Services/product.servic.js";
 
 export const GetProducts = async (req, res) => {
   try {
-    const products = await getProducts(req.query);
+    const products = await productServic.getAllProducts(req.query);
     res.json(products);
   } catch (error) {
     res.status(500).json({ status: 'error', error: error.message });
@@ -12,7 +12,7 @@ export const GetProducts = async (req, res) => {
 export const GetProductById = async (req, res) => {
   try {
     const { pid } = req.params;
-    const product = await getProductById(pid);
+    const product = await productServic.getProductById(pid);
     if (!product) {
       res.status(404).json({ error: 'Product not found.' });
     } else {
@@ -25,21 +25,20 @@ export const GetProductById = async (req, res) => {
 
 export const CreateProduct = async (req, res) => {
   try {
-    const newProduct = await createProduct(req.body);
+    const newProduct = await productServic.createProduct(req.body);
     res.status(201).json(newProduct);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-
 export const UpdateProduct = async (req, res) => {
   try {
     const { pid } = req.params;
     const data = req.body;
-    const ProductUpdate = await updateProduct(pid, data);
+    const ProductUpdate = await productServic.updateProduct(pid, data);
     if (!ProductUpdate) {
-      res.status(404).json({ error: 'Producto not found.' });
+      res.status(404).json({ error: 'Product not found.' });
     } else {
       res.json(ProductUpdate);
     }
@@ -51,9 +50,9 @@ export const UpdateProduct = async (req, res) => {
 export const DeleteProduct = async (req, res) => {
   try {
     const { pid } = req.params;
-    const ProductoDelete = await deleteProduct(pid);
+    const ProductoDelete = await productServic.deleteProduct(pid);
     if (!ProductoDelete) {
-      res.status(404).json({ error: 'Producto not found.' });
+      res.status(404).json({ error: 'Product not found.' });
     } else {
       res.json(ProductoDelete);
     }
@@ -66,7 +65,7 @@ export const GetProductsInCart = async (req, res) => {
   const cartId = req.params.cid;
 
   try {
-    const productsInCart = await getProductsInCart(cartId);
+    const productsInCart = await productServic.getProductsInCart(cartId);
     res.json(productsInCart);
   } catch (error) {
     res.status(500).json({ error: error.message });
