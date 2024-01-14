@@ -1,11 +1,11 @@
-import AuthService from "../../Services/Session.services.js"
-
+import SessionServices from "../../Services/Session.services.js";
 
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const result = await AuthService.login(email, password, req, res);
+    const result = await SessionServices.login(email, password, req, res);
     res.status(result.success ? 200 : 401).json(result);
+    console.log('Usuario autenticado:', result);
   } catch (error) {
     res.status(500).json({ success: false, error: "Error en el inicio de sesión." });
   }
@@ -14,32 +14,48 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   try {
     const { email, first_Name, last_Name, password } = req.body;
-    const result = await AuthService.register(email, first_Name, last_Name, password);
+    const result = await SessionServices.register(email, first_Name, last_Name, password);
     if (result.success) {
-      res.redirect("/home");
+      res.status(200).json({ success: true, message: "Registro exitoso", redirect: "/home" });
     } else {
       res.status(500).json(result);
     }
   } catch (error) {
+    console.error('Error en el controlador de registro:', error);
     res.status(500).json({ success: false, error: "Error en el registro." });
   }
 };
 
 const getProfile = async (req, res) => {
   try {
-    const result = await AuthService.getProfile(req, res);
-    res.status(result.success ? 200 : 404).json(result);
+    console.log('Usuario en la sesión:', req.session.user);
+    if (req.session.user) {
+      const userData = {
+        email: req.session.user.email,
+        first_Name: req.session.user.first_Name,
+        last_Name: req.session.user.last_Name,
+        role: req.session.user.role,
+      };
+      res.status(200).json({ success: true, data: userData });
+    } else {
+      res.status(404).json({ success: false, error: "Usuario no autenticado" });
+    }
   } catch (error) {
-    res.status(500).json({ success: false, error: "Error obteniendo el perfil del usuario." });
+    console.error('Error en getProfile:', error);
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
 const logout = async (req, res) => {
   try {
-    const result = await AuthService.logout(req, res);
-    res.status(result.success ? 200 : 500).json(result);
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ error: "Error en el deslogeo" });
+      }
+      return res.status(200).json({ alert: "Cuenta desLogeada Exitosamente" });
+    });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Error al cerrar sesión." });
+    return res.status(500).json({ error: error.message });
   }
 };
 

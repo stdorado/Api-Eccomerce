@@ -43,14 +43,14 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
 //cookies
-logger.info('SESSION', process.env.SESSION_SECRET);
+logger.info('SESSION' + "" + process.env.SESSION_SECRET);
 const URI = process.env.MONGO_URI
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: new MongoStore({ mongoUrl: URI }),
-  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, 
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
 }));
 
 //passport

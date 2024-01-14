@@ -57,15 +57,20 @@ export const DeleteProductFromCart = async (req, res) => {
 
 export const ViewCart = async (req, res) => {
   try {
-    const cartId = req.params.cid; 
+    // Temporalmente, asigna un ID de carrito fijo
+    const cartId = '6526aab3fb59b510c46939fe';
+    
+    // Puedes seguir con el resto del código
     const cartData = await cartServicio.getViewCartData(cartId);
 
     if (!cartData) {
-      return res.status(404).json({ error: "Cart not found." });
+      return res.status(404).json({ error: "Carrito no encontrado." });
     }
     res.render('cart', cartData);
+
   } catch (error) {
-    res.status(500).render('error', { error: 'Error getting the products in the cart.' });
+    console.error(error);
+    res.status(500).render('error', { error: 'Error al obtener los productos en el carrito.' });
   }
 };
 
@@ -90,7 +95,8 @@ export const GetProductsInCart = async (req, res) => {
 
 export const PurchaseCart = async (req, res) => {
   try {
-    const result = await cartServicio.purchaseCart(req.params.cid, req.user.email);
+    const userEmail = req.session.user ? req.session.user.email : null;
+    const result = await cartServicio.purchaseCart(req.params.cid, userEmail);
     res.status(result.success ? 200 : 400).json(result);
   } catch (error) {
     res.status(500).json({ success: false, error: "Error to buy" });

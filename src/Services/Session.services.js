@@ -6,7 +6,7 @@ class SesionService {
   async login(email, password, req, res) {
     try {
       let result;
-
+  
       // Verificamos si es el usuario admin
       if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
         result = {
@@ -14,49 +14,63 @@ class SesionService {
           age: 20,
           role: "admin"
         };
-
+  
+        // Eliminamos la propiedad 'password' del resultado
         delete result.password;
-
+  
+        // Configuramos la sesión con información del usuario
+        req.session.user = {
+          email: result.email,
+          role: result.role,
+        };
+  
+        // Configuramos la cookie JWT
         const token = generateToken({ email: result.email });
-
-        // Configuramos la sesión
-        req.session.user = result;
-
         res.cookie("jwt", token, {
           maxAge: 1000 * 60 * 60 * 24 * 7,
           httpOnly: true,
         });
-
-        return { success: true, message: result };
+  
+        // Mensaje de bienvenida
+        console.log('Usuario autenticado:', { success: true, message: `Bienvenido ${result.email}` });
+        console.log('Usuario en la sesión:', req.session.user);
+  
+        return { success: true, message: `Bienvenido ${result.email}` };
       }
-
+  
+      // Resto del código para usuarios normales...
       const userExists = await UserManager.findOne({ email });
-
+  
       if (!userExists) {
-        return { success: false, message: 'Credenciales inválidas' };
+        console.error('Credenciales inválidas: Usuario no encontrado en la base de datos');
+        return { success: false, message: 'Credenciales inválidas: Usuario no encontrado en la base de datos' };
       }
-
+  
       result = await SessionManager.login(email, password);
-
+  
       if (!result) {
-        return { success: false, message: 'Credenciales inválidas' };
+        console.error('Credenciales inválidas: Error en el inicio de sesión');
+        return { success: false, message: 'Credenciales inválidas: Error en el inicio de sesión' };
       }
-
+  
       // Configuramos la sesión
       req.session.user = result;
-
+  
+      console.log('Usuario autenticado:', { success: true, message: `Bienvenido ${result.first_Name} ${result.last_Name}` });
+      console.log('Usuario en la sesión:', req.session.user);
+  
       return {
         success: true,
         message: `Bienvenido ${result.first_Name} ${result.last_Name}`,
       };
     } catch (error) {
-      console.error(`Error en el inicio de sesión: ${error.message}`);
-      
+      console.error('Error en el inicio de sesión:', error);
+  
       if (error.message === "secretOrPrivateKey must have a value") {
         return { success: false, error: "Error en el inicio de sesión: secretOrPrivateKey must have a value" };
       }
-
-      return { success: false, error: error.message };
+  
+      return { success: false, error: "Error en el inicio de sesión." };
     }
   }
 
@@ -70,7 +84,7 @@ class SesionService {
       });
 
       // Configuramos la sesión
-      req.session.user = result;
+      // Asegúrate de configurar la sesión según tu lógica de inicio de sesión
 
       return { success: true, message: "Registro exitoso" };
     } catch (error) {
@@ -80,40 +94,40 @@ class SesionService {
 
   async getProfile(req, res) {
     try {
-      if (req.session.user) {
+      if (req.session.email) {
         const userData = {
-          email: req.session.user.email,
-          first_Name: req.session.user.first_Name,
-          last_Name: req.session.user.last_Name,
-          role: req.session.user.role,
+          email: req.session.email,
+          // Puedes agregar el resto de la lógica para obtener otros detalles del perfil si es necesario
         };
         return { success: true, data: userData };
       } else {
+        // Si el email no está en la sesión, intentamos obtener el perfil desde la base de datos
         try {
-          const emailFromSession = req.session.user.email;
+          const emailFromSession = req.session.email;
           console.log('Email from session:', emailFromSession);
-
+  
           const user = await UserManager.findOne({ email: emailFromSession });
-
+  
           if (user) {
             const userData = {
               email: user.email,
               first_Name: user.first_Name,
               last_Name: user.last_Name,
               role: user.role,
+              // Puedes agregar otros campos según sea necesario
             };
             return { success: true, data: userData };
           } else {
-            console.log('User not found in the database');
-            return { success: false, error: "User not found in the database" };
+            console.log('Usuario no encontrado en la base de datos');
+            return { success: false, error: "Usuario no encontrado en la base de datos" };
           }
         } catch (error) {
-          console.error('Error in database lookup:', error);
+          console.error('Error en la búsqueda en la base de datos:', error);
           return { success: false, error: error.message };
         }
       }
     } catch (error) {
-      console.error('Error in getProfile:', error);
+      console.error('Error en getProfile:', error);
       return { success: false, error: error.message };
     }
   }

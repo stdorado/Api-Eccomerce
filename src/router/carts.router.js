@@ -121,7 +121,7 @@ router.delete('/:cid/products/:pid',    DeleteProductFromCart); //✅
  *       '200':
  *         description: Lista de productos en el carrito
  */
-router.get('/:cid/products', GetCartById); // ✅
+router.get('/:cid/products', GetCartById); // 
 
 // Ruta para actualizar un carrito
 /**
