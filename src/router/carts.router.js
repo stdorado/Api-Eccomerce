@@ -4,10 +4,6 @@ import { requireAuth } from '../middlewares/authMiddleware.js';
 import { checkProductOwner } from '../middlewares/ownerMiddleware.js';
 const router = Router();
 
-
-
-
-
 /**
  * @swagger
  * /carts/{cid}/purchase:
