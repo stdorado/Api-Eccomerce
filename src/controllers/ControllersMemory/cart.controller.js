@@ -1,4 +1,4 @@
-import cartServicio from "../../Services/cart.servicio.js";
+import cartServicio from "../../Services/cart.service.js";
 
 export const CreateCart = async (req, res) => {
   try {
@@ -57,10 +57,10 @@ export const DeleteProductFromCart = async (req, res) => {
 
 export const ViewCart = async (req, res) => {
   try {
-    // Temporalmente, asigna un ID de carrito fijo
+    
     const cartId = '6526aab3fb59b510c46939fe';
     
-    // Puedes seguir con el resto del código
+    
     const cartData = await cartServicio.getViewCartData(cartId);
 
     if (!cartData) {

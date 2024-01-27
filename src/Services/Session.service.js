@@ -1,6 +1,8 @@
-import SessionManager from "../dao/DaoDataBase/SessionManager.js";
-import UserManager from "../dao/DaoDataBase/UserManager.js";
-import { generateToken } from "../utils.js";
+import SessionManager from "../dao/DaoDataBase/Session.manager.js";
+import UserManager from "../dao/DaoDataBase/User.manager.js";
+import { generateToken } from "../utils/utils.js";
+import { SendToEmail } from "./nodemailer.service.js";
+import { logger } from "../utils/logger.js";
 
 class SesionService {
   async login(email, password, req, res) {
@@ -32,8 +34,8 @@ class SesionService {
         });
   
         // Mensaje de bienvenida
-        console.log('Usuario autenticado:', { success: true, message: `Bienvenido ${result.email}` });
-        console.log('Usuario en la sesión:', req.session.user);
+        logger.info('Usuario autenticado:', { success: true, message: `Bienvenido ${result.email}` });
+        logger.info('Usuario en la sesión:', req.session.user);
   
         return { success: true, message: `Bienvenido ${result.email}` };
       }
@@ -49,22 +51,22 @@ class SesionService {
       result = await SessionManager.login(email, password);
   
       if (!result) {
-        console.error('Credenciales inválidas: Error en el inicio de sesión');
+        logger.error('Credenciales inválidas: Error en el inicio de sesión');
         return { success: false, message: 'Credenciales inválidas: Error en el inicio de sesión' };
       }
   
       // Configuramos la sesión
       req.session.user = result;
   
-      console.log('Usuario autenticado:', { success: true, message: `Bienvenido ${result.first_Name} ${result.last_Name}` });
-      console.log('Usuario en la sesión:', req.session.user);
+      logger.info('Usuario autenticado:', { success: true, message: `Bienvenido ${result.first_Name} ${result.last_Name}` });
+      logger.info('Usuario en la sesión:', req.session.user);
   
       return {
         success: true,
         message: `Bienvenido ${result.first_Name} ${result.last_Name}`,
       };
     } catch (error) {
-      console.error('Error en el inicio de sesión:', error);
+      logger.error('Error en el inicio de sesión:', error);
   
       if (error.message === "secretOrPrivateKey must have a value") {
         return { success: false, error: "Error en el inicio de sesión: secretOrPrivateKey must have a value" };
@@ -82,10 +84,6 @@ class SesionService {
         first_Name,
         last_Name,
       });
-
-      // Configuramos la sesión
-      // Asegúrate de configurar la sesión según tu lógica de inicio de sesión
-
       return { success: true, message: "Registro exitoso" };
     } catch (error) {
       return { success: false, error: error.message };
@@ -97,14 +95,14 @@ class SesionService {
       if (req.session.email) {
         const userData = {
           email: req.session.email,
-          // Puedes agregar el resto de la lógica para obtener otros detalles del perfil si es necesario
+
         };
         return { success: true, data: userData };
       } else {
-        // Si el email no está en la sesión, intentamos obtener el perfil desde la base de datos
+        
         try {
           const emailFromSession = req.session.email;
-          console.log('Email from session:', emailFromSession);
+          logger.info('Email from session:', emailFromSession);
   
           const user = await UserManager.findOne({ email: emailFromSession });
   
@@ -118,16 +116,16 @@ class SesionService {
             };
             return { success: true, data: userData };
           } else {
-            console.log('Usuario no encontrado en la base de datos');
+            logger.info('Usuario no encontrado en la base de datos');
             return { success: false, error: "Usuario no encontrado en la base de datos" };
           }
         } catch (error) {
-          console.error('Error en la búsqueda en la base de datos:', error);
+          logger.error('Error en la búsqueda en la base de datos:', error);
           return { success: false, error: error.message };
         }
       }
     } catch (error) {
-      console.error('Error en getProfile:', error);
+      logger.error('Error en getProfile:', error);
       return { success: false, error: error.message };
     }
   }
@@ -148,6 +146,7 @@ class SesionService {
       return { success: false, error: error.message };
     }
   }
+
 }
 
 export default new SesionService()

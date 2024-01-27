@@ -7,8 +7,8 @@ import viewsRouter from "./router/views.router.js";
 import MocksRouter from "./router/router.mock.js"
 import SessionRouter from "./router/session.router.js";
 import loggerRouter from "./router/logger.router.js"
-import RecoveringRouter from "./router/recoveringPassword.router.js"
-import { __dirname } from "./utils.js";
+import RecoverRouter from "./router/Recover.router.js"
+import { __dirname } from "./utils/utils.js";
 import mongoose from "./config/Database.config.js"
 import session from "express-session";
 import passport from "passport";
@@ -18,8 +18,8 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv"
 import compression from "express-compression"
 import { errorHandler } from "./middlewares/errorHandlerMiddlewares.js";
-import {logger} from "./logger.js";
-import swaggerDocs from "./swagger.js";
+import {logger} from "./utils/logger.js";
+import swaggerDocs from "./utils/swagger.js";
 
 dotenv.config()
 
@@ -64,7 +64,7 @@ app.use("/api/carts", cartRouter);
 app.use("/api/sessions",SessionRouter)
 app.use("/api/mocks", MocksRouter)
 app.use("/api/logger" ,  loggerRouter)
-app.use("/api/recovering",RecoveringRouter)
+app.use("/api/recover", RecoverRouter)
 app.use('/auth', AuthRouter);
 app.use("/", viewsRouter);
 

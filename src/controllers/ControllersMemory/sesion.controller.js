@@ -1,4 +1,4 @@
-import SessionServices from "../../Services/Session.services.js";
+import SessionServices from "../../Services/Session.service.js";
 
 const login = async (req, res) => {
   try {
@@ -59,4 +59,5 @@ const logout = async (req, res) => {
   }
 };
 
-export { logout, login, register, getProfile };
+
+export { logout, login, register, getProfile,  };

@@ -17,8 +17,6 @@ const swaggerSpec = swaggerJSDoc(options);
 const swaggerDocs = (app, port) => {
   app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
   app.use("/api/products/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-  console.log(swaggerDocs);
-
 };
 
 export default swaggerDocs;

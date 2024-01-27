@@ -1,8 +1,8 @@
 import { Cart } from "../dao/model/cart.js";
 import { Product } from "../dao/model/products.js";
 import Ticket from "../dao/model/Ticket.js";
-import { generateUniqueCode } from "../utils.js";
-import { SendToEmail } from "./nodemailer.js";
+import { generateUniqueCode } from "../utils/utils.js";
+import { SendToEmail } from "./nodemailer.service.js";
 
 class CartService {
   async createCart() {

@@ -1,4 +1,4 @@
-import productServic from "../../Services/product.servic.js";
+import productServic from "../../Services/product.service.js";
 
 export const GetProducts = async (req, res) => {
   try {
@@ -50,11 +50,11 @@ export const UpdateProduct = async (req, res) => {
 export const DeleteProduct = async (req, res) => {
   try {
     const { pid } = req.params;
-    const ProductoDelete = await productServic.deleteProduct(pid);
-    if (!ProductoDelete) {
+    const ProductDelete = await productServic.deleteProduct(pid);
+    if (!ProductDelete) {
       res.status(404).json({ error: 'Product not found.' });
     } else {
-      res.json(ProductoDelete);
+      res.json(ProductDelete);
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

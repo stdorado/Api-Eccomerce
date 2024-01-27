@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addLogger } from "../logger.js";
+import { addLogger } from "../utils/logger.js";
 const router = Router()
 
 router.get("/loggerTest", addLogger, (req, res) => {

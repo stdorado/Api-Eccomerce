@@ -1,4 +1,4 @@
-import UserManager from "./UserManager.js";
+import UserManager from "./User.manager.js";
 
 
 class sessionManager {
@@ -8,7 +8,7 @@ class sessionManager {
     const user = await UserManager.getUserByEmail(email);
 
     if (!user) {
-      return null; // Usuario no encontrado
+      return null; 
     }
 
    

@@ -1,8 +1,8 @@
 import passport from 'passport';
 import GoogleStrategy from "passport-google-oauth20"
 import LocalStrategy from 'passport-local';
-import UserManager from '../dao/DaoDataBase/UserManager.js';
-import { hashPassword } from '../utils.js';
+import UserManager from '../dao/DaoDataBase/User.manager.js';
+import { hashPassword } from '../utils/utils.js';
 import bcrypt from "bcrypt"
 
 passport.use('login', new LocalStrategy(

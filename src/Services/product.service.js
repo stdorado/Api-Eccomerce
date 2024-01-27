@@ -1,5 +1,6 @@
-import { ProductsManager } from "../dao/DaoDataBase/ProductsManager.js";
+import { ProductsManager } from "../dao/DaoDataBase/Products.manager.js";
 import { Cart } from "../dao/model/cart.js";
+import {logger} from "../utils/logger.js"
 
 const productManager = new ProductsManager();
 
@@ -31,7 +32,7 @@ class ProductService {
   
         return response;
       } catch (error) {
-        console.error(error);
+        logger.error(error)
         throw new Error('Error en el servidor');
       }
     }
@@ -41,7 +42,7 @@ class ProductService {
         // Utilizando el método findById de ProductsManager
         return await productManager.findById(productId);
       } catch (error) {
-        console.error(error);
+        logger.error(error)
         throw new Error('Error al obtener el producto.');
       }
     }
@@ -51,7 +52,7 @@ class ProductService {
         // Utilizando el método createOne de ProductsManager
         return await productManager.createOne(productData);
       } catch (error) {
-        console.error(error);
+        logger.error(error)
         throw new Error('Error al crear el producto.');
       }
     }
@@ -61,7 +62,7 @@ class ProductService {
         // Utilizando el método updateOne de ProductsManager
         return await productManager.updateOne(productId, productData);
       } catch (error) {
-        console.error(error);
+        logger.error(error)
         throw new Error('Error al actualizar el producto.');
       }
     }
@@ -71,7 +72,7 @@ class ProductService {
         // Utilizando el método deleteOne de ProductsManager
         return await productManager.deleteOne(productId);
       } catch (error) {
-        console.error(error);
+        logger.error(error)
         throw new Error('Error al eliminar el producto.');
       }
     }
@@ -85,7 +86,7 @@ class ProductService {
         }
         return cart.products;
       } catch (error) {
-        console.error(error);
+        logger.error(error)
         throw new Error('Error al obtener los productos en el carrito.');
       }
     }

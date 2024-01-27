@@ -36,12 +36,12 @@ router.get("/profile",   (req, res) => {
     res.render("profile");
 });
 
-
-router.get("/recovering/:token", (req,res)=>{
-    res.render("recoveringPassword")
+router.get("/forgot-password", (req,res)=>{
+    res.render("forgot-password-form")
 })
 
-router.get("/reset-password/:token",(req,res)=>{
-    res.render("resetPasswor")
-})
+router.get('/password-reset-sent', (req, res) => {
+    res.render('password-resent-sent');
+});
+
 export default router;

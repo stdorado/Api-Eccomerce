@@ -1,4 +1,4 @@
-import { generatedMockProducts } from "../../Services/mocking.js";
+import { generatedMockProducts } from "../../Services/mocking.service.js";
 
 function getMocksProducts(req,res){
     const ProductsSimulated = generatedMockProducts()

@@ -1,5 +1,5 @@
 import express from "express";
-import passport from "../Services/passport.js";
+import passport from "../Services/passport.service.js";
 const router = express.Router();
 
 // Ruta autenticación con google
