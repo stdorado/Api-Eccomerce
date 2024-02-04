@@ -1,41 +1,67 @@
 import { ProductsManager } from "../dao/DaoDataBase/Products.manager.js";
 import { Cart } from "../dao/model/cart.js";
 import {logger} from "../utils/logger.js"
+import { Product } from "../dao/model/products.js";
 
 const productManager = new ProductsManager();
 
 class ProductService {
-    async getAllProducts({ limit = 9, page = 1, query, sort }) {
-      try {
-        const validPage = Math.min(Math.max(parseInt(page), 1), 3);
-        const options = {
-          page: validPage,
-          limit: parseInt(limit),
-        };
-  
-        if (sort) {
-          options.sort = { precio: sort === 'asc' ? 1 : -1 };
-        }
-  
-        const filter = query ? { tipo: query } : {};
-  
-        
-        const docs = await productManager.findAll(filter, options);
-  
-        
-  
-        const response = {
-          status: 'success',
-          payload: docs,
-          
-        };
-  
-        return response;
-      } catch (error) {
-        logger.error(error)
-        throw new Error('Error en el servidor');
+  async getAllProducts({ limit = 9, page = 1, query, sort }) {
+    try {
+      const validPage = Math.min(Math.max(parseInt(page), 1), 3);
+      const options = {
+        page: validPage,
+        limit: parseInt(limit),
+      };
+
+      // Construir la opción de ordenamiento si se proporciona
+      const sortOptions = {};
+      if (sort) {
+        sortOptions['price'] = sort === 'asc' ? 1 : -1;
       }
+
+      const filter = query ? { category: query } : {};
+
+      // Obtener los productos paginados utilizando el modelo Product
+      const result = await Product.paginate(filter, options);
+
+      const { docs, totalDocs, totalPages, page: currentPage } = result;
+
+      const hasPrevPage = result.hasPrevPage;
+      const hasNextPage = result.hasNextPage;
+      const prevPage = result.prevPage;
+      const nextPage = result.nextPage;
+
+      let prevLink = null;
+      let nextLink = null;
+
+      if (hasPrevPage) {
+        prevLink = `/products?page=${prevPage}`;
+      }
+
+      if (hasNextPage) {
+        nextLink = `/products?page=${nextPage}`;
+      }
+
+      const response = {
+        status: 'success',
+        payload: docs,
+        prevPage: prevPage,
+        nextPage: nextPage,
+        prevLink: prevLink,
+        nextLink: nextLink,
+        page: currentPage,
+        hasNextPage: hasNextPage,
+        hasPrevPage: hasPrevPage,
+        totalPages: totalPages,
+      };
+
+      return response;
+    } catch (error) {
+      logger.error(error)
+      throw new Error('Error en el servidor');
     }
+  }
   
     async getProductById(productId) {
       try {

@@ -1,6 +1,7 @@
 import express from "express";
 import { engine } from "express-handlebars";
 import { Server} from "socket.io";
+import UserRouter from "./router/User.router.js"
 import productsRouter from "./router/products.router.js";
 import cartRouter from "./router/carts.router.js";
 import viewsRouter from "./router/views.router.js";
@@ -8,7 +9,7 @@ import MocksRouter from "./router/router.mock.js"
 import SessionRouter from "./router/session.router.js";
 import loggerRouter from "./router/logger.router.js"
 import RecoverRouter from "./router/Recover.router.js"
-import { __dirname } from "./utils/utils.js";
+import { __dirname } from "./utils.js";
 import mongoose from "./config/Database.config.js"
 import session from "express-session";
 import passport from "passport";
@@ -65,6 +66,7 @@ app.use("/api/sessions",SessionRouter)
 app.use("/api/mocks", MocksRouter)
 app.use("/api/logger" ,  loggerRouter)
 app.use("/api/recover", RecoverRouter)
+app.use("/api/users", UserRouter)
 app.use('/auth', AuthRouter);
 app.use("/", viewsRouter);
 

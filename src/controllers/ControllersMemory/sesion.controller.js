@@ -1,9 +1,9 @@
-import SessionServices from "../../Services/Session.service.js";
+import SessionService from "../../Services/Session.service.js";
 
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const result = await SessionServices.login(email, password, req, res);
+    const result = await SessionService.login(email, password, req, res);
     res.status(result.success ? 200 : 401).json(result);
     console.log('Usuario autenticado:', result);
   } catch (error) {
@@ -14,7 +14,7 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   try {
     const { email, first_Name, last_Name, password } = req.body;
-    const result = await SessionServices.register(email, first_Name, last_Name, password);
+    const result = await SessionService.register(email, first_Name, last_Name, password);
     if (result.success) {
       res.status(200).json({ success: true, message: "Registro exitoso", redirect: "/home" });
     } else {

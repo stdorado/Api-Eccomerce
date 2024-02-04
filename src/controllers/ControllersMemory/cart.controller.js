@@ -1,8 +1,8 @@
-import cartServicio from "../../Services/cart.service.js";
+import cartService from "../../Services/cart.service.js";
 
 export const CreateCart = async (req, res) => {
   try {
-    const savedCart = await cartServicio.createCart();
+    const savedCart = await cartService.createCart();
     res.status(201).json(savedCart);
   } catch (error) {
     res.status(500).json({ error: "Error creating cart." });
@@ -11,7 +11,7 @@ export const CreateCart = async (req, res) => {
 
 export const GetCartById = async (req, res) => {
   try {
-    const cart = await cartServicio.getCartById(req.params.cid);
+    const cart = await cartService.getCartById(req.params.cid);
     if (!cart) {
       res.status(404).json({ error: "Cart not found." });
     } else {
@@ -24,7 +24,10 @@ export const GetCartById = async (req, res) => {
 
 export const AddProductToCart = async (req, res) => {
   try {
-    const result = await cartServicio.addProductToCart(
+    if (!req.session.user) {
+      return res.status(401).json({ error: "Unauthorized: User not logged in" });
+    }
+    const result = await cartService.addProductToCart(
       req.params.cid,
       req.params.pid,
       req.body.quantity || 1
@@ -38,7 +41,7 @@ export const AddProductToCart = async (req, res) => {
 export const UpdateCart = async (req, res) => {
   try {
     const { cid } = req.params;
-    const updatedCart = await cartServicio.updateCart(cid, req.body);
+    const updatedCart = await cartService.updateCart(cid, req.body);
     res.json(updatedCart);
   } catch (error) {
     res.status(500).json({ error: "Error updating cart." });
@@ -48,7 +51,7 @@ export const UpdateCart = async (req, res) => {
 export const DeleteProductFromCart = async (req, res) => {
   try {
     const { cid, pid } = req.params;
-    const result = await cartServicio.deleteProductFromCart(cid, pid);
+    const result = await cartService.deleteProductFromCart(cid, pid);
     res.status(result.success ? 200 : 404).json(result);
   } catch (error) {
     res.status(500).json({ error: "Error removing a product from the cart." });
@@ -57,27 +60,27 @@ export const DeleteProductFromCart = async (req, res) => {
 
 export const ViewCart = async (req, res) => {
   try {
-    
-    const cartId = '6526aab3fb59b510c46939fe';
-    
-    
-    const cartData = await cartServicio.getViewCartData(cartId);
+    // Temporalmente, asigna un ID de carrito fijo
+    const cartId = '6526aabcfb59b510c4693a02';
+
+    // Puedes seguir con el resto del código
+    const cartData = await cartService.getViewCartData(cartId);
 
     if (!cartData) {
-      return res.status(404).json({ error: "Carrito no encontrado." });
+      return res.status(404).json({ error: "Cart not found." });
     }
     res.render('cart', cartData);
 
   } catch (error) {
     console.error(error);
-    res.status(500).render('error', { error: 'Error al obtener los productos en el carrito.' });
+    res.status(500).render('error', { error: 'Error obtaining cart products.' });
   }
 };
 
 export const ClearCart = async (req, res) => {
   try {
     const { cid } = req.params;
-    const result = await cartServicio.clearCart(cid);
+    const result = await cartService.clearCart(cid);
     res.status(result.success ? 200 : 404).json(result);
   } catch (error) {
     res.status(500).json({ error: 'Error emptying cart.' });
@@ -86,7 +89,10 @@ export const ClearCart = async (req, res) => {
 
 export const GetProductsInCart = async (req, res) => {
   try {
-    const result = await cartServicio.getProductsInCart(req.params.cid);
+    // Temporalmente, asigna un ID de carrito fijo
+    const cartId = '6526aabcfb59b510c4693a02';
+
+    const result = await cartService.getProductsInCart(cartId);
     res.status(result.success ? 200 : 500).json(result);
   } catch (error) {
     res.status(500).json({ error: 'Error getting the products in the cart.' });
@@ -96,7 +102,7 @@ export const GetProductsInCart = async (req, res) => {
 export const PurchaseCart = async (req, res) => {
   try {
     const userEmail = req.session.user ? req.session.user.email : null;
-    const result = await cartServicio.purchaseCart(req.params.cid, userEmail);
+    const result = await cartService.purchaseCart(req.params.cid, userEmail);
     res.status(result.success ? 200 : 400).json(result);
   } catch (error) {
     res.status(500).json({ success: false, error: "Error to buy" });

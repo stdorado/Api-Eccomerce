@@ -14,15 +14,15 @@ router.get("/home",   (req, res) => {
 });
 
 // Rutas de productos, carrito, etc.
-router.get("/cart", requireAuth,  ViewCart);
+router.get("/cart",  ViewCart,);
 
 router.get("/products",  (req, res) => {
     res.render("products");
 });
 
-router.get('/carts/:cid', requireAuth, GetProductsInCart);
+router.get('/carts/:cid', GetProductsInCart);
 
-router.get("/:cid/purchase", requireAuth, (req,res)=>{
+router.get("/:cid/purchase", (req,res)=>{
     res.render("purchase")
 })
 

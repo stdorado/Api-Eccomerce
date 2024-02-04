@@ -1,4 +1,4 @@
-import { generateToken } from "../utils/utils.js";
+import { generateToken } from "../utils.js";
 import { SendToEmail } from "./nodemailer.service.js";
 import UserManager from "../dao/DaoDataBase/User.manager.js";
 import { logger } from "../utils/logger.js";

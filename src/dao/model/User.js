@@ -41,7 +41,17 @@ const userSchema = new mongoose.Schema({
     fromGoogle: {
         type: Boolean,
         default: false,
-    }
+    },
+    documents: [
+        {
+          name: String,
+          reference: String
+        }
+      ],
+      last_connection: {
+        type: Date,
+        default: null
+      }
 });
 
 const User = new mongoose.model("users",userSchema)

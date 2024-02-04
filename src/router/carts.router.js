@@ -23,7 +23,7 @@ const router = Router();
  *     security:
  *       - bearerAuth: []
  */
-router.post("/:cid/purchase", requireAuth, PurchaseCart); //✅ , tiene un error que envia 2 correos
+router.post("/:cid/purchase", PurchaseCart); //✅ , tiene un error que envia 2 correos
 
 // Ruta para limpiar el carrito
 /**

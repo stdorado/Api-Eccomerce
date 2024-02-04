@@ -9,7 +9,7 @@
     "start:test": "nodemon src/Entorno de testing/process.app.js --mode test",
     "start:dev": "nodemon src/Entorno de desarrollo/process.app.js --mode dev",
     "start": "nodemon src/app.js",
-    "test": "mocha src/Test/products.test.js"
+    "test": "mocha src/Test/sesion.test.js"
   },
   "author": "Dorado Santino",
   "license": "ISC",
@@ -27,6 +27,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.2",
     "mongoose-paginate-v2": "^1.7.4",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.1",
     "passport": "^0.6.0",

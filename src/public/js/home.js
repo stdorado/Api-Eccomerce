@@ -110,7 +110,7 @@ nextButton.addEventListener("click", () => {
   getAllProducts(currentPage);
 });
 
-const carritoId = "6526aab3fb59b510c46939fe";
+const carritoId = "6526aabcfb59b510c4693a02";
 
 function agregarAlCarrito(productoId) {
   if (!productoId || typeof productoId !== 'string') {

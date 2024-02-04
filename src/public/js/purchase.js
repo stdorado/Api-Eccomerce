@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const confirmarCompraButton = document.getElementById('confirmarCompraButton');
   const ticketElement = document.getElementById('ticketDetails');
-  const cartId = '6526aab3fb59b510c46939fe'; 
+  const cartId = '6526aabcfb59b510c4693a02'; 
 
   confirmarCompraButton.addEventListener('click', async () => {
     try {
