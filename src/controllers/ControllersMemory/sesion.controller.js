@@ -5,7 +5,6 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const result = await SessionService.login(email, password, req, res);
     res.status(result.success ? 200 : 401).json(result);
-    console.log('Usuario autenticado:', result);
   } catch (error) {
     res.status(500).json({ success: false, error: "Error en el inicio de sesión." });
   }
@@ -21,20 +20,19 @@ const register = async (req, res) => {
       res.status(500).json(result);
     }
   } catch (error) {
-    console.error('Error en el controlador de registro:', error);
     res.status(500).json({ success: false, error: "Error en el registro." });
   }
 };
 
 const getProfile = async (req, res) => {
   try {
-    console.log('Usuario en la sesión:', req.session.user);
     if (req.session.user) {
       const userData = {
         email: req.session.user.email,
         first_Name: req.session.user.first_Name,
         last_Name: req.session.user.last_Name,
         role: req.session.user.role,
+        last_connection : req.session.last_connection
       };
       res.status(200).json({ success: true, data: userData });
     } else {

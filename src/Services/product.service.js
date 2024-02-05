@@ -14,7 +14,7 @@ class ProductService {
         limit: parseInt(limit),
       };
 
-      // Construir la opción de ordenamiento si se proporciona
+     
       const sortOptions = {};
       if (sort) {
         sortOptions['price'] = sort === 'asc' ? 1 : -1;
@@ -22,7 +22,7 @@ class ProductService {
 
       const filter = query ? { category: query } : {};
 
-      // Obtener los productos paginados utilizando el modelo Product
+      
       const result = await Product.paginate(filter, options);
 
       const { docs, totalDocs, totalPages, page: currentPage } = result;
@@ -54,66 +54,62 @@ class ProductService {
         hasNextPage: hasNextPage,
         hasPrevPage: hasPrevPage,
         totalPages: totalPages,
+        totalDocs : totalDocs
       };
 
       return response;
     } catch (error) {
       logger.error(error)
-      throw new Error('Error en el servidor');
+      throw new Error('Error to Server');
     }
   }
   
     async getProductById(productId) {
       try {
-        // Utilizando el método findById de ProductsManager
         return await productManager.findById(productId);
       } catch (error) {
         logger.error(error)
-        throw new Error('Error al obtener el producto.');
+        throw new Error('Error to get Product.');
       }
     }
   
     async createProduct(productData) {
       try {
-        // Utilizando el método createOne de ProductsManager
         return await productManager.createOne(productData);
       } catch (error) {
         logger.error(error)
-        throw new Error('Error al crear el producto.');
+        throw new Error('Error to create Product.');
       }
     }
   
     async updateProduct(productId, productData) {
       try {
-        // Utilizando el método updateOne de ProductsManager
         return await productManager.updateOne(productId, productData);
       } catch (error) {
         logger.error(error)
-        throw new Error('Error al actualizar el producto.');
+        throw new Error('Error to Update Product.');
       }
     }
   
     async deleteProduct(productId) {
       try {
-        // Utilizando el método deleteOne de ProductsManager
         return await productManager.deleteOne(productId);
       } catch (error) {
         logger.error(error)
-        throw new Error('Error al eliminar el producto.');
+        throw new Error('Error to delete Product.');
       }
     }
   
     async getProductsInCart(cartId) {
       try {
-        console.log("cart ID :", cartId)
         const cart = await Cart.findById(cartId).populate('products.productId');
         if (!cart) {
-          throw new Error('Carrito no encontrado.');
+          throw new Error('Cart not found.');
         }
         return cart.products;
       } catch (error) {
         logger.error(error)
-        throw new Error('Error al obtener los productos en el carrito.');
+        throw new Error('Error getting products from cart');
       }
     }
   }

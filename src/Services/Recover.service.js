@@ -43,7 +43,7 @@ export const sendResetEmail = async (email, token) => {
 
     SendToEmail(email, 'Recover Password', message, (error, info) => {
         if (error) {
-            console.error('Error sending password reset email:', error);
+            logger.error('Error sending password reset email:', error);
             throw error;
         }
         logger.info('Password reset email sent successfully:', info.response);

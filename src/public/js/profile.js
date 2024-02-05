@@ -4,29 +4,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     const registerButton = document.getElementById("registerButton");
     const logoutButton = document.getElementById("logoutButton");
 
-    // Función para cargar y mostrar los detalles del perfil
     const loadProfileDetails = async () => {
         try {
-            
             const profileResponse = await fetch("/api/sessions/profile");
 
             if (profileResponse.ok) {
                 const profileData = await profileResponse.json();
                 console.log("Profile Response:", profileData);
                 
-                if (profileData.email) {
+                if (profileData.data.email) {
+                    const { email, role } = profileData.data;
+                    const { firstName, lastName } = profileData.data; // Desestructuración de los datos del perfil
+
                     profileDetails.innerHTML = `
-                        <p class="text-lg"><span class="font-semibold text-2xl">Email:</span> ${profileData.email}</p>
-                        <p class="text-lg"><span class="font-semibold text-2xl">First Name:</span> ${profileData.first_Name}</p>
-                        <p class="text-lg"><span class="font-semibold text-2xl">Last Name:</span> ${profileData.last_Name}</p>
-                        <p class="text-lg"><span class="font-semibold text-2xl">Role:</span> ${profileData.role}</p>
+                        <div class="bg-white p-8 rounded-lg shadow-md mx-auto max-w-md mb-8">
+                            <p class="text-lg"><span class="font-semibold text-2xl">Email:</span> ${email}</p>
+                            <p class="text-lg"><span class="font-semibold text-2xl">Role:</span> ${role}</p>
+                            <p class="text-lg"><span class="font-semibold text-2xl">First Name:</span> ${firstName}</p>
+                            <p class="text-lg"><span class="font-semibold text-2xl">Last Name:</span> ${lastName}</p>
+                        </div>
                     `;
                 } else {
                     profileDetails.innerHTML = "";
                 }
 
                 // Oculta o muestra el botón de cerrar sesión según la autenticación
-                if (profileData.email) {
+                if (profileData.data.email) {
                     loginButton.style.display = "none";
                     registerButton.style.display = "none";
                     logoutButton.style.display = "block"; // Muestra el botón de cerrar sesión
@@ -48,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Agregar eventos de clic a los botones de "Log In" y "Register"
     loginButton.addEventListener("click", () => {
-        window.location.href = "http://localhost:8080/login";
+        window.location.href = "http://localhost:8080/";
     });
 
     registerButton.addEventListener("click", () => {

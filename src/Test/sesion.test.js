@@ -18,7 +18,7 @@ describe("Pruebas de la ruta de sesión", () => {
       .post("/api/sessions/register")
       .send(newUser);
 
-    expect(registerResponse.statusCode).to.equal(500); // Corrección: esperar 500 en lugar de 201
+    expect(registerResponse.statusCode).to.equal(500); 
   });
 
   it("debería iniciar sesión con el usuario registrado", async () => {

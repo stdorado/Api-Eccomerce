@@ -4,6 +4,7 @@ import LocalStrategy from 'passport-local';
 import UserManager from '../dao/DaoDataBase/User.manager.js';
 import { hashPassword } from '../utils.js';
 import bcrypt from "bcrypt"
+import { logger } from '../utils/logger.js';
 
 passport.use('login', new LocalStrategy(
   {
@@ -14,11 +15,11 @@ passport.use('login', new LocalStrategy(
     try {
       const userDB = await UserManager.getUserByEmail(email);
       if (!userDB) {
-        return done(null, false, { message: 'El correo electrónico no está registrado' });
+        return done(null, false, { message: 'the email is not registered' });
       }
       const passwordMatch = await bcrypt.compare(password, userDB.password);
       if (!passwordMatch) {
-        return done(null, false, { message: 'Contraseña incorrecta' });
+        return done(null, false, { message: 'Password incorrect' });
       }
       return done(null, userDB);
     } catch (error) {
@@ -38,7 +39,7 @@ passport.use('register', new LocalStrategy(
     try {
       const userDB = await UserManager.getUserByEmail(email);
       if (userDB) {
-        return done(null, false, { message: 'El correo electrónico ya está registrado' });
+        return done(null, false, { message: 'the email is already registered' });
       }
 
       const hashedPassword = await hashPassword(password);
@@ -86,7 +87,7 @@ passport.use(
 
         return done(null, user);
       } catch (err) {
-        console.error(`Error en la autenticación con Google: ${err.message}`);
+        logger.error(`error in google authentication ${err.message}`);
         return done(err);
       }
     }
@@ -102,7 +103,7 @@ passport.deserializeUser(async (id, done) => {
     const user = await UserManager.findById(id);
 
     if (!user) {
-      return done(null, false); // Usuario no encontrado
+      return done(null, false); 
     }
 
     let userInfo = {};

@@ -1,15 +1,13 @@
 import SessionManager from "../dao/DaoDataBase/Session.manager.js";
 import UserManager from "../dao/DaoDataBase/User.manager.js";
 import { generateToken } from "../utils.js";
-import { SendToEmail } from "./nodemailer.service.js";
 import { logger } from "../utils/logger.js";
 
 class SesionService {
   async login(email, password, req, res) {
     try {
       let result;
-  
-      // Verificamos si es el usuario admin
+
       if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
         result = {
           email: "adminCoder@coder.com",
@@ -17,62 +15,59 @@ class SesionService {
           role: "admin"
         };
   
-        // Eliminamos la propiedad 'password' del resultado
+        
         delete result.password;
   
-        // Configuramos la sesión con información del usuario
+       
         req.session.user = {
           email: result.email,
           role: result.role,
+          first_Name : result.first_Name,
+          last_Name : result.last_Name,
+          last_connection : result.last_connection
         };
-  
-        // Configuramos la cookie JWT
+  console.log(req.session.user)
+
         const token = generateToken({ email: result.email });
         res.cookie("jwt", token, {
           maxAge: 1000 * 60 * 60 * 24 * 7,
           httpOnly: true,
         });
   
-        // Mensaje de bienvenida
-        logger.info('Usuario autenticado:', { success: true, message: `Bienvenido ${result.email}` });
-        logger.info('Usuario en la sesión:', req.session.user);
+       
+        logger.info('User autenticated:', { success: true, message: `Welcome ${result.email}` });
+        logger.info('User in session:', req.session.user);
   
-        return { success: true, message: `Bienvenido ${result.email}` };
+        return { success: true, message: `welcome ${result.email}` };
       }
   
-      // Resto del código para usuarios normales...
+
       const userExists = await UserManager.findOne({ email });
   
       if (!userExists) {
-        console.error('Credenciales inválidas: Usuario no encontrado en la base de datos');
-        return { success: false, message: 'Credenciales inválidas: Usuario no encontrado en la base de datos' };
+        return { success: false, message: 'Invalid credentials : user not found in DataBase' };
       }
   
       result = await SessionManager.login(email, password);
   
       if (!result) {
-        logger.error('Credenciales inválidas: Error en el inicio de sesión');
-        return { success: false, message: 'Credenciales inválidas: Error en el inicio de sesión' };
+        return { success: false, message: 'Invalid Credentials : error to login' };
       }
-  
-      // Configuramos la sesión
+   
+    
       req.session.user = result;
-  
-      logger.info('Usuario autenticado:', { success: true, message: `Bienvenido ${result.first_Name} ${result.last_Name}` });
-      logger.info('Usuario en la sesión:', req.session.user);
-  
       return {
         success: true,
-        message: `Bienvenido ${result.first_Name} ${result.last_Name}`,
+        message: `Welcome ${result.first_Name} ${result.last_Name}`,
       };
+     
     } catch (error) {
-      logger.error('Error en el inicio de sesión:', error);
   
       if (error.message === "secretOrPrivateKey must have a value") {
-        return { success: false, error: "Error en el inicio de sesión: secretOrPrivateKey must have a value" };
+        return { success: false, error: "Error to Login: secretOrPrivateKey must have a value" };
       }
   
-      return { success: false, error: "Error en el inicio de sesión." };
+      return { success: false, error: "Error to Login " };
     }
   }
 
@@ -84,7 +79,7 @@ class SesionService {
         first_Name,
         last_Name,
       });
-      return { success: true, message: "Registro exitoso" };
+      return { success: true, message: "Regiser successfully" };
     } catch (error) {
       return { success: false, error: error.message };
     }
@@ -112,15 +107,13 @@ class SesionService {
               first_Name: user.first_Name,
               last_Name: user.last_Name,
               role: user.role,
-              // Puedes agregar otros campos según sea necesario
             };
             return { success: true, data: userData };
           } else {
-            logger.info('Usuario no encontrado en la base de datos');
-            return { success: false, error: "Usuario no encontrado en la base de datos" };
+            return { success: false, error: "User not found in data base" };
           }
         } catch (error) {
-          logger.error('Error en la búsqueda en la base de datos:', error);
+          logger.error('Error to search in data base', error);
           return { success: false, error: error.message };
         }
       }
@@ -135,12 +128,12 @@ class SesionService {
       if (req) {
         req.session.destroy((err) => {
           if (err) {
-            return { success: false, error: "Error en el deslogeo" };
+            return { success: false, error: "Error in out Session" };
           }
-          return { success: true, message: "Cuenta desLogeada Exitosamente" };
+          return { success: true, message: "User out session successfully" };
         });
       } else {
-        return { success: false, error: "Request no definido" };
+        return { success: false, error: "Request not defined" };
       }
     } catch (error) {
       return { success: false, error: error.message };
