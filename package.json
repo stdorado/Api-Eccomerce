@@ -9,7 +9,7 @@
     "start:test": "nodemon src/Entorno de testing/process.app.js --mode test",
     "start:dev": "nodemon src/Entorno de desarrollo/process.app.js --mode dev",
     "start": "nodemon src/app.js",
-    "test": "mocha src/Test/sesion.test.js"
+    "test": "mocha src/Test"
   },
   "author": "Dorado Santino",
   "license": "ISC",
