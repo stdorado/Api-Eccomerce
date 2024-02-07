@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 
                 if (profileData.data.email) {
                     const { email, role } = profileData.data;
-                    const { firstName, lastName } = profileData.data; // Desestructuración de los datos del perfil
+                    const { firstName, lastName, last_connection } = profileData.data; // Desestructuración de los datos del perfil
 
                     profileDetails.innerHTML = `
                         <div class="bg-white p-8 rounded-lg shadow-md mx-auto max-w-md mb-8">
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             <p class="text-lg"><span class="font-semibold text-2xl">Role:</span> ${role}</p>
                             <p class="text-lg"><span class="font-semibold text-2xl">First Name:</span> ${firstName}</p>
                             <p class="text-lg"><span class="font-semibold text-2xl">Last Name:</span> ${lastName}</p>
+                            <p class="text-lg"><span class="font-semibold text-2xl gray">Last Connection</span> ${last_connection}</p>
                         </div>
                     `;
                 } else {

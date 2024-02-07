@@ -2,7 +2,7 @@ import { generateToken } from "../utils.js";
 import { SendToEmail } from "./nodemailer.service.js";
 import UserManager from "../dao/DaoDataBase/User.manager.js";
 import { logger } from "../utils/logger.js";
-import JWT from "jsonwebtoken"
+import JWT from "jsonwebtoken";
 
 export const generateResetToken = async (email) => {
     try {
@@ -23,9 +23,9 @@ export const generateResetToken = async (email) => {
     }
 };
 
-export const getPasswordByEmail = async (email) => {
+export const getPasswordByEmail = async (userId) => {
     try {
-        const user = await UserManager.findOne({ email });
+        const user = await UserManager.findById(userId);
         if (!user) {
             throw new Error('User not found');
         }
@@ -41,13 +41,13 @@ export const sendResetEmail = async (email, token) => {
     const resetLink = `http://localhost:8080/api/recover/reset-password/${token}`;
     const message = `<p>Haz clic en el siguiente enlace para restablecer tu contraseña: ${resetLink}</p>`;
 
-    SendToEmail(email, 'Recover Password', message, (error, info) => {
-        if (error) {
-            logger.error('Error sending password reset email:', error);
-            throw error;
-        }
-        logger.info('Password reset email sent successfully:', info.response);
-    });
+    try {
+        await SendToEmail(email, 'Recover Password', message);
+        logger.info('Password reset email sent successfully');
+    } catch (error) {
+        logger.error('Error sending password reset email:', error);
+        throw error;
+    }
 };
 
 export const getTokenFromAuthorizationHeader = (authorizationHeader) => {

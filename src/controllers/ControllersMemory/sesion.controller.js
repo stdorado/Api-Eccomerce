@@ -32,7 +32,7 @@ const getProfile = async (req, res) => {
         first_Name: req.session.user.first_Name,
         last_Name: req.session.user.last_Name,
         role: req.session.user.role,
-        last_connection : req.session.last_connection
+        last_connection : req.session.user.last_connection 
       };
       res.status(200).json({ success: true, data: userData });
     } else {

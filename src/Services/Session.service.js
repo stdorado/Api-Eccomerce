@@ -12,7 +12,8 @@ class SesionService {
         result = {
           email: "adminCoder@coder.com",
           age: 20,
-          role: "admin"
+          role: "admin",
+          last_connection: new Date()
         };
   
         
@@ -55,6 +56,8 @@ class SesionService {
       }
    
     
+     result.last_connection = new Date();
+     console.log(result)
       req.session.user = result;
       return {
         success: true,
