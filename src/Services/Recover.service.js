@@ -39,7 +39,14 @@ export const getPasswordByEmail = async (userId) => {
 
 export const sendResetEmail = async (email, token) => {
     const resetLink = `http://localhost:8080/api/recover/reset-password/${token}`;
-    const message = `<p>Haz clic en el siguiente enlace para restablecer tu contraseña: ${resetLink}</p>`;
+    const message = `
+    <div style="font-family: sans-serif; max-width: 32rem; margin: 0 auto; padding: 1rem; text-align: left;">
+        <p style="font-size: 1.25rem;">Haz clic en el siguiente botón para restablecer tu contraseña:</p>
+        <a href="${resetLink}" style="display: inline-block; background-color: #3490dc; color: #ffffff; font-weight: bold; padding: 0.5rem 1rem; border-radius: 0.25rem; text-decoration: none; margin-top: 1rem;">
+            <span style="vertical-align: middle;">Recuperar Contraseña</span>
+            <i class="fas fa-unlock-alt" style="vertical-align: middle; margin-left: 0.5rem;"></i>
+        </a>
+    </div>`;
 
     try {
         await SendToEmail(email, 'Recover Password', message);

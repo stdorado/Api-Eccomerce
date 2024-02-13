@@ -44,4 +44,7 @@ router.get('/password-reset-sent', (req, res) => {
     res.render('password-resent-sent');
 });
 
+router.get("/uploadImage", (req,res)=>{
+    res.render("uploadImage")
+})
 export default router;

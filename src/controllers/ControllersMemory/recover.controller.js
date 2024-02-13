@@ -31,14 +31,11 @@ const resetPasswordWithToken = async (req, res) => {
             return res.status(400).json({ error: 'Token not provided in the request URL' });
         }
     
-        // Verificar si el token es válido
         const { userId } = verifyToken(token);
 
-        // Obtener la contraseña asociada al ID de usuario
         const password = await getPasswordByEmail(userId);
 
-        // Devolver la contraseña al cliente
-        res.status(200).json({ password });
+        res.render('reset-password', { password });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error resetting password' });

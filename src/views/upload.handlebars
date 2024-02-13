@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Imagen</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
+        <h1 class="text-3xl font-bold mb-8">Subir Imagen</h1>
+        <form action="/api/users/upload" method="post" enctype="multipart/form-data" class="flex flex-col items-center">
+            <label for="image" class="mb-4">
+                <span class="inline-block bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600 cursor-pointer">Seleccionar Imagen</span>
+                <input id="image" type="file" name="image" accept="image/*" class="hidden" required>
+            </label>
+            <div id="dropArea" class="border-dashed border-2 border-gray-400 rounded-lg p-8 w-64 flex flex-col items-center justify-center">
+                <p id="fileInfo" class="text-gray-500">Arrastra y suelta tus archivos aquí</p>
+                <p class="text-sm">(o haz clic para seleccionarlos)</p>
+            </div>
+            <button type="submit" class="bg-green-500 text-white rounded-lg py-2 px-4 mt-4 hover:bg-green-600">Subir Imagen</button>
+        </form>
+    </div>
+    <script src="/js/uploadImage.js"></script>
+</body>
+</html>
+

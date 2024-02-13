@@ -10,6 +10,7 @@ router.get('/password-reset-sent', (req, res) => {
     res.render('password-resent-sent');
 });
 
-router.get('/reset-password/:token', resetPasswordWithToken); 
+// Redirigir a la vista que muestra la contraseña
+router.get('/reset-password/:token', resetPasswordWithToken);
 
 export default router;

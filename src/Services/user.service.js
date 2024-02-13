@@ -1,29 +1,45 @@
-import UserManager from "../dao/DaoDataBase/User.manager.js"
+import Image from "../dao/model/image.js";
+import UserManager from "../dao/DaoDataBase/User.manager.js";
 
+class ImageService {
 
-class UserService {
-    async updateUserRole(userId, newRole) {
-      try {
-        return await UserManager.updateOne(userId, { role: newRole });
-      } catch (error) {
-        throw error;
+  async upgradeToPremium(userEmail) {
+    try {
+      const user = await UserManager.findOne({ email: userEmail });
+      if (!user) {
+        return { success: false, error: 'Usuario no encontrado' };
       }
+
+      user.role = 'premium';
+      await user.save();
+
+      return { success: true, message: 'Usuario actualizado a premium correctamente' };
+    } catch (error) {
+      return { success: false, error: error.message };
     }
+  }
+
   
-    async updateUserPremium(userId) {
+    async uploadImage(filename, userEmail) {
       try {
-        const user = await UserManager.findById(userId);
-        const requiredDocuments = ['identificacion', 'domicilio', 'comprobante de esta de cuenta'];
-        const missingDocuments = requiredDocuments.filter(doc => !user.documents.some(d => d.name === doc));
-        if (missingDocuments.length > 0) {
-          throw new Error("El usuario no ha cargado todos los documentos requeridos.");
-        }
-        await this.updateUserRole(userId, 'premium');
+        // Guardar la imagen en la base de datos
+        const image = new Image({ filename });
+        await image.save();
+  
+        // Buscar al usuario por su correo electrónico
+        const user = await UserManager.findOne({ email: userEmail });
+        if (!user) throw new Error('Usuario no encontrado');
+  
+        // Asociar la imagen con el usuario y guardar los cambios
+        user.documents.push({ name: 'profile', reference: image._id });
+        await UserManager.updateOne(user._id, user);
+  
+        return image;
       } catch (error) {
         throw error;
       }
     }
   }
-  
-  const userService = new UserService();
-  export default userService;
+
+const newImage = new ImageService()
+export default newImage
