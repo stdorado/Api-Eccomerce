@@ -5,7 +5,6 @@ import UserRouter from "./router/User.router.js"
 import productsRouter from "./router/products.router.js";
 import cartRouter from "./router/carts.router.js";
 import viewsRouter from "./router/views.router.js";
-import MocksRouter from "./router/router.mock.js"
 import SessionRouter from "./router/session.router.js";
 import loggerRouter from "./router/logger.router.js"
 import RecoverRouter from "./router/Recover.router.js"
@@ -63,7 +62,6 @@ app.use(passport.session());
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/sessions",SessionRouter)
-app.use("/api/mocks", MocksRouter)
 app.use("/api/logger" ,  loggerRouter)
 app.use("/api/recover", RecoverRouter)
 app.use("/api/users", UserRouter)

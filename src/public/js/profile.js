@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const loginButton = document.getElementById("loginButton");
   const registerButton = document.getElementById("registerButton");
   const logoutButton = document.getElementById("logoutButton");
+  const premiumButton = document.getElementById("premiumButton");
 
-  
   logoutButton.style.display = "none";
 
   const loadProfileDetails = async () => {
@@ -104,6 +104,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.location.href = "/";
       } 
     } catch (error) {
+    }
+  });
+
+  premiumButton.addEventListener("click", async () => {
+    try {
+      const userId = "Obtener el ID del usuario de la sesión"; // Aquí deberías obtener el ID del usuario de la sesión
+      const upgradeResponse = await fetch(`/api/users/${userId}/upgrade`, {
+        method: "POST",
+      });
+
+      if (upgradeResponse.ok) {
+        // Manejar el caso de éxito (por ejemplo, mostrar un mensaje de confirmación)
+        console.log("Usuario actualizado a premium/vendedor exitosamente");
+      } else {
+        // Manejar el caso de error (por ejemplo, mostrar un mensaje de error)
+        console.error("Error al actualizar usuario a premium/vendedor:", upgradeResponse);
+      }
+    } catch (error) {
+      console.error("Error al actualizar usuario a premium/vendedor:", error);
     }
   });
 });
