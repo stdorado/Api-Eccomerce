@@ -6,123 +6,112 @@ import { logger } from "../utils/logger.js";
 class SesionService {
   async login(email, password, req, res) {
     try {
-      let result;
+        let result;
 
-      if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
-        result = {
-          email: "adminCoder@coder.com",
-          age: 20,
-          role: "admin",
-          last_connection: new Date()
-        };
-  
-        
-        delete result.password;
-  
-       
+        // Verificar si las credenciales son para el usuario admin
+        if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+            // Establecer la información del usuario admin en la sesión
+            result = {
+                email: "adminCoder@coder.com",
+                role: "admin",
+                last_connection: new Date()
+            };
+            req.session.user = {
+                email: result.email,
+                role: result.role,
+                last_connection: result.last_connection,
+                first_Name : result.first_Name,
+                last_Name : result.last_Name,
+                _id : result._id 
+            };
+
+            // Generar token JWT y establecerlo en la cookie
+            const token = generateToken({ email: result.email });
+            res.cookie("jwt", token, {
+                maxAge: 1000 * 60 * 60 * 24 * 7,
+                httpOnly: true,
+            });
+
+            logger.info('User authenticated:', { success: true, message: `Welcome ${result.email}` });
+            logger.info('User in session:', req.session.user);
+
+            return { success: true, message: `Welcome ${result.email}` };
+        }
+
+        // Buscar el usuario en la base de datos
+        const user = await UserManager.findOne({ email });
+
+        if (!user) {
+            return { success: false, message: 'Usuario no encontrado' };
+        }
+
+        // Verificar si la contraseña es correcta
+        const passwordMatch = await SessionManager.login(email, password);
+        if (!passwordMatch) {
+            return { success: false, message: 'Contraseña incorrecta' };
+        }
+
+        // Actualizar la última conexión del usuario
+        user.last_connection = new Date();
+        await user.save();
+
+        // Establecer los datos del usuario en la sesión
         req.session.user = {
-          email: result.email,
-          role: result.role,
-          first_Name : result.first_Name,
-          last_Name : result.last_Name,
-          last_connection : result.last_connection
+            _id: user._id,
+            email: user.email,
+            role: user.role,
+            first_Name: user.first_Name,
+            last_Name: user.last_Name,
+            last_connection: user.last_connection
         };
-  console.log(req.session.user)
 
-        const token = generateToken({ email: result.email });
-        res.cookie("jwt", token, {
-          maxAge: 1000 * 60 * 60 * 24 * 7,
-          httpOnly: true,
-        });
-  
-       
-        logger.info('User autenticated:', { success: true, message: `Welcome ${result.email}` });
-        logger.info('User in session:', req.session.user);
-  
-        return { success: true, message: `welcome ${result.email}` };
-      }
-  
-
-      const userExists = await UserManager.findOne({ email });
-  
-      if (!userExists) {
-        return { success: false, message: 'Invalid credentials : user not found in DataBase' };
-      }
-  
-      result = await SessionManager.login(email, password);
-  
-      if (!result) {
-        return { success: false, message: 'Invalid Credentials : error to login' };
-      }
-   
-    
-     result.last_connection = new Date();
-     console.log(result)
-      req.session.user = result;
-      return {
-        success: true,
-        message: `Welcome ${result.first_Name} ${result.last_Name}`,
-      };
-     
+        return { success: true, message: `¡Bienvenido, ${user.first_Name} ${user.last_Name}!` };
     } catch (error) {
-  
-      if (error.message === "secretOrPrivateKey must have a value") {
-        return { success: false, error: "Error to Login: secretOrPrivateKey must have a value" };
-      }
-  
-      return { success: false, error: "Error to Login " };
+        return { success: false, error: error.message };
     }
-  }
+}
 
   async register(email, first_Name, last_Name, password) {
-    try {
-      const result = await UserManager.createOne({
-        email,
-        password,
-        first_Name,
-        last_Name,
-      });
-      return { success: true, message: "Regiser successfully" };
-    } catch (error) {
-      return { success: false, error: error.message };
+  try {
+    // Aquí realizas la consulta a la base de datos para obtener el userId
+    const user = await UserManager.findOne({ email }); // Suponiendo que encuentras el usuario por su email
+    if (!user) {
+      return { success: false, error: 'Usuario no encontrado' };
     }
+
+    // Utilizas el userId obtenido para registrar el usuario
+    const result = await UserManager.createOne({
+      email,
+      password,
+      first_Name,
+      last_Name,
+      userId: user._id // Utilizando _id como el userId en MongoDB
+    });
+
+    return { success: true, message: "Registro exitoso" };
+  } catch (error) {
+    return { success: false, error: error.message };
   }
+}
 
   async getProfile(req, res) {
     try {
-      if (req.session.email) {
+      if (req.session.user) {
         const userData = {
-          email: req.session.email,
-
+          userId: req.session.user._id, // Utilizando _id como el userId en MongoDB
+          email: req.session.user.email,
+          first_Name: req.session.user.first_Name,
+          last_Name: req.session.user.last_Name,
+          role: req.session.user.role,
+          last_connection : req.session.user.last_connection 
         };
-        return { success: true, data: userData };
+        res.status(200).json({ success: true, data: userData });
       } else {
-        
-        try {
-          const emailFromSession = req.session.email;
-          logger.info('Email from session:', emailFromSession);
-  
-          const user = await UserManager.findOne({ email: emailFromSession });
-  
-          if (user) {
-            const userData = {
-              email: user.email,
-              first_Name: user.first_Name,
-              last_Name: user.last_Name,
-              role: user.role,
-            };
-            return { success: true, data: userData };
-          } else {
-            return { success: false, error: "User not found in data base" };
-          }
-        } catch (error) {
-          logger.error('Error to search in data base', error);
-          return { success: false, error: error.message };
-        }
+        res.status(404).json({ success: false, error: "Usuario no autenticado" });
       }
     } catch (error) {
-      logger.error('Error en getProfile:', error);
-      return { success: false, error: error.message };
+      console.error('Error en getProfile:', error);
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 

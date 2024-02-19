@@ -4,6 +4,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const registerButton = document.getElementById("registerButton");
   const logoutButton = document.getElementById("logoutButton");
   const premiumButton = document.getElementById("premiumButton");
+  const createProductButton = document.createElement("a"); 
+  createProductButton.id = "createProductButton";
+  createProductButton.className = "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 focus:outline-none focus:shadow-outline mt-4";
+  createProductButton.textContent = "Crear Producto";
+  createProductButton.style.display = "none";
+  createProductButton.href = "/createProduct"; 
+  premiumButton.parentNode.insertBefore(createProductButton, premiumButton.nextSibling);
 
   logoutButton.style.display = "none";
 
@@ -15,11 +22,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         const profileData = await profileResponse.json();
         console.log("Profile Response:", profileData);
 
-        if (profileData.data.email) {
-          const { email, role, first_Name, last_Name, last_connection } =
-            profileData.data;
+        if (profileData.success) {
+          const { _id: userId, email, role, last_connection } = profileData.data;
+          premiumButton.dataset.userId = userId;
 
-            let profileHTML = `
+          let profileHTML = `
             <div class="bg-white p-8 rounded-lg shadow-md mx-auto max-w-md mb-8">
                 <div class="mb-6">
                     <p class="text-lg font-semibold text-gray-800">Email:</p>
@@ -29,24 +36,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p class="text-lg font-semibold text-gray-800">Role:</p>
                     <p class="text-lg text-gray-600">${role}</p>
                 </div>`;
-        
-        if (first_Name) {
-            profileHTML += `
-                <div class="mb-6">
-                    <p class="text-lg font-semibold text-gray-800">First Name:</p>
-                    <p class="text-lg text-gray-600">${first_Name}</p>
-                </div>`;
-        }
-        
-        if (last_Name) {
-            profileHTML += `
-                <div class="mb-6">
-                    <p class="text-lg font-semibold text-gray-800">Last Name:</p>
-                    <p class="text-lg text-gray-600">${last_Name}</p>
-                </div>`;
-        }
-        
-        profileHTML += `
+
+          profileHTML += `
                 <div>
                     <p class="text-lg font-semibold text-gray-800">Last Connection:</p>
                     <p class="text-lg text-gray-600">${last_connection}</p>
@@ -54,35 +45,31 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>`;
 
           profileDetails.innerHTML = profileHTML;
-        } else {
-          profileDetails.innerHTML = "";
-        }
 
-        
-        if (profileData.data.email) {
+          if (role === "admin") {
+            premiumButton.style.display = "none";
+            createProductButton.style.display = "block";
+          } else {
+            premiumButton.style.display = "block";
+            createProductButton.style.display = "none";
+          }
+
           loginButton.style.display = "none";
           registerButton.style.display = "none";
           logoutButton.style.display = "block";
         } else {
-          loginButton.style.display = "inline-block";
-          registerButton.style.display = "inline-block";
-          logoutButton.style.display = "none";
+          console.error("Error al obtener los detalles del perfil:", profileData);
         }
       } else {
-        console.error(
-          "Error al obtener los detalles del perfil:",
-          profileResponse
-        );
+        console.error("Error al obtener los detalles del perfil:", profileResponse);
       }
     } catch (error) {
       console.error("Error al obtener los detalles del perfil:", error);
     }
   };
 
-  
   loadProfileDetails();
 
-  
   loginButton.addEventListener("click", () => {
     window.location.href = "http://localhost:8080/";
   });
@@ -91,38 +78,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = "http://localhost:8080/register";
   });
 
-
   logoutButton.addEventListener("click", async () => {
     try {
-      
       const logoutResponse = await fetch("/api/sessions", {
         method: "DELETE",
       });
 
       if (logoutResponse.ok) {
-        
         window.location.href = "/";
-      } 
+      }
     } catch (error) {
+      console.error("Error al cerrar sesión:", error);
     }
   });
 
   premiumButton.addEventListener("click", async () => {
     try {
-      const userId = "Obtener el ID del usuario de la sesión"; // Aquí deberías obtener el ID del usuario de la sesión
+      const userId = premiumButton.dataset.userId;
+      console.log("User ID", userId)
+  
       const upgradeResponse = await fetch(`/api/users/${userId}/upgrade`, {
         method: "POST",
       });
-
+  
       if (upgradeResponse.ok) {
-        // Manejar el caso de éxito (por ejemplo, mostrar un mensaje de confirmación)
-        console.log("Usuario actualizado a premium/vendedor exitosamente");
+        window.location.reload();
       } else {
-        // Manejar el caso de error (por ejemplo, mostrar un mensaje de error)
-        console.error("Error al actualizar usuario a premium/vendedor:", upgradeResponse);
+        console.error("Error al actualizar a premium:", upgradeResponse);
       }
     } catch (error) {
-      console.error("Error al actualizar usuario a premium/vendedor:", error);
+      console.error("Error al actualizar a premium:", error); 
     }
   });
 });

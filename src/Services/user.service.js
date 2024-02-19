@@ -22,7 +22,6 @@ class ImageService {
 
   async uploadImage(filename, userEmail) {
       try {
-        
         const image = new Image({ filename });
         await image.save();
         const user = await UserManager.findOne({ email: userEmail });
@@ -30,7 +29,6 @@ class ImageService {
 
         user.documents.push({ name: 'profile', reference: image._id });
         await UserManager.updateOne(user._id, user);
-  
         return image;
       } catch (error) {
         throw error;

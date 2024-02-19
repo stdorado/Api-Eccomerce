@@ -47,4 +47,8 @@ router.get('/password-reset-sent', (req, res) => {
 router.get("/uploadImage", (req,res)=>{
     res.render("uploadImage")
 })
+
+router.get("/createProduct", ( req,res)=>{
+    res.render("createProduct")
+})
 export default router;
