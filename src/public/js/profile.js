@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           profileDetails.innerHTML = profileHTML;
 
-          if (role === "admin") {
+          if (role === "Premium") {
             premiumButton.style.display = "none";
             createProductButton.style.display = "block";
           } else {

@@ -19,12 +19,15 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   try {
     const { email, first_Name, last_Name, password } = req.body;
+    if (!email || !first_Name || !last_Name || !password) {
+      return res.status(400).json({ success: false, error: "Todos los campos son requeridos" });
+    }
     const result = await SessionService.register(email, first_Name, last_Name, password);
 
     if (result.success) {
       res.status(200).json({ success: true, message: "Registro exitoso", redirect: "/home" });
     } else {
-      res.status(500).json({ success: false, error: "Error en el registro." });
+      res.status(400).json({ success: false, error: result.error });
     }
   } catch (error) {
     res.status(500).json({ success: false, error: "Error en el registro." });

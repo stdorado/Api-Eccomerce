@@ -1,89 +1,79 @@
-<!-- Sección de Bienvenida -->
-<section class="flex-1 relative text-gray-800">
-    <div class="bg-white absolute inset-0 z-0"></div>
+<section class="flex-1 relative">
+    <!-- Fondo con Imagen de Fondo y Overlay -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+        <img src="https://imgs.search.brave.com/B7XJLrR9YA0hZId9NN_ZaDtqOss7wn2hcaPJw63KFs4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudG9ra29icm9r/ZXIuY29tL3BpY3R1/cmVzLzk0MjE4NTMy/ODM4NjA0NjEwMzQ1/Mzc2MTE3NTg4NzQ1/ODM5ODk5Mjk4NjAx/MDg0NTQyOTU4NTk2/OTMzNDIyMjMwMTA3/NzkwNjA0ODMuanBn" alt="Fondo" class="object-cover w-full h-auto md:h-full" />
+        <div class="absolute inset-0 bg-black opacity-60"></div>
+    </div>
 
     <div class="container mx-auto px-6 flex flex-col-reverse sm:flex-row items-center justify-center h-screen relative">
-        <div class="mx-auto max-w-3xl text-center sm:text-left mb-16 sm:mb-0">
-            <h1 class="text-6xl font-extrabold tracking-tight text-yellow-500  text-black leading-tight text-center">¡Bienvenido!</h1>
-            <p class="mt-8 text-3xl text-black leading-8 text-center">Explora nuestras increíbles propiedades en las ubicaciones más deseables.</p>
+        <div class="mx-auto max-w-4xl text-center sm:text-left mb-16 sm:mb-0 text-white">
+            <!-- Título Principal -->
+            <h1 class="text-6xl font-extrabold tracking-tight leading-tight text-center">¡Bienvenido!</h1>
+            <!-- Texto Descriptivo -->
+            <p class="mt-8 text-3xl leading-8 text-center">Descubre tu próximo hogar en los lugares más encantadores.</p>
+            <!-- Botón de Acción -->
             <div class="mt-10 flex items-center justify-center gap-x-6">
-                <a href="/products" class="rounded-full bg-white hover:bg-yellow-400 px-8 py-4 text-lg font-semibold text-black hover:text-white shadow-lg transition duration-200 transform hover:scale-105">Ver Propiedades</a>
+                <a href="/productos" class="rounded-full bg-green-400  px-8 py-4 text-lg font-semibold text-white  shadow-lg transition duration-200 transform hover:scale-105">Explorar Propiedades</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Sección de Características -->
-<div class="bg-white py-24 sm:py-32">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-3xl lg:text-center">
-            <h2 class="text-5xl font-semibold leading-10 text-black mb-8">Inmobiliaria Dorado</h2>
-            <p class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl text-black">¡El sueño de la Casa Propia es Posible ahora!</p>
-            <p class="mt-6 text-lg leading-7 text-black">Nos enfocamos en ayudarte en estos 4 puntos fundamentales</p>
+
+
+<div class="bg-gray-100 py-24 sm:py-32">
+    <div class="container mx-auto px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl text-center">
+            <h2 class="text-5xl font-semibold leading-10 text-black mb-8">Descubre las ventajas de elegir Inmobiliaria Dorado</h2>
+            <p class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl text-black">¡Haz realidad el sueño de tu Casa Propia!</p>
+            <p class="mt-6 text-lg leading-7 text-black">En Inmobiliaria Dorado nos preocupamos por ofrecerte un servicio integral que abarca cada aspecto de tu experiencia de compra de vivienda. Aquí tienes algunos de nuestros principales servicios:</p>
         </div>
 
-        <div class="mx-auto mt-16 max-w-3xl sm:mt-20 lg:mt-24 grid grid-cols-1 sm:grid-cols-2 gap-8">
-            <!-- Tarjeta 1: Tu casa Propia -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg p-8 hover:shadow-xl transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="bi bi-house-check-fill mb-6" viewBox="0 0 16 16">
-                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
-                    <path d="M8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
-                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.707l.547.547 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
-                </svg>
-                <h3 class="text-2xl font-semibold mb-4">Tu casa Propia</h3>
-                <p class="text-gray-700">Tu casa propia es el inicio de un nuevo capítulo en tu vida. Es donde la comodidad y la felicidad se encuentran en cada rincón. No esperes más, crea tu propio hogar y comienza a vivir tus sueños.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-16">
+            <!-- Tarjeta 1: Asesoramiento Personalizado -->
+            <div class="rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 group">
+                <img src="https://imgs.search.brave.com/134bmQq5xOP6ryqjRxSaL6FGYDRV81LMkDSh4M6a1EU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9kMWVp/cG0zdno0MGh5MC5j/bG91ZGZyb250Lm5l/dC9pbWFnZXMvU1NB/Qy1CbG9nL3NvbHVj/aW9uZXMtZXhwZXJp/ZW5jaWEtY2xpZW50/ZS5qcGc" alt="Asesoramiento Personalizado" class="w-full h-64 object-cover">
+                <div class="p-4">
+                    <h3 class="text-2xl font-semibold text-black">Asesoramiento Personalizado</h3>
+                    <p class="text-gray-600 text-lg mt-2">Nuestros expertos en bienes raíces están aquí para guiarte en cada paso del proceso de compra. Desde encontrar la propiedad perfecta hasta la finalización de la transacción, te brindamos un asesoramiento personalizado para asegurarnos de que tomes la mejor decisión.</p>
+                <button class="mt-10 flex items-center justify-center gap-x-6">
+                        <a href="" class="rounded-md bg-green-400  px-6 py-4 text-lg font-semibold text-white  shadow-lg transition duration-200 transform hover:scale-105">Descubrir</a> 
+                        </button>
+                </div>
             </div>
-
-            <!-- Tarjeta 2: Financiamientos -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg p-8 hover:shadow-xl transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="green" class="bi bi-cash mb-6" viewBox="0 0 16 16">
-                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/>
-                </svg>
-                <h3 class="text-2xl font-semibold mb-4">Financiamientos</h3>
-                <p class="text-gray-700">En Inmobiliaria Dorado, hacemos realidad tu sueño de tener tu propia casa. Te ayudamos a financiarla para que puedas disfrutar de un hogar que es tuyo en todos los sentidos. Deja que la libertad y la estabilidad de la propiedad sean parte de tu vida.</p>
+            <!-- Tarjeta 2: Financiamiento Flexible -->
+            <div class="rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 group">
+                <img src="https://imgs.search.brave.com/rvepn9ullPkGPOnyUoqPz3L4m-mIMANlqu8H1JikEmk/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/Y2V1cGUuY29tL2lt/YWdlcy9lYXN5Ymxv/Z19hcnRpY2xlcy80/NTk0L2IyYXAzX2xh/cmdlX3F1ZS1zZS1o/YWNlLWVuLXVuYS1t/YWVzdHJpYS1lbi1m/aW5hbnphcy5qcGc" alt="Financiamiento Flexible" class="w-full h-64 object-cover">
+                <div class="p-4">
+                    <h3 class="text-2xl font-semibold text-black">Financiamiento Flexible</h3>
+                    <p class="text-gray-600 text-lg mt-2">Entendemos que cada cliente tiene necesidades financieras únicas. Por eso, ofrecemos opciones de financiamiento flexibles y personalizadas para ayudarte a hacer realidad tu sueño de tener tu propia casa, sin importar tu situación económica.</p>
+                <button class="mt-10 flex items-center justify-center gap-x-6">
+                        <a href="" class="rounded-md bg-green-400  px-6 py-4 text-lg font-semibold text-white  shadow-lg transition duration-200 transform hover:scale-105">Contactar</a> 
+                        </button>
+                </div>
             </div>
-
             <!-- Tarjeta 3: Servicio de Mudanza -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg p-8 hover:shadow-xl transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="orange" class="bi bi-box-seam mb-6" viewBox="0 0 16 16">
-                    <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443 .184z"/>
-                </svg>
-                <h3 class="text-2xl font-semibold mb-4">Servicio de Mudanza 100% Free</h3>
-                <p class="text-gray-700">En Inmobiliaria Dorado, nos encargamos de tu mudanza por completo. Ofrecemos un servicio de mudanza 100% gratuito para que puedas trasladarte sin preocupaciones. Tu transición a tu nuevo hogar será suave y sin costos adicionales. Confía en nosotros para hacer que el cambio sea lo más sencillo posible.</p>
+            <div class="rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 group">
+                <img src="https://imgs.search.brave.com/85eXJZEbDgnZRjAQHFIaSBibWk7IMsQHInqf4_TsgLQ/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/c2hpcGx5LmNvbS9p/bWcvYXJ0aWNsZS9l/cy90cmFuc3BvcnRl/cy15LW11ZGFuemFz/LTEuanBn" alt="Servicio de Mudanza" class="w-full h-64 object-cover">
+                <div class="p-4">
+                    <h3 class="text-2xl font-semibold text-black">Servicio de Mudanza sin Estrés</h3>
+                    <p class="text-gray-600 text-lg mt-2">Una vez que hayas encontrado tu hogar perfecto, nos encargamos de que la mudanza sea lo más fácil y libre de estrés posible. Con nuestro servicio de mudanza profesional, podrás trasladarte a tu nuevo hogar sin preocupaciones ni complicaciones.</p>
+               <button class="mt-10 flex items-center justify-center gap-x-6">
+                        <a href="" class="rounded-md bg-green-400  px-6 py-4 text-lg font-semibold text-white  shadow-lg transition duration-200 transform hover:scale-105">Descubrir</a> 
+                        </button>
+               </div>
             </div>
-
-            <!-- Tarjeta 4: Nos encargamos del Papeleo -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg p-8 hover:shadow-xl transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="blue" class="bi bi-file-bar-graph mb-6" viewBox="0 0 16 16">
-                    <path d="M4.5 12a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1z"/>
-                    <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-                </svg>
-                <h3 class="text-2xl font-semibold mb-4">Nos encargamos del Papeleo</h3>
-                <p class="text-gray-700">En Inmobiliaria Dorado, te liberamos de la carga del papeleo. Nos ocupamos de todos los trámites y documentos, para que puedas enfocarte en disfrutar de tu nuevo hogar. Deja que nosotros nos encarguemos de los detalles y la burocracia, mientras tú te relajas y disfrutas de tu propiedad sin preocupaciones.</p>
+            <!-- Tarjeta 4: Soporte Post-Venta -->
+            <div class="rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 group">
+                <img src="https://imgs.search.brave.com/G-KTX9kKvbVuDC9TkQ0kOmDPDXH0Di_HkE9xQgWiib8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9ibG9n/Lmh1YnNwb3QuZXMv/aHViZnMvbWVkaWEv/YXRlbmNpb25jbGll/bnRlb25saW5lLmpw/ZWc" alt="Soporte Post-Venta" class="w-full h-64 object-cover">
+                <div class="p-4">
+                    <h3 class="text-2xl font-semibold text-black">Soporte Post-Venta Confiable</h3>
+                    <p class="text-gray-600 text-lg mt-2">Nuestro compromiso contigo no termina en el momento de la compra. Estamos aquí para brindarte un soporte post-venta confiable y atento, para resolver cualquier duda o problema que puedas tener en tu nuevo hogar.</p>
+                    <button class="mt-10 flex items-center justify-center gap-x-6">
+                        <a href="" class="rounded-md bg-green-400  px-6 py-4 text-lg font-semibold text-white  shadow-lg transition duration-200 transform hover:scale-105">Contactar</a> 
+                        </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Footer -->
-<footer class="bg-gray-600 text-white p-8">
-    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        <!-- Logo -->
-        <div class="mb-4 md:mb-0">
-            <h1 class="text-2xl font-bold">Inmobiliaria Dorado</h1>
-        </div>
-
-        <!-- Enlaces del Pie de Página -->
-        <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
-            <a href="#" class="hover:text-gray-400 transition duration-300">Inicio</a>
-            <a href="#" class="hover:text-gray-400 transition duration-300">Propiedades</a>
-            <a href="#" class="hover:text-gray-400 transition duration-300">Contacto</a>
-            <a href="#" class="hover:text-gray-400 transition duration-300">Acerca de nosotros</a>
-        </div>
-
-        <!-- Información de Contacto -->
-        <div class="mt-4 md:mt-0">
-            <p class="text-lg font-semibold">Santino Dorado <br> Diseñador UX Ui - Back-End Developer </p>
-        </div>
-    </div>
-</footer>

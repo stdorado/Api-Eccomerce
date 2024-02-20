@@ -13,7 +13,7 @@ export function SendToEmail(addressee, affair, Message, callback){
     });
 
 const Options = {
-    from : "doradosantinotomas@gmail.com",
+    from : "inmobiliariadonmario459@gmail.com",
     to : addressee,
     subject : affair,
     html : Message

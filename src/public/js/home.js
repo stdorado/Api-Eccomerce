@@ -132,10 +132,26 @@ function agregarAlCarrito(productoId) {
   })
     .then(response => {
       if (response.ok) {
-        alert('Producto agregado al carrito con éxito');
+       
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'El producto se agregó al carrito exitosamente',
+          position: 'top-end', 
+          showConfirmButton: false, 
+          timer: 3000 
+        });
       } else {
         response.text().then(errorMsg => {
-          alert('Error al agregar el producto al carrito: ' + errorMsg);
+          
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al agregar el producto al carrito: ' + errorMsg,
+            position: 'top-end', 
+            showConfirmButton: false, 
+            timer: 3000 
+          });
         });
       }
     })

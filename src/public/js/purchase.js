@@ -16,8 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!document.getElementById('ticketDetails')) {
             console.log('Ya existe un ticket. Evitando la creación duplicada.');
           } else {
-            // Muestra el ticket existente
-            console.log('Mostrando el ticket existente.');
+            
             ticketElement.style.display = 'block'; // Ajusta según tu estilo
           }
 

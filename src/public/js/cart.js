@@ -21,15 +21,37 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         if (response.status === 200) {
-          alert("Producto eliminado del carrito");
-          window.location.reload();
+          Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: 'Producto eliminado del carrito',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000
+          }).then(() => {
+            window.location.reload();
+          });
         } else {
           const data = await response.json();
-          alert(`Error al eliminar el producto: ${data.error}`);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Error al eliminar el producto: ${data.error}`,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000
+          });
         }
       } catch (error) {
         console.error("Error al eliminar el producto:", error);
-        alert("Hubo un error al eliminar el producto del carrito");
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al eliminar el producto del carrito',
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000
+        });
       }
     });
   });
@@ -41,15 +63,37 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (response.status === 200) {
-        alert("Carrito vaciado con éxito");
-        window.location.reload();
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Carrito vaciado con éxito',
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000
+        }).then(() => {
+          window.location.reload();
+        });
       } else {
         const data = await response.json();
-        alert(`Error al vaciar el carrito: ${data.error}`);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: `Error al vaciar el carrito: ${data.error}`,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000
+        });
       }
     } catch (error) {
       console.error("Error al vaciar el carrito:", error);
-      alert("Hubo un error al vaciar el carrito");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un error al vaciar el carrito',
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000
+      });
     }
   });
 
@@ -61,14 +105,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.status === 200) {
         const data = await response.json();
-        alert(`Compra realizada con éxito`);
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Compra realizada con éxito',
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000
+        });
       } else {
         const data = await response.json();
-        alert(`Error al finalizar la compra: ${data.error}`);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: `Error al finalizar la compra: ${data.error}`,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000
+        });
       }
     } catch (error) {
       console.error("Error al finalizar la compra:", error);
-      alert("Hubo un error al finalizar la compra");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un error al finalizar la compra',
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000
+      });
     }
   });
 
@@ -86,15 +151,37 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         if (response.ok) {
-          alert("Producto agregado al carrito");
-          window.location.reload();
+          Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: 'Producto agregado al carrito',
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          }).then(() => {
+            window.location.reload();
+          });
         } else {
           const data = await response.json();
-          alert(`Error al agregar el producto al carrito: ${data.error}`);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Error al agregar el producto al carrito: ${data.error}`,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000
+          });
         }
       } catch (error) {
         console.error("Error al agregar el producto al carrito:", error);
-        alert("Hubo un error al agregar el producto al carrito");
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al agregar el producto al carrito',
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000
+        });
       }
     });
   });

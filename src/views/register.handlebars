@@ -1,5 +1,5 @@
 <div class="min-h-screen flex items-center justify-center bg-slate-900" style="background-image: url('https://cdn.pixabay.com/photo/2022/04/03/22/05/buildings-7109918_1280.jpg'); background-size: cover; background-position: center;">
-  <form id="registerForm" method="POST" class="bg-transparent p-10 rounded-lg shadow-md w-96 sm:w-96 md:w-96 lg:w-96 xl:w-96 2xl:w-96 transition-transform transform hover:scale-105 duration-300 border border-white" style="backdrop-filter: blur(10px); ">
+  <form id="registerForm" method="POST" class="bg-transparent p-10 rounded-lg shadow-md w-96 sm:w-96 md:w-96 lg:w-96 xl:w-96 2xl:w-96 transition-transform transform hover:scale-105 duration-300 border border-white" style="backdrop-filter: blur(10px);">
     <div class="mx-auto mb-4">
       <svg xmlns="http://www.w3.org/2000/svg" width="106" height="106" fill="black" class="bi bi-person-fill-add mx-auto " viewBox="0 0 16 16">
         <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
@@ -11,38 +11,35 @@
     <div class="mb-4 flex flex-wrap">
       <div class="w-full md:w-1/2 pr-2">
         <label for="first_name" class="block text-sm font-semibold text-gray-700 mb-2 italic">First Name</label>
-        <input type="text" id="first_name" name="first_name" class="w-full py-3 px-4 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+        <input type="text" id="first_Name" name="first_Name" class="w-full py-3 px-4 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
       </div>
       <div class="w-full md:w-1/2 pl-2">
-        <label for="last_name" class="block text-sm  font-semibold text-gray-700 mb-2 italic">Last Name</label>
-        <input type="text" id="last_name" name="last_name" class="w-full py-3 px-4 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+        <label for="last_name" class="block text-sm font-semibold text-gray-700 mb-2 italic">Last Name</label>
+        <input type="text" id="last_Name" name="last_name" class="w-full py-3 px-4 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
       </div>
     </div>
 
     <div class="mb-4">
-      <label for="email" class="block text-sm  font-semibold text-gray-700 mb-2 italic">Email</label>
+      <label for="email" class="block text-sm font-semibold text-gray-700 mb-2 italic">Email</label>
       <input type="email" id="email" name="email" class="w-full py-3 px-4 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
     </div>
 
     <div class="mb-4">
-      <label for="password" class="block text-sm  font-semibold text-gray-700 mb-2 italic">Password</label>
+      <label for="password" class="block text-sm font-semibold text-gray-700 mb-2 italic">Password</label>
       <input type="password" id="password" name="password" class="w-full py-3 px-4 border border-black rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
     </div>
 
-    <button type="submit" class="w-full p-4 text-lg font-semibold text-white bg-slate-900 hover:bg-orange-700  focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300">
-  Register
-</button>
+    <button type="submit" class="w-full p-4 text-lg font-semibold text-white bg-slate-900 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300">
+      Register
+    </button>
 
-<button
-  id="google-register"
-  class="w-full mt-5 p-4 bg-black text-white  flex items-center justify-center space-x-2  focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 shadow-lg"
->
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google mr-4" viewBox="0 0 16 16">
-  <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
-</svg>
-  <p class="text-xg font-semibold">Register From Google</p>
-</button>
+    <button id="google-register" class="w-full mt-5 p-4 bg-black text-white  flex items-center justify-center space-x-2  focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 shadow-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google mr-4" viewBox="0 0 16 16">
+        <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+      </svg>
+      <p class="text-xg font-semibold">Register From Google</p>
+    </button>
   </form>
   <div id="error-message" class="text-red-500 mt-4 text-lg"></div>
 </div>
-    <script src="/js/register.js"></script>
+<script src="/js/register.js"></script>

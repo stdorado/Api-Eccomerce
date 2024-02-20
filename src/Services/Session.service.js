@@ -71,21 +71,19 @@ class SesionService {
     }
 }
 
-  async register(email, first_Name, last_Name, password) {
+async register(email, first_Name, last_Name, password) {
   try {
-    // Aquí realizas la consulta a la base de datos para obtener el userId
-    const user = await UserManager.findOne({ email }); // Suponiendo que encuentras el usuario por su email
-    if (!user) {
-      return { success: false, error: 'Usuario no encontrado' };
+    const existingUser = await UserManager.findOne({ email });
+    if (existingUser) {
+      return { success: false, error: 'El usuario ya existe' };
     }
 
-    // Utilizas el userId obtenido para registrar el usuario
-    const result = await UserManager.createOne({
+    // Crear un nuevo usuario
+    const newUser = await UserManager.createOne({
       email,
-      password,
       first_Name,
       last_Name,
-      userId: user._id // Utilizando _id como el userId en MongoDB
+      password,
     });
 
     return { success: true, message: "Registro exitoso" };

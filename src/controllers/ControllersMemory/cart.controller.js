@@ -60,7 +60,7 @@ export const DeleteProductFromCart = async (req, res) => {
 
 export const ViewCart = async (req, res) => {
   try {
-    // Temporalmente, asigna un ID de carrito fijo
+    
     const cartId = '6526aabcfb59b510c4693a02';
 
     // Puedes seguir con el resto del código

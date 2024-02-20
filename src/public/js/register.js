@@ -6,19 +6,19 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         errorMessage.textContent = ""; // Limpia cualquier mensaje de error anterior
 
-        const firstName = registerForm.first_name.value;
-        const lastName = registerForm.last_name.value;
+        const firstName = registerForm.first_Name.value;
+        const lastName = registerForm.last_Name.value;
         const email = registerForm.email.value;
         const password = registerForm.password.value;
-
+        
         try {
           // Realiza una solicitud al servidor para registrar un nuevo usuario
           const response = await fetch("/api/sessions/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              first_name: firstName, 
-              last_name: lastName,   
+              first_Name: firstName, 
+              last_Name: lastName,   
               email,
               password,
             }),

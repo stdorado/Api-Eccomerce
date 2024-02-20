@@ -1,9 +1,4 @@
-import {
-    generateResetToken,
-    sendResetEmail,
-    getPasswordByEmail,
-    verifyToken
-} from "../../Services/Recover.service.js";
+import RecoverService from "../../Services/Recover.service.js";
 
 const showForgotPasswordForm = (req, res) => {
     res.render('forgot-password-form');
@@ -13,8 +8,8 @@ const handleForgotPassword = async (req, res) => {
     const { email } = req.body;
 
     try {
-        const { user, resetToken } = await generateResetToken(email);
-        await sendResetEmail(email, resetToken);
+        const { user, resetToken } = await RecoverService.generateResetToken(email);
+        await RecoverService.sendResetEmail(email, resetToken);
 
         const { firstName, _id } = user; 
         res.status(200).json({ message: 'Email Reset password sent successfully', resetToken, userId: _id, firstName }); 
@@ -31,9 +26,9 @@ const resetPasswordWithToken = async (req, res) => {
             return res.status(400).json({ error: 'Token not provided in the request URL' });
         }
     
-        const { userId } = verifyToken(token);
+        const { userId } = RecoverService.verifyToken(token);
 
-        const password = await getPasswordByEmail(userId);
+        const password = await RecoverService.getPasswordByEmail(userId);
 
         res.render('reset-password', { password });
     } catch (error) {

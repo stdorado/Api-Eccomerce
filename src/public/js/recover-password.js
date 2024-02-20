@@ -21,13 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    const password = data.password;
-
-                    // Mostrar la contraseña en el contenedor
-                    passwordMessage.textContent = `Tu contraseña es: ${password}`;
-                    passwordContainer.style.display = 'block';
-
-                    // También puedes ajustar cómo deseas mostrar la contraseña, como en un cuadro de diálogo modal, etc.
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'El correo se envió con éxito, revisa tu casilla de mensajes',
+                        position: 'top-end', 
+                        showConfirmButton: false, 
+                        timer: 2000,
+                        width : "20rem"
+                    });
                 } else {
                     const error = await response.json();
                     console.error('Error:', error.message);
