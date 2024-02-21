@@ -1,63 +1,71 @@
-import passport from 'passport';
-import GoogleStrategy from "passport-google-oauth20"
-import LocalStrategy from 'passport-local';
-import UserManager from '../dao/DaoDataBase/User.manager.js';
-import { hashPassword } from '../utils.js';
-import bcrypt from "bcrypt"
-import { logger } from '../utils/logger.js';
+import passport from "passport";
+import GoogleStrategy from "passport-google-oauth20";
+import LocalStrategy from "passport-local";
+import UserManager from "../dao/DaoDataBase/User.manager.js";
+import { hashPassword } from "../utils.js";
+import bcrypt from "bcrypt";
+import { logger } from "../utils/logger.js";
 
-passport.use('login', new LocalStrategy(
-  {
-    usernameField: 'email',
-    passReqToCallback: true,
-  },
-  async (req, email, password, done) => {
-    try {
-      const userDB = await UserManager.getUserByEmail(email);
-      if (!userDB) {
-        return done(null, false, { message: 'the email is not registered' });
+passport.use(
+  "login",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passReqToCallback: true,
+    },
+    async (req, email, password, done) => {
+      try {
+        const userDB = await UserManager.getUserByEmail(email);
+        if (!userDB) {
+          return done(null, false, { message: "the email is not registered" });
+        }
+        const passwordMatch = await bcrypt.compare(password, userDB.password);
+        if (!passwordMatch) {
+          return done(null, false, { message: "Password incorrect" });
+        }
+        return done(null, userDB);
+      } catch (error) {
+        return done(error);
       }
-      const passwordMatch = await bcrypt.compare(password, userDB.password);
-      if (!passwordMatch) {
-        return done(null, false, { message: 'Password incorrect' });
-      }
-      return done(null, userDB);
-    } catch (error) {
-      return done(error);
     }
-  }
-));
+  )
+);
 
-passport.use('register', new LocalStrategy(
-  {
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true,
-  },
-  async (req, email, password, done) => {
-    const { first_Name, last_Name } = req.body;
-    try {
-      const userDB = await UserManager.getUserByEmail(email);
-      if (userDB) {
-        return done(null, false, { message: 'the email is already registered' });
+passport.use(
+  "register",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    async (req, email, password, done) => {
+      const { first_Name, last_Name } = req.body;
+      try {
+        const userDB = await UserManager.getUserByEmail(email);
+        if (userDB) {
+          return done(null, false, {
+            message: "the email is already registered",
+          });
+        }
+
+        const hashedPassword = await hashPassword(password);
+        const newUser = new User({
+          email,
+          password: hashedPassword,
+          first_Name,
+          last_Name,
+          last_connection: new Date(),
+        });
+
+        await newUser.save();
+        return done(null, newUser);
+      } catch (error) {
+        return done(error);
       }
-
-      const hashedPassword = await hashPassword(password);
-      const newUser = new User({
-        email,
-        password: hashedPassword,
-        first_Name,
-        last_Name,
-        role: 'User', 
-      });
-
-      await newUser.save();
-      return done(null, newUser);
-    } catch (error) {
-      return done(error);
     }
-  }
-));
+  )
+);
 
 passport.use(
   new GoogleStrategy(
@@ -72,11 +80,14 @@ passport.use(
 
         if (!user) {
           user = await UserManager.createOne({
-            googleId: profile.id,
             email: profile.emails[0].value,
-            first_Name: profile.name.givenName ? profile.name.givenName : 'First name not provided',
-            last_Name: profile.name.familyName ? profile.name.familyName : 'Last name not provided',
-            fromGoogle: true,
+            first_Name: profile.name.givenName
+              ? profile.name.givenName
+              : "First name not provided",
+            last_Name: profile.name.familyName
+              ? profile.name.familyName
+              : "Last name not provided",
+            last_connection: new Date(),
           });
         } else {
           if (!user.fromGoogle) {
@@ -103,26 +114,20 @@ passport.deserializeUser(async (id, done) => {
     const user = await UserManager.findById(id);
 
     if (!user) {
-      return done(null, false); 
+      return done(null, false);
     }
 
-    let userInfo = {};
-    if (user.fromGoogle) {
-      userInfo = {
-        id: user.id,
-        email: user.email,
-        first_Name: user.first_Name,
-        last_Name: user.last_Name,
-        authMethod: 'Google',
-      };
-    } else {
-      userInfo = {
-        id: user.id,
-        email: user.email,
-        first_Name: user.first_Name,
-        last_Name: user.last_Name,
-        authMethod: 'Local',
-      };
+    let userInfo = {
+      _id: user._id,
+      email: user.email,
+      first_Name: user.first_Name,
+      last_Name: user.last_Name,
+      last_connection: user.last_connection,
+      authMethod: user.fromGoogle ? "Google" : "Local",
+    };
+
+    if (user.role) {
+      userInfo.role = user.role;
     }
 
     done(null, userInfo);

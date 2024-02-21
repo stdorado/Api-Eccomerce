@@ -1,9 +1,13 @@
 import express from "express";
-import { GetProducts,GetProductById,CreateProduct,UpdateProduct,DeleteProduct } from "../controllers/ControllersMemory/product.control.js";
+import {
+  GetProducts,
+  GetProductById,
+  CreateProduct,
+  UpdateProduct,
+  DeleteProduct,
+} from "../controllers/ControllersMemory/product.control.js";
 import { authorizerUser } from "../middlewares/authMiddleware.js";
 const router = express.Router();
-
-
 
 /**
  * @swagger
@@ -15,7 +19,7 @@ const router = express.Router();
  *       '200':
  *         description: Lista de productos obtenida con éxito
  */
-router.get('/', GetProducts); //✅
+router.get("/", GetProducts); //✅
 
 /**
  * @swagger
@@ -34,7 +38,7 @@ router.get('/', GetProducts); //✅
  *       '200':
  *         description: Información detallada del producto obtenida con éxito
  */
-router.get('/:pid', GetProductById);//✅
+router.get("/:pid", GetProductById); //✅
 
 /**
  * @swagger
@@ -48,8 +52,7 @@ router.get('/:pid', GetProductById);//✅
  *       '500':
  *         description: Error en el middleware
  */
-router.post('/', CreateProduct); //✅ Problemas con el middleware
-
+router.post("/", CreateProduct); //✅ Problemas con el middleware
 
 /**
  * @swagger
@@ -68,7 +71,7 @@ router.post('/', CreateProduct); //✅ Problemas con el middleware
  *       '200':
  *         description: Producto actualizado con éxito
  */
-router.put('/:pid', UpdateProduct); //✅
+router.put("/:pid", UpdateProduct); //✅
 
 /**
  * @swagger
@@ -87,7 +90,6 @@ router.put('/:pid', UpdateProduct); //✅
  *       '200':
  *         description: Producto eliminado con éxito
  */
-router.delete('/:pid', DeleteProduct); //✅
-
+router.delete("/:pid", DeleteProduct); //✅
 
 export default router;

@@ -1,45 +1,71 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <title>Carrito de Compras</title>
-</head>
-<body >
+  <head>
+    <title>Carrito de Compras</title>
+  </head>
+  <body>
 
+    <h1 class="text-5xl font-bold text-center m-8">Bienvenido a tu carrito de
+      Compras</h1>
 
-<h1 class="text-5xl font-bold text-center m-8  ">Bienvenido a tu carrito de Compras</h1>
-
-{{#if products.length}}
-<div class="max-w-screen-xl mx-auto">
-  <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
-    {{#each products}}
-    <div class="bg-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
-      <img src="{{this.thumbnail}}" alt="{{this.title}}" class="w-full h-48 object-cover">
-      <div class="p-4 pt-6 pb-6">
-        <h2 class="text-lg sm:text-xl font-semibold mb-2">{{this.title}}</h2>
-        <p class="text-gray-600 text-sm">{{this.descripcion}}</p>
-        <p class="text-2xl font-semibold text-gray-900 mt-2">${{this.price}}</p>
-        <p class="mt-2 text-sm text-gray-600">Stock disponible: {{this.stock}}</p>
-        <p class="mt-2 text-sm text-gray-600">Categoría: {{this.category}}</p>
-        <button data-product-id="{{this._id}}" class="eliminarButton px-4 py-2 bg-red-800 hover:bg-red-500 text-white rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none mt-4">Eliminar producto</button>
+    {{#if products.length}}
+      <div class="max-w-screen-xl mx-auto">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4"
+        >
+          {{#each products}}
+            <div
+              class="bg-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300"
+            >
+              <img
+                src="{{this.thumbnail}}"
+                alt="{{this.title}}"
+                class="w-full h-48 object-cover"
+              />
+              <div class="p-4 pt-6 pb-6">
+                <h2
+                  class="text-lg sm:text-xl font-semibold mb-2"
+                >{{this.title}}</h2>
+                <p class="text-gray-600 text-sm">{{this.descripcion}}</p>
+                <p
+                  class="text-2xl font-semibold text-gray-900 mt-2"
+                >${{this.price}}</p>
+                <p class="mt-2 text-sm text-gray-600">Stock disponible:
+                  {{this.stock}}</p>
+                <p class="mt-2 text-sm text-gray-600">Categoría:
+                  {{this.category}}</p>
+                <button
+                  data-product-id="{{this._id}}"
+                  class="eliminarButton px-4 py-2 bg-red-800 hover:bg-red-500 text-white rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none mt-4"
+                >Eliminar producto</button>
+              </div>
+            </div>
+          {{/each}}
+        </div>
       </div>
+    {{else}}
+      <p class="text-xl text-center mt-8">Carrito vacio, Agrega Productos aqui
+        <button class="bg-slate-900 text-white px-4 py-2 rounded-md"><a
+            href="/products"
+          >Buildings</a></button></p>
+      <img
+        src="https://pizzadelli.es/static/images/cart/empty_cart.png"
+        alt="imagen-carrito-vacio"
+        class="mx-auto mt-4 w-1/2"
+      />
+    {{/if}}
+
+    <div class="mt-8 text-center mb-6">
+      <p id="totalAmount">Total: ${{totalAmount}}</p>
+      <button
+        id="vaciarCarritoButton"
+        class="bg-red-500 text-white px-4 py-2 rounded-md mt-4 mr-4"
+      >Vaciar Carrito</button>
+      <button
+        id="finalizarCompraButton"
+        class="bg-green-500 text-white px-4 py-2 rounded-md mt-4"
+      ><a href="/:cid/purchase">Finalizar Compra</a></button>
     </div>
-    {{/each}}
-  </div>
-</div>
-{{else}}
-<p class="text-xl text-center mt-8">Carrito vacio, Agrega Productos aqui <button class="bg-slate-900 text-white px-4 py-2 rounded-md"><a href="/products">Buildings</a></button></p>
-<img src="https://pizzadelli.es/static/images/cart/empty_cart.png" alt="imagen-carrito-vacio" class="mx-auto mt-4 w-1/2" >
-{{/if}}
 
-<div class="mt-8 text-center mb-6 ">
-  <p id="totalAmount">Total: ${{totalAmount}}</p>
-  <button id="vaciarCarritoButton" class="bg-red-500 text-white px-4 py-2 rounded-md mt-4 mr-4">Vaciar Carrito</button>
-  <button id="finalizarCompraButton" class="bg-green-500 text-white px-4 py-2 rounded-md mt-4"><a href="/:cid/purchase">Finalizar Compra</a></button>
-</div>
-    
-
-
-  <script src="/js/cart.js"></script>
-</body>
+    <script src="/js/cart.js"></script>
+  </body>
 </html>
-

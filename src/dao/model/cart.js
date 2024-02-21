@@ -7,23 +7,19 @@ const cartProductSchema = new mongoose.Schema({
   },
   quantity: {
     type: Number,
-  }
+  },
 });
 
 const cartSchema = new mongoose.Schema(
   {
     products: {
       type: [cartProductSchema],
-    }
+    },
   },
   {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
   }
 );
 
 export const Cart = mongoose.model("Cart", cartSchema);
-
-
-
-

@@ -1,6 +1,6 @@
 import User from "../model/User.js";
 
-class userManager{
+class userManager {
   async findAll() {
     try {
       return User.find();
@@ -52,5 +52,5 @@ class userManager{
   }
 }
 
-const UserManager = new userManager()
-export default UserManager
+const UserManager = new userManager();
+export default UserManager;

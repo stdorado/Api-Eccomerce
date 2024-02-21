@@ -22,35 +22,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (response.status === 200) {
           Swal.fire({
-            icon: 'success',
-            title: '¡Éxito!',
-            text: 'Producto eliminado del carrito',
-            position: 'top-end',
+            icon: "success",
+            title: "¡Éxito!",
+            text: "Producto eliminado del carrito",
+            position: "top-end",
             showConfirmButton: false,
-            timer: 1000
+            timer: 1000,
           }).then(() => {
             window.location.reload();
           });
         } else {
           const data = await response.json();
           Swal.fire({
-            icon: 'error',
-            title: 'Error',
+            icon: "error",
+            title: "Error",
             text: `Error al eliminar el producto: ${data.error}`,
-            position: 'top-end',
+            position: "top-end",
             showConfirmButton: false,
-            timer: 1000
+            timer: 1000,
           });
         }
       } catch (error) {
         console.error("Error al eliminar el producto:", error);
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Hubo un error al eliminar el producto del carrito',
-          position: 'top-end',
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al eliminar el producto del carrito",
+          position: "top-end",
           showConfirmButton: false,
-          timer: 1000
+          timer: 1000,
         });
       }
     });
@@ -64,35 +64,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.status === 200) {
         Swal.fire({
-          icon: 'success',
-          title: '¡Éxito!',
-          text: 'Carrito vaciado con éxito',
-          position: 'top-end',
+          icon: "success",
+          title: "¡Éxito!",
+          text: "Carrito vaciado con éxito",
+          position: "top-end",
           showConfirmButton: false,
-          timer: 1000
+          timer: 1000,
         }).then(() => {
           window.location.reload();
         });
       } else {
         const data = await response.json();
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
+          icon: "error",
+          title: "Error",
           text: `Error al vaciar el carrito: ${data.error}`,
-          position: 'top-end',
+          position: "top-end",
           showConfirmButton: false,
-          timer: 1000
+          timer: 1000,
         });
       }
     } catch (error) {
       console.error("Error al vaciar el carrito:", error);
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un error al vaciar el carrito',
-        position: 'top-end',
+        icon: "error",
+        title: "Error",
+        text: "Hubo un error al vaciar el carrito",
+        position: "top-end",
         showConfirmButton: false,
-        timer: 1000
+        timer: 1000,
       });
     }
   });
@@ -106,38 +106,37 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.status === 200) {
         const data = await response.json();
         Swal.fire({
-          icon: 'success',
-          title: '¡Éxito!',
-          text: 'Compra realizada con éxito',
-          position: 'top-end',
+          icon: "success",
+          title: "¡Éxito!",
+          text: "Compra realizada con éxito",
+          position: "top-end",
           showConfirmButton: false,
-          timer: 1000
+          timer: 1000,
         });
       } else {
         const data = await response.json();
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
+          icon: "error",
+          title: "Error",
           text: `Error al finalizar la compra: ${data.error}`,
-          position: 'top-end',
+          position: "top-end",
           showConfirmButton: false,
-          timer: 1000
+          timer: 1000,
         });
       }
     } catch (error) {
       console.error("Error al finalizar la compra:", error);
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un error al finalizar la compra',
-        position: 'top-end',
+        icon: "error",
+        title: "Error",
+        text: "Hubo un error al finalizar la compra",
+        position: "top-end",
         showConfirmButton: false,
-        timer: 1000
+        timer: 1000,
       });
     }
   });
 
-  
   addToCartButtons.forEach((button) => {
     button.addEventListener("click", async (event) => {
       const productId = event.target.getAttribute("data-product-id");
@@ -152,35 +151,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (response.ok) {
           Swal.fire({
-            icon: 'success',
-            title: '¡Éxito!',
-            text: 'Producto agregado al carrito',
-            position: 'top-end',
+            icon: "success",
+            title: "¡Éxito!",
+            text: "Producto agregado al carrito",
+            position: "top-end",
             showConfirmButton: false,
-            timer: 3000
+            timer: 3000,
           }).then(() => {
             window.location.reload();
           });
         } else {
           const data = await response.json();
           Swal.fire({
-            icon: 'error',
-            title: 'Error',
+            icon: "error",
+            title: "Error",
             text: `Error al agregar el producto al carrito: ${data.error}`,
-            position: 'top-end',
+            position: "top-end",
             showConfirmButton: false,
-            timer: 1000
+            timer: 1000,
           });
         }
       } catch (error) {
         console.error("Error al agregar el producto al carrito:", error);
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Hubo un error al agregar el producto al carrito',
-          position: 'top-end',
+          icon: "error",
+          title: "Error",
+          text: "Hubo un error al agregar el producto al carrito",
+          position: "top-end",
           showConfirmButton: false,
-          timer: 1000
+          timer: 1000,
         });
       }
     });

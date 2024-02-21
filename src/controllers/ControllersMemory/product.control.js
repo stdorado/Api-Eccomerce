@@ -5,7 +5,7 @@ export const GetProducts = async (req, res) => {
     const products = await productService.getAllProducts(req.query);
     res.json(products);
   } catch (error) {
-    res.status(500).json({ status: 'error', error: error.message });
+    res.status(500).json({ status: "error", error: error.message });
   }
 };
 
@@ -14,7 +14,7 @@ export const GetProductById = async (req, res) => {
     const { pid } = req.params;
     const product = await productService.getProductById(pid);
     if (!product) {
-      res.status(404).json({ error: 'Product not found.' });
+      res.status(404).json({ error: "Product not found." });
     } else {
       res.json({ product });
     }
@@ -38,7 +38,7 @@ export const UpdateProduct = async (req, res) => {
     const data = req.body;
     const ProductUpdate = await productService.updateProduct(pid, data);
     if (!ProductUpdate) {
-      res.status(404).json({ error: 'Product not found.' });
+      res.status(404).json({ error: "Product not found." });
     } else {
       res.json(ProductUpdate);
     }
@@ -52,7 +52,7 @@ export const DeleteProduct = async (req, res) => {
     const { pid } = req.params;
     const ProductDelete = await productService.deleteProduct(pid);
     if (!ProductDelete) {
-      res.status(404).json({ error: 'Product not found.' });
+      res.status(404).json({ error: "Product not found." });
     } else {
       res.json(ProductDelete);
     }

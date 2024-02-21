@@ -15,7 +15,8 @@ async function getAllProducts(page) {
     compileProducts(products);
   } catch (err) {
     console.error("Error al obtener los productos:", err);
-    document.getElementById("error-message").textContent = "Error al cargar los productos.";
+    document.getElementById("error-message").textContent =
+      "Error al cargar los productos.";
   }
 }
 
@@ -23,7 +24,15 @@ function compileProducts(products) {
   productsList.innerHTML = "";
 
   const productGrid = document.createElement("div");
-  productGrid.classList.add("grid", "grid-cols-1", "sm:grid-cols-2", "md:grid-cols-3", "lg:grid-cols-3", "xl:grid-cols-3", "gap-4");
+  productGrid.classList.add(
+    "grid",
+    "grid-cols-1",
+    "sm:grid-cols-2",
+    "md:grid-cols-3",
+    "lg:grid-cols-3",
+    "xl:grid-cols-3",
+    "gap-4"
+  );
 
   products.forEach((product) => {
     const productCard = createProductCard(product);
@@ -35,7 +44,12 @@ function compileProducts(products) {
 
 function createProductCard(product) {
   const productCard = document.createElement("div");
-  productCard.classList.add("bg-white", "rounded-lg", "overflow-hidden", "shadow-lg");
+  productCard.classList.add(
+    "bg-white",
+    "rounded-lg",
+    "overflow-hidden",
+    "shadow-lg"
+  );
 
   const cardBody = document.createElement("div");
   cardBody.classList.add("p-4");
@@ -70,16 +84,17 @@ function createProductCard(product) {
   `;
 
   if (product.stock === 0) {
-    const productGroup = cardBody.querySelector('.group');
-    productGroup.classList.add('opacity-80', 'relative', 'sin-stock');
-  
-    const notAvailableMessage = document.createElement('div');
-    notAvailableMessage.innerHTML = '<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-800 bg-opacity-100 p-4 rounded text-white">Producto no disponible</div>';
+    const productGroup = cardBody.querySelector(".group");
+    productGroup.classList.add("opacity-80", "relative", "sin-stock");
+
+    const notAvailableMessage = document.createElement("div");
+    notAvailableMessage.innerHTML =
+      '<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-800 bg-opacity-100 p-4 rounded text-white">Producto no disponible</div>';
     productGroup.appendChild(notAvailableMessage);
-  
+
     const comprarButton = cardBody.querySelector(".comprarButton");
     comprarButton.disabled = true;
-    comprarButton.classList.add('bg-red-800', 'cursor-not-allowed');
+    comprarButton.classList.add("bg-red-800", "cursor-not-allowed");
   }
 
   const comprarButton = cardBody.querySelector(".comprarButton");
@@ -113,49 +128,46 @@ nextButton.addEventListener("click", () => {
 const carritoId = "6526aabcfb59b510c4693a02";
 
 function agregarAlCarrito(productoId) {
-  if (!productoId || typeof productoId !== 'string') {
-    console.error('ID de producto no válido.');
+  if (!productoId || typeof productoId !== "string") {
+    console.error("ID de producto no válido.");
     return;
   }
 
   const url = `/api/carts/${carritoId}/products/${productoId}`;
- 
 
   fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      quantity: 1, 
+      quantity: 1,
     }),
   })
-    .then(response => {
+    .then((response) => {
       if (response.ok) {
-       
         Swal.fire({
-          icon: 'success',
-          title: '¡Éxito!',
-          text: 'El producto se agregó al carrito exitosamente',
-          position: 'top-end', 
-          showConfirmButton: false, 
-          timer: 3000 
+          icon: "success",
+          title: "¡Éxito!",
+          text: "El producto se agregó al carrito exitosamente",
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
         });
       } else {
-        response.text().then(errorMsg => {
-          
+        response.text().then((errorMsg) => {
           Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Error al agregar el producto al carrito: ' + errorMsg,
-            position: 'top-end', 
-            showConfirmButton: false, 
-            timer: 3000 
+            icon: "error",
+            title: "Error",
+            text: "Error al agregar el producto al carrito: " + errorMsg,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
           });
         });
       }
     })
-    .catch(error => {
-      console.error('Error al agregar el producto al carrito:', error);
+    .catch((error) => {
+      console.error("Error al agregar el producto al carrito:", error);
     });
 }

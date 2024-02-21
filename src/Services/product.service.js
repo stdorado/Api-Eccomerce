@@ -1,6 +1,6 @@
 import { ProductsManager } from "../dao/DaoDataBase/Products.manager.js";
 import { Cart } from "../dao/model/cart.js";
-import {logger} from "../utils/logger.js"
+import { logger } from "../utils/logger.js";
 import { Product } from "../dao/model/products.js";
 
 const productManager = new ProductsManager();
@@ -14,15 +14,13 @@ class ProductService {
         limit: parseInt(limit),
       };
 
-     
       const sortOptions = {};
       if (sort) {
-        sortOptions['price'] = sort === 'asc' ? 1 : -1;
+        sortOptions["price"] = sort === "asc" ? 1 : -1;
       }
 
       const filter = query ? { category: query } : {};
 
-      
       const result = await Product.paginate(filter, options);
 
       const { docs, totalDocs, totalPages, page: currentPage } = result;
@@ -44,7 +42,7 @@ class ProductService {
       }
 
       const response = {
-        status: 'success',
+        status: "success",
         payload: docs,
         prevPage: prevPage,
         nextPage: nextPage,
@@ -54,64 +52,64 @@ class ProductService {
         hasNextPage: hasNextPage,
         hasPrevPage: hasPrevPage,
         totalPages: totalPages,
-        totalDocs : totalDocs
+        totalDocs: totalDocs,
       };
 
       return response;
     } catch (error) {
-      logger.error(error)
-      throw new Error('Error to Server');
+      logger.error(error);
+      throw new Error("Error to Server");
     }
   }
-  
-    async getProductById(productId) {
-      try {
-        return await productManager.findById(productId);
-      } catch (error) {
-        logger.error(error)
-        throw new Error('Error to get Product.');
-      }
-    }
-  
-    async createProduct(productData) {
-      try {
-        return await productManager.createOne(productData);
-      } catch (error) {
-        logger.error(error)
-        throw new Error('Error to create Product.');
-      }
-    }
-  
-    async updateProduct(productId, productData) {
-      try {
-        return await productManager.updateOne(productId, productData);
-      } catch (error) {
-        logger.error(error)
-        throw new Error('Error to Update Product.');
-      }
-    }
-  
-    async deleteProduct(productId) {
-      try {
-        return await productManager.deleteOne(productId);
-      } catch (error) {
-        logger.error(error)
-        throw new Error('Error to delete Product.');
-      }
-    }
-  
-    async getProductsInCart(cartId) {
-      try {
-        const cart = await Cart.findById(cartId).populate('products.productId');
-        if (!cart) {
-          throw new Error('Cart not found.');
-        }
-        return cart.products;
-      } catch (error) {
-        logger.error(error)
-        throw new Error('Error getting products from cart');
-      }
+
+  async getProductById(productId) {
+    try {
+      return await productManager.findById(productId);
+    } catch (error) {
+      logger.error(error);
+      throw new Error("Error to get Product.");
     }
   }
-  
-  export default new ProductService();
+
+  async createProduct(productData) {
+    try {
+      return await productManager.createOne(productData);
+    } catch (error) {
+      logger.error(error);
+      throw new Error("Error to create Product.");
+    }
+  }
+
+  async updateProduct(productId, productData) {
+    try {
+      return await productManager.updateOne(productId, productData);
+    } catch (error) {
+      logger.error(error);
+      throw new Error("Error to Update Product.");
+    }
+  }
+
+  async deleteProduct(productId) {
+    try {
+      return await productManager.deleteOne(productId);
+    } catch (error) {
+      logger.error(error);
+      throw new Error("Error to delete Product.");
+    }
+  }
+
+  async getProductsInCart(cartId) {
+    try {
+      const cart = await Cart.findById(cartId).populate("products.productId");
+      if (!cart) {
+        throw new Error("Cart not found.");
+      }
+      return cart.products;
+    } catch (error) {
+      logger.error(error);
+      throw new Error("Error getting products from cart");
+    }
+  }
+}
+
+export default new ProductService();

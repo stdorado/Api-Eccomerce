@@ -25,7 +25,9 @@ export const GetCartById = async (req, res) => {
 export const AddProductToCart = async (req, res) => {
   try {
     if (!req.session.user) {
-      return res.status(401).json({ error: "Unauthorized: User not logged in" });
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: User not logged in" });
     }
     const result = await cartService.addProductToCart(
       req.params.cid,
@@ -60,8 +62,7 @@ export const DeleteProductFromCart = async (req, res) => {
 
 export const ViewCart = async (req, res) => {
   try {
-    
-    const cartId = '6526aabcfb59b510c4693a02';
+    const cartId = "6526aabcfb59b510c4693a02";
 
     // Puedes seguir con el resto del código
     const cartData = await cartService.getViewCartData(cartId);
@@ -69,11 +70,12 @@ export const ViewCart = async (req, res) => {
     if (!cartData) {
       return res.status(404).json({ error: "Cart not found." });
     }
-    res.render('cart', cartData);
-
+    res.render("cart", cartData);
   } catch (error) {
     console.error(error);
-    res.status(500).render('error', { error: 'Error obtaining cart products.' });
+    res
+      .status(500)
+      .render("error", { error: "Error obtaining cart products." });
   }
 };
 
@@ -83,19 +85,19 @@ export const ClearCart = async (req, res) => {
     const result = await cartService.clearCart(cid);
     res.status(result.success ? 200 : 404).json(result);
   } catch (error) {
-    res.status(500).json({ error: 'Error emptying cart.' });
+    res.status(500).json({ error: "Error emptying cart." });
   }
 };
 
 export const GetProductsInCart = async (req, res) => {
   try {
     // Temporalmente, asigna un ID de carrito fijo
-    const cartId = '6526aabcfb59b510c4693a02';
+    const cartId = "6526aabcfb59b510c4693a02";
 
     const result = await cartService.getProductsInCart(cartId);
     res.status(result.success ? 200 : 500).json(result);
   } catch (error) {
-    res.status(500).json({ error: 'Error getting the products in the cart.' });
+    res.status(500).json({ error: "Error getting the products in the cart." });
   }
 };
 

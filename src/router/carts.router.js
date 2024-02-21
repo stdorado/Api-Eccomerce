@@ -1,7 +1,15 @@
-import { Router } from 'express';
-import { GetCartById,CreateCart,AddProductToCart,UpdateCart,DeleteProductFromCart,ViewCart,ClearCart,GetProductsInCart,PurchaseCart } from '../controllers/ControllersMemory/cart.controller.js';
-import { requireAuth } from '../middlewares/authMiddleware.js';
-import { checkProductOwner } from '../middlewares/ownerMiddleware.js';
+import { Router } from "express";
+import {
+  GetCartById,
+  CreateCart,
+  AddProductToCart,
+  UpdateCart,
+  DeleteProductFromCart,
+  ViewCart,
+  ClearCart,
+  GetProductsInCart,
+  PurchaseCart,
+} from "../controllers/ControllersMemory/cart.controller.js";
 const router = Router();
 
 /**
@@ -44,8 +52,7 @@ router.post("/:cid/purchase", PurchaseCart); //✅ , tiene un error que envia 2 
  *         description: Carrito limpiado con éxito
  */
 
-router.post('/:cid/clear', ClearCart); //✅
-
+router.post("/:cid/clear", ClearCart); //✅
 
 // Ruta para agregar un producto al carrito
 /**
@@ -71,7 +78,7 @@ router.post('/:cid/clear', ClearCart); //✅
  *       '200':
  *         description: Producto añadido al carrito con éxito
  */
-router.post('/:cid/products/:pid', AddProductToCart); //✅
+router.post("/:cid/products/:pid", AddProductToCart); //✅
 
 // Ruta para eliminar un producto del carrito
 /**
@@ -97,7 +104,7 @@ router.post('/:cid/products/:pid', AddProductToCart); //✅
  *       '200':
  *         description: Producto eliminado del carrito con éxito
  */
-router.delete('/:cid/products/:pid',    DeleteProductFromCart); //✅
+router.delete("/:cid/products/:pid", DeleteProductFromCart); //✅
 
 // Ruta para obtener los productos en un carrito
 /**
@@ -117,7 +124,7 @@ router.delete('/:cid/products/:pid',    DeleteProductFromCart); //✅
  *       '200':
  *         description: Lista de productos en el carrito
  */
-router.get('/:cid/products', GetCartById); // 
+router.get("/:cid/products", GetCartById); //
 
 // Ruta para actualizar un carrito
 /**
@@ -137,8 +144,7 @@ router.get('/:cid/products', GetCartById); //
  *       '200':
  *         description: Carrito actualizado con éxito
  */
-router.put('/:cid', UpdateCart);//✅
-
+router.put("/:cid", UpdateCart); //✅
 
 // Ruta para crear un nuevo carrito
 /**
@@ -151,6 +157,6 @@ router.put('/:cid', UpdateCart);//✅
  *       '200':
  *         description: Nuevo carrito creado con éxito
  */
-router.post('/create', CreateCart); //✅
+router.post("/create", CreateCart); //✅
 
 export default router;

@@ -1,6 +1,5 @@
 import Ticket from "../model/Ticket.js";
 
-
 export class TicketManager {
   async createTicket(products, totalAmount) {
     try {

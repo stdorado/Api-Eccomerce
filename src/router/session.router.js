@@ -1,13 +1,16 @@
 import { Router } from "express";
-import { register,getProfile,login,logout} from "../controllers/ControllersMemory/sesion.controller.js";
+import {
+  register,
+  getProfile,
+  login,
+  logout,
+} from "../controllers/ControllersMemory/sesion.controller.js";
 
-const SessionRouter = Router()
+const SessionRouter = Router();
 
-SessionRouter.get("/profile" , getProfile)
+SessionRouter.get("/profile", getProfile);
 SessionRouter.post("/register", register);
-SessionRouter.post("/login",login)
-SessionRouter.delete("/",logout)
+SessionRouter.post("/login", login);
+SessionRouter.delete("/", logout);
 
-
-
-export default SessionRouter; 
+export default SessionRouter;

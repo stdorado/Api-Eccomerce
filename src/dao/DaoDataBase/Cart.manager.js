@@ -27,7 +27,9 @@ class CartManager {
   }
   async updateOne(id, data) {
     try {
-      const cartActualizado = await Cart.findByIdAndUpdate(id, data, { new: true });
+      const cartActualizado = await Cart.findByIdAndUpdate(id, data, {
+        new: true,
+      });
       return cartActualizado;
     } catch (error) {
       throw error;
@@ -47,8 +49,10 @@ class CartManager {
       if (!cart) {
         throw new Error("Carrito no encontrado.");
       }
-      console.log('Valor de productId:', productId); // Agrega esta línea
-      const existingProduct = cart.products.find(p => p.product === productId);
+      console.log("Valor de productId:", productId); // Agrega esta línea
+      const existingProduct = cart.products.find(
+        (p) => p.product === productId
+      );
       if (existingProduct) {
         existingProduct.quantity += quantity;
       } else {
@@ -69,8 +73,7 @@ class CartManager {
         throw new Error("Carrito no encontrado.");
       }
 
-      
-      cart.products = cart.products.filter(p => p.productId !== productId);
+      cart.products = cart.products.filter((p) => p.productId !== productId);
 
       // Guarda el carrito actualizado en la base de datos
       await cart.save();
@@ -82,7 +85,7 @@ class CartManager {
   }
   async getProductsInCart(cartId) {
     try {
-      const cart = await Cart.findById(cartId).populate('products');
+      const cart = await Cart.findById(cartId).populate("products");
       if (!cart) {
         return [];
       }
