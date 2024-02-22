@@ -3,7 +3,8 @@ import {
   GetProductsInCart,
   ViewCart,
 } from "../controllers/ControllersMemory/cart.controller.js";
-import { requireAuth } from "../middlewares/authMiddleware.js";
+import { requireAuth } from "../middlewares/ownerMiddleware.js";
+
 const router = Router();
 
 // Rutas de acceso
@@ -16,7 +17,7 @@ router.get("/home", (req, res) => {
 });
 
 // Rutas de productos, carrito, etc.
-router.get("/cart", ViewCart);
+router.get("/cart", requireAuth, ViewCart);
 
 router.get("/products", (req, res) => {
   res.render("products");

@@ -2,12 +2,10 @@
   "name": "desafio-6",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
+  "main": "index.js",
   "type": "module",
- 
   "scripts": {
     "start": "nodemon src/app.js",
-    "dev" : "node src/app.js",
     "test": "mocha src/Test"
   },
   "author": "Dorado Santino",

@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         // Redirecciona al usuario después de registrarse
-        window.location.href = "/home";
+        window.location.href = "/";
       } else {
         // Muestra un mensaje de error si el registro falla
         const data = await response.json();
