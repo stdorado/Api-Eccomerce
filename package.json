@@ -4,8 +4,10 @@
   "description": "",
   "main": "app.js",
   "type": "module",
+  "homepage": "https://final-backend-production-ae76.up.railway.app/",
   "scripts": {
     "start": "nodemon src/app.js",
+    "dev" : "node src/app.js",
     "test": "mocha src/Test"
   },
   "author": "Dorado Santino",
