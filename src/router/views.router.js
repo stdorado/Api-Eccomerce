@@ -3,7 +3,7 @@ import {
   GetProductsInCart,
   ViewCart,
 } from "../controllers/ControllersMemory/cart.controller.js";
-import { requireAuth } from "../middlewares/ownerMiddleware.js";
+import {  requireAuth } from "../middlewares/ownerMiddleware.js";
 
 const router = Router();
 
@@ -53,4 +53,8 @@ router.get("/uploadImage", (req, res) => {
 router.get("/createProduct", (req, res) => {
   res.render("createProduct");
 });
+
+router.get("/AdminView", (req,res)=>{
+  res.render("adminView")
+})
 export default router;
