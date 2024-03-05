@@ -39,7 +39,7 @@ class RecoverService {
   }
 
   async sendResetEmail(email, token) {
-    const resetLink = `http://localhost:8080/api/recover/reset-password/${token}`;
+    const resetLink = `https://final-backend-dev-jsjt.3.us-1.fl0.io/api/recover/reset-password/${token}`;
     const message = `
         <div style="font-family: sans-serif; max-width: 32rem; margin: 0 auto; padding: 1rem; text-align: left;">
             <p style="font-size: 1.25rem;">Haz clic en el siguiente botón para restablecer tu contraseña:</p>
