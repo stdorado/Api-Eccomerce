@@ -68,7 +68,9 @@ const getProfile = async (req, res) => {
         role: req.session.user.role,
         last_connection: req.session.user.last_connection,
       };
-    } else if (req.user && req.user.authMethod === "Google") {
+    } 
+    // Verificar si el usuario está autenticado con Google
+    else if (req.user && req.user.authMethod === "Google") {
       userData = {
         _id: req.user._id,
         email: req.user.email,
