@@ -6,7 +6,7 @@ import {
   UpdateProduct,
   DeleteProduct,
 } from "../controllers/ControllersMemory/product.control.js";
-import { requireAuth } from "../middlewares/ownerMiddleware.js";
+
 
 const router = express.Router();
 
@@ -53,7 +53,7 @@ router.get("/:pid",  GetProductById); //✅
  *       '500':
  *         description: Error en el middleware
  */
-router.post("/",requireAuth, CreateProduct); //✅ Problemas con el middleware
+router.post("/", CreateProduct); //✅ Problemas con el middleware
 
 /**
  * @swagger
@@ -72,7 +72,7 @@ router.post("/",requireAuth, CreateProduct); //✅ Problemas con el middleware
  *       '200':
  *         description: Producto actualizado con éxito
  */
-router.put("/:pid", requireAuth, UpdateProduct); //✅
+router.put("/:pid", UpdateProduct); //✅
 
 /**
  * @swagger
@@ -91,6 +91,6 @@ router.put("/:pid", requireAuth, UpdateProduct); //✅
  *       '200':
  *         description: Producto eliminado con éxito
  */
-router.delete("/:pid", requireAuth,  DeleteProduct); //✅
+router.delete("/:pid",  DeleteProduct); //✅
 
 export default router;

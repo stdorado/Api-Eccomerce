@@ -10,7 +10,6 @@ import {
   GetProductsInCart,
   PurchaseCart,
 } from "../controllers/ControllersMemory/cart.controller.js";
-import { requireAuth } from "../middlewares/ownerMiddleware.js";
 const router = Router();
 
 /**
@@ -79,7 +78,7 @@ router.post("/:cid/clear", ClearCart); //✅
  *       '200':
  *         description: Producto añadido al carrito con éxito
  */
-router.post("/:cid/products/:pid", requireAuth, AddProductToCart); //✅
+router.post("/:cid/products/:pid", AddProductToCart); //✅
 
 // Ruta para eliminar un producto del carrito
 /**
